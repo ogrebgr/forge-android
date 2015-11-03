@@ -29,10 +29,11 @@ abstract public class ActivityComponentImpl extends Activity implements Activity
 
     @Inject
     UnitManager mUnitManager;
+
     private ResidentComponent mResidentComponent;
 
 
-    public org.slf4j.Logger getLogger() {
+    protected org.slf4j.Logger getLogger() {
         return mLogger;
     }
 
@@ -64,5 +65,21 @@ abstract public class ActivityComponentImpl extends Activity implements Activity
             mUnitManager.onActivityFinishing(this);
             mResidentComponent = null;
         }
+    }
+
+
+    /**
+     * Usually mUnitManager will be injected by Dagger. Apps that don't use Dagger will
+     * use this method to set mUnitManager
+     *
+     * @param man
+     */
+    protected void setUnitManager(UnitManager man) {
+        if (mUnitManager == null) {
+            mUnitManager = man;
+        } else {
+            throw new IllegalStateException("Unit manager already set or injected by Dagger.");
+        }
+
     }
 }

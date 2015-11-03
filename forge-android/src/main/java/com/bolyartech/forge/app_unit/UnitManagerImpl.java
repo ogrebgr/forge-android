@@ -6,21 +6,14 @@ import com.bolyartech.forge.misc.ForUnitTestsOnly;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 
 /**
  * Created by ogre on 2015-10-22
  */
-public class UnitManagerImpl implements UnitManager {
+abstract public class UnitManagerImpl implements UnitManager {
     private final Map<Class<? extends ActivityComponent>, ResidentComponent> mResidentComponents = new HashMap<>();
     private final Map<ResidentComponent, Class<? extends ActivityComponent>> mResidentComponentsReverse = new HashMap<>();
     private ResidentComponent mActiveResidentComponent;
-
-
-    @Inject
-    public UnitManagerImpl() {
-    }
 
 
     @Override
