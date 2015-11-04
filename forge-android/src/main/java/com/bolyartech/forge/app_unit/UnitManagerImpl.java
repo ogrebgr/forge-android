@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by ogre on 2015-10-22
  */
-abstract public class UnitManagerImpl implements UnitManager {
+public class UnitManagerImpl implements UnitManager {
     private final Map<Class<? extends ActivityComponent>, ResidentComponent> mResidentComponents = new HashMap<>();
     private final Map<ResidentComponent, Class<? extends ActivityComponent>> mResidentComponentsReverse = new HashMap<>();
     private ResidentComponent mActiveResidentComponent;
