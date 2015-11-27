@@ -3,21 +3,33 @@ package com.bolyartech.forge.app_unit;
 
 import com.bolyartech.forge.misc.ForUnitTestsOnly;
 
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 
 /**
  * Created by ogre on 2015-10-22
  */
 public class UnitManagerImpl implements UnitManager {
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+
     private final Map<Class<? extends ActivityComponent>, ResidentComponent> mResidentComponents = new HashMap<>();
     private final Map<ResidentComponent, Class<? extends ActivityComponent>> mResidentComponentsReverse = new HashMap<>();
     private ResidentComponent mActiveResidentComponent;
 
 
+    @Inject
+    public UnitManagerImpl() {
+    }
+
+
     @Override
     public ResidentComponent onActivityResumed(ActivityComponent act) {
+        mLogger.trace("Activity resumed: {}", act.getClass().getSimpleName());
         ResidentComponent comp = mResidentComponents.get(act.getClass());
         if (comp == null) {
             createNewComponent(act);
@@ -40,6 +52,7 @@ public class UnitManagerImpl implements UnitManager {
 
     @Override
     public void onActivityPaused(ActivityComponent act) {
+        mLogger.trace("Activity paused: {}", act.getClass().getSimpleName());
         if (mActiveResidentComponent != null) {
             ResidentComponent comp = mResidentComponents.get(act.getClass());
             if (mActiveResidentComponent == comp) {
@@ -57,10 +70,11 @@ public class UnitManagerImpl implements UnitManager {
 
     @Override
     public void onActivityFinishing(ActivityComponent act) {
+        mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());
         ResidentComponent comp = mResidentComponents.get(act.getClass());
         comp.onActivityFinishing();
         if (comp.isDead()) {
-            removeComponentPair(mActiveResidentComponent);
+            removeComponentPair(comp);
         }
 
         if (mActiveResidentComponent == comp) {
