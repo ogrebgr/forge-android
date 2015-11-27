@@ -10,6 +10,8 @@ import com.bolyartech.forge.exchange.ForgeExchangeResult;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.inject.Inject;
+
 
 /**
  * Created by ogre on 2015-11-03 10:15
@@ -19,10 +21,10 @@ public class ForgeExchangeManagerImpl implements ForgeExchangeManager {
     private final ForgeExchangeFunctionality mForgeExchangeFunctionality;
     private final AtomicLong mExchangeIdGenerator = new AtomicLong(0);
 
-
-    public ForgeExchangeManagerImpl(UnitManager mUnitManager, ForgeExchangeFunctionality mForgeExchangeFunctionality) {
-        this.mUnitManager = mUnitManager;
-        this.mForgeExchangeFunctionality = mForgeExchangeFunctionality;
+    @Inject
+    public ForgeExchangeManagerImpl(UnitManager unitManager, ForgeExchangeFunctionality forgeExchangeFunctionality) {
+        mUnitManager = unitManager;
+        mForgeExchangeFunctionality = forgeExchangeFunctionality;
     }
 
 
