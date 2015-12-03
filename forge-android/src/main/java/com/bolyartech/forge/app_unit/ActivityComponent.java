@@ -10,5 +10,9 @@ public interface ActivityComponent {
 
     void onStop();
 
+    boolean isFinishing();
+
     ResidentComponent createResidentComponent();
+
+    ResidentComponent getResidentComponent();
 }

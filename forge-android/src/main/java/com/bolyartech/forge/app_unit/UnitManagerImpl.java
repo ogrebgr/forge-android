@@ -69,16 +69,19 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @Override
-    public void onActivityFinishing(ActivityComponent act) {
-        mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());
-        ResidentComponent comp = mResidentComponents.get(act.getClass());
-        comp.onActivityFinishing();
-        if (comp.isDead()) {
-            removeComponentPair(comp);
-        }
+    public void onActivityStop(ActivityComponent act) {
+        mLogger.trace("Activity stop: {}", act.getClass().getSimpleName());
+        if (act.isFinishing()) {
+            mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());
+            ResidentComponent comp = mResidentComponents.get(act.getClass());
+            comp.onActivityFinishing();
+            if (comp.isDead()) {
+                removeComponentPair(comp);
+            }
 
-        if (mActiveResidentComponent == comp) {
-            mActiveResidentComponent = null;
+            if (mActiveResidentComponent == comp) {
+                mActiveResidentComponent = null;
+            }
         }
     }
 
