@@ -2,13 +2,22 @@ package com.bolyartech.forge.app_unit;
 
 import android.app.Activity;
 
+import com.bolyartech.forge.app_unit.utils.TestActivityBase;
+
 
 /**
- * Created by ogre on 2015-10-22
+ * Created by o15-10-22
  */
-public class Act1 extends Activity implements ActivityComponent {
+public class Act1 extends TestActivityBase {
     @Override
     public ResidentComponent createResidentComponent() {
         return null;
     }
+
+
+    @Override
+    public ResidentComponent getResidentComponent() {
+        return null;
+    }
+
 }
