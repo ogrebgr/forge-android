@@ -38,6 +38,7 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
         if (mActivity.isFinishing()) {
             die();
         }
+        mActivity = null;
     }
 
 
