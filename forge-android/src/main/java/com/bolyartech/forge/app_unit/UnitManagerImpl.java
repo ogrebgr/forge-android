@@ -74,7 +74,7 @@ public class UnitManagerImpl implements UnitManager {
         if (act.isFinishing()) {
             mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());
             ResidentComponent comp = mResidentComponents.get(act.getClass());
-            comp.onActivityFinishing();
+            comp.onActivityStop();
             if (comp.isDead()) {
                 removeComponentPair(comp);
             }

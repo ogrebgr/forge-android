@@ -34,8 +34,10 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
 
 
     @Override
-    public void onActivityFinishing() {
-        // empty
+    public void onActivityStop() {
+        if (mActivity.isFinishing()) {
+            die();
+        }
     }
 
 

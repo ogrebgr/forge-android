@@ -13,7 +13,7 @@ public interface ResidentComponent {
 
     void onActivityPaused();
 
-    void onActivityFinishing();
+    void onActivityStop();
 
     boolean isDead();
 }
