@@ -28,6 +28,7 @@ import java.io.InputStream;
 /**
  * Utility class that provides static methods for manipulating images
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ImageUtils {
     /**
      * Noninstantiable utility class
@@ -38,7 +39,7 @@ public class ImageUtils {
 
 
     /**
-     * Resizes bitmap to max width or height. Resulting image will not have dimension bigger than specified.
+     * Resize bitmap to max width or height. Resulting image will not have dimension bigger than specified.
      *
      * @param srcBitmap Source bitmap
      * @param maxSizeX  Max width

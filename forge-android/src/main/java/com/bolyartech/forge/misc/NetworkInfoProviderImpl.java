@@ -18,7 +18,9 @@ package com.bolyartech.forge.misc;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
+import android.os.Build;
 
 import javax.inject.Inject;
 
@@ -60,14 +62,44 @@ public class NetworkInfoProviderImpl implements NetworkInfoProvider {
 
 
     private boolean isWifiConnected(ConnectivityManager connMgr) {
-        NetworkInfo networkInfoWifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            @SuppressWarnings("deprecation")
+            NetworkInfo networkInfoWifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            return networkInfoWifi != null && networkInfoWifi.isConnectedOrConnecting();
+        } else {
+            Network[] networks = connMgr.getAllNetworks();
+            NetworkInfo networkInfo;
+            Network network;
+            for (Network network1 : networks) {
+                network = network1;
+                networkInfo = connMgr.getNetworkInfo(network);
+                if ((networkInfo.getType() == ConnectivityManager.TYPE_WIFI) && (networkInfo.getState().equals(NetworkInfo.State.CONNECTED))) {
+                    return true;
+                }
+            }
+        }
 
-        return networkInfoWifi != null && networkInfoWifi.isConnectedOrConnecting();
+        return false;
     }
 
 
     private boolean isMobileConnected(ConnectivityManager connMgr) {
-        NetworkInfo networkInfoMobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        return networkInfoMobile != null && networkInfoMobile.isConnectedOrConnecting();
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            @SuppressWarnings("deprecation")
+            NetworkInfo networkInfoMobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            return networkInfoMobile != null && networkInfoMobile.isConnectedOrConnecting();
+        } else {
+            Network[] networks = connMgr.getAllNetworks();
+            NetworkInfo networkInfo;
+            Network network;
+            for (Network network1 : networks) {
+                network = network1;
+                networkInfo = connMgr.getNetworkInfo(network);
+                if ((networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) && (networkInfo.getState().equals(NetworkInfo.State.CONNECTED))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

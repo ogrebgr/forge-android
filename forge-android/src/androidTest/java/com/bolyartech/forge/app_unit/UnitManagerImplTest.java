@@ -101,7 +101,7 @@ public class UnitManagerImplTest {
         verify(comp1, times(1)).onActivityPaused();
         verify(comp1, times(0)).onActivityStop();
 
-        um.onActivityStop(act1);
+        um.onActivityStopped(act1);
         verify(comp1, times(2)).onActivityResumed(act1);
         verify(comp1, times(1)).onActivityPaused();
         verify(comp1, times(1)).onActivityStop();
@@ -117,7 +117,7 @@ public class UnitManagerImplTest {
         UnitManagerImpl um = new UnitManagerImpl();
         um.onActivityResumed(act1);
         um.onActivityPaused(act1);
-        um.onActivityStop(act1);
+        um.onActivityStopped(act1);
 
         ResidentComponent comp = um.getActiveResidentComponent();
         assertTrue(comp == null);

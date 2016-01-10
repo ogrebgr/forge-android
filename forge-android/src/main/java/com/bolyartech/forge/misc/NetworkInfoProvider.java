@@ -16,6 +16,7 @@
 
 package com.bolyartech.forge.misc;
 
+@SuppressWarnings("unused")
 public interface NetworkInfoProvider {
     boolean isWifiConnected();
 

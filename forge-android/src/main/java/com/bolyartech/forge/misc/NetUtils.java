@@ -24,6 +24,7 @@ import android.net.NetworkInfo;
 /**
  * Utility class that provides static methods for working with network
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class NetUtils {
     /**
      * Noninstantiable utility class

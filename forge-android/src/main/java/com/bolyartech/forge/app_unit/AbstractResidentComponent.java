@@ -53,6 +53,7 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
     }
 
 
+    @SuppressWarnings("WeakerAccess") // suppressed because subclass my want to die
     protected final void die() {
         mIsDead = true;
     }

@@ -19,7 +19,9 @@ package com.bolyartech.forge.misc;
 /**
  * Utility class that provides methods for working with location
  */
+@SuppressWarnings("WeakerAccess")
 public class LocationUtils {
+    @SuppressWarnings("WeakerAccess")
     public static final double EARTH_RADIUS = 6371 * 1000;
 
 
@@ -34,12 +36,13 @@ public class LocationUtils {
     /**
      * Calculates distance between two points using Haversine formula (https://en.wikipedia.org/wiki/Haversine_formula)
      *
-     * @param lat1 Latitute 1
+     * @param lat1 Latitude 1
      * @param lon1 Longitude 1
      * @param lat2 Latitude 2
      * @param lon2 Longitude 2
      * @return Distance between two points in meters
      */
+    @SuppressWarnings("unused")
     public static double distanceHaversine(double lat1, double lon1, double lat2, double lon2) {
         double latDistance = Math.toRadians(lat2 - lat1);
         double lonDistance = Math.toRadians(lon2 - lon1);

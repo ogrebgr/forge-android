@@ -45,6 +45,7 @@ public class ImageViewWithContextMenuInfo extends ImageView {
     }
 
 
+    @SuppressWarnings("unused")
     public static class CommonViewContextMenuInfo implements ContextMenuInfo {
         public final ImageView targetView;
 

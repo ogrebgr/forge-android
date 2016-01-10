@@ -45,7 +45,7 @@ public class UnitManagerImpl implements UnitManager {
                 mActiveResidentComponent.onActivityResumed(act);
             }
         }
-
+        act.setResidentComponent(mActiveResidentComponent);
         return mActiveResidentComponent;
     }
 
@@ -69,7 +69,7 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @Override
-    public void onActivityStop(ActivityComponent act) {
+    public void onActivityStopped(ActivityComponent act) {
         mLogger.trace("Activity stop: {}", act.getClass().getSimpleName());
         if (act.isFinishing()) {
             mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());

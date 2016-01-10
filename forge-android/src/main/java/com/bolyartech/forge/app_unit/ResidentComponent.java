@@ -11,6 +11,7 @@ public interface ResidentComponent {
 
     void onActivityResumed(@NonNull ActivityComponent act);
 
+    @SuppressWarnings("EmptyMethod")
     void onActivityPaused();
 
     void onActivityStop();

@@ -21,7 +21,7 @@ public interface UnitManager {
 
     void onActivityPaused(ActivityComponent act);
 
-    void onActivityStop(ActivityComponent act);
+    void onActivityStopped(ActivityComponent act);
 
     ResidentComponent getActiveResidentComponent();
 }

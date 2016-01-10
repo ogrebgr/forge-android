@@ -35,6 +35,7 @@ import android.widget.ToggleButton;
 import org.slf4j.LoggerFactory;
 
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ViewUtils {
     private static final org.slf4j.Logger mLogger = LoggerFactory.getLogger(ViewUtils.class
             .getSimpleName());
