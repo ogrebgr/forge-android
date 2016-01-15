@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/projects_src/forge/forge-android/forge-android/src/main/assets"/></dataSet><dataSet config="release"><source path="/projects_src/forge/forge-android/forge-android/src/release/assets"/></dataSet></merger>
