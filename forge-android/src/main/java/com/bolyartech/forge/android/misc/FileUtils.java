@@ -1,4 +1,4 @@
-package com.bolyartech.forge.misc;
+package com.bolyartech.forge.android.misc;
 
 /*
  * Copyright (C) 2007-2008 OpenIntents.org

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bolyartech.forge.app_unit;
+package com.bolyartech.forge.android.app_unit;
 
 public interface UnitManager {
     ResidentComponent onActivityResumed(ActivityComponent act);

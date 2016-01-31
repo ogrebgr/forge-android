@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bolyartech.forge.misc;
+package com.bolyartech.forge.android.misc;
 
 @SuppressWarnings("unused")
 public interface NetworkInfoProvider {

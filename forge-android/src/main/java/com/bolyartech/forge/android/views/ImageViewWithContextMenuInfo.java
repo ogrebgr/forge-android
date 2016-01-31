@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bolyartech.forge.views;
+package com.bolyartech.forge.android.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

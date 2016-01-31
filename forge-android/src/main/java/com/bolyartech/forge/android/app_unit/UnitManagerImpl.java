@@ -1,4 +1,4 @@
-package com.bolyartech.forge.app_unit;
+package com.bolyartech.forge.android.app_unit;
 
 
 import com.bolyartech.forge.misc.ForUnitTestsOnly;

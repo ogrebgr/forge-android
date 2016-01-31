@@ -1,4 +1,4 @@
-package com.bolyartech.forge.misc;
+package com.bolyartech.forge.android.misc;
 
 import android.os.Handler;
 import android.os.Looper;

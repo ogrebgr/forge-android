@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bolyartech.forge.misc;
+package com.bolyartech.forge.android.misc;
 
 import android.text.TextWatcher;
 import android.view.View;
