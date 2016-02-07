@@ -23,12 +23,6 @@ android {
     }
 }
 
-/*
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "source"
-}
-*/
 
 publishing {
     repositories {
@@ -40,16 +34,13 @@ publishing {
             groupId 'com.bolyartech.forge'
             artifactId 'forge-android'
             version '1.0-SNAPSHOT'
-//            artifact(sourceJar)
         }
     }
 }
 
 
 dependencies {
-    compile ('com.bolyartech.forge:forge:1.0-SNAPSHOT') {
-        transitive=true
-    }
+    compile ('com.bolyartech.forge:forge:1.0-SNAPSHOT')
     compile 'com.google.dagger:dagger:2.0'
     provided 'com.google.dagger:dagger-compiler:2.0'
     testCompile 'junit:junit:4.12'
