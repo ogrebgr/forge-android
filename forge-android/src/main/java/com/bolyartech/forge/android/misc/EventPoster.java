@@ -4,5 +4,5 @@ import com.squareup.otto.Bus;
 
 
 interface EventPoster {
-    void postEvent(Bus bus, Object o);
+    void postEvent(Object o);
 }
