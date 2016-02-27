@@ -44,7 +44,9 @@ publishing {
 
 
 dependencies {
-    compile ('com.bolyartech.forge:forge:2.7-SNAPSHOT')
+    releaseCompile ('com.bolyartech.forge:forge:2.7-SNAPSHOT')
+    debugCompile project(':forge-base')
+
     compile 'com.google.dagger:dagger:2.0'
     provided 'com.google.dagger:dagger-compiler:2.0'
     testCompile 'junit:junit:4.12'
