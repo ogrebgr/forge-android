@@ -67,4 +67,9 @@ abstract public class UnitApplication extends Application {
             }
         });
     }
+
+
+    protected void setUnitManager(UnitManager unitManager) {
+        mUnitManager = unitManager;
+    }
 }
