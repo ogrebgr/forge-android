@@ -20,9 +20,6 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
 
     @Override
     public void onActivityResumed(@NonNull ActivityComponent act) {
-        if (!(act instanceof Activity)) {
-            throw new IllegalArgumentException("act must be instance of Activity");
-        }
         mActivity = act;
     }
 
