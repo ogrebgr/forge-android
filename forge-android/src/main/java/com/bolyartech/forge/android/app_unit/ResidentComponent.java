@@ -9,12 +9,12 @@ import android.support.annotation.NonNull;
 public interface ResidentComponent {
     void onCreate();
 
-    void onActivityResumed(@NonNull ActivityComponent act);
+    void onActivityResumed();
 
     @SuppressWarnings("EmptyMethod")
     void onActivityPaused();
 
-    void onActivityStop();
+    void onActivityFinishing();
 
     boolean isDead();
 }
