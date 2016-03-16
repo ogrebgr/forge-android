@@ -3,30 +3,30 @@ package com.bolyartech.forge.android.mvp;
 import com.bolyartech.forge.android.app_unit.ResidentComponent;
 
 
-abstract public class PresenterImpl implements Presenter {
-    private Model mModel;
-    private ActivityView mView;
-    private Host mHost;
+abstract public class PresenterImpl<T extends Model, U extends P2V, V extends Host> implements Presenter {
+    private T mModel;
+    private U mP2V;
+    private V mHost;
 
 
-    public PresenterImpl(Model model, ActivityView view, Host host) {
+    public PresenterImpl(T model, U p2v, V host) {
         mModel = model;
-        mView = view;
+        mP2V = p2v;
         mHost = host;
     }
 
 
-    protected Model getModel() {
+    protected T getModel() {
         return mModel;
     }
 
 
-    protected ActivityView getView() {
-        return mView;
+    protected U getP2V() {
+        return mP2V;
     }
 
 
-    protected Host getHost() {
+    protected V getHost() {
         return mHost;
     }
 
@@ -40,7 +40,7 @@ abstract public class PresenterImpl implements Presenter {
     @Override
     public void onDestroy() {
         mModel = null;
-        mView = null;
+        mP2V = null;
         mHost = null;
     }
 }
