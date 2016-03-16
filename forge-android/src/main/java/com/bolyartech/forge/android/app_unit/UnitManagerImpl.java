@@ -17,8 +17,8 @@ import javax.inject.Inject;
 public class UnitManagerImpl implements UnitManager {
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    private final Map<Class<? extends ActivityComponent>, ResidentComponent> mResidentComponents = new HashMap<>();
-    private final Map<ResidentComponent, Class<? extends ActivityComponent>> mResidentComponentsReverse = new HashMap<>();
+    private final Map<Class<? extends UnitActivity>, ResidentComponent> mResidentComponents = new HashMap<>();
+    private final Map<ResidentComponent, Class<? extends UnitActivity>> mResidentComponentsReverse = new HashMap<>();
     private ResidentComponent mActiveResidentComponent;
 
 
@@ -28,7 +28,7 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @Override
-    public ResidentComponent onActivityResumed(ActivityComponent act) {
+    public ResidentComponent onActivityResumed(UnitActivity act) {
         mLogger.trace("Activity resumed: {}", act.getClass().getSimpleName());
         ResidentComponent comp = mResidentComponents.get(act.getClass());
         if (comp == null) {
@@ -51,7 +51,7 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @Override
-    public void onActivityPaused(ActivityComponent act) {
+    public void onActivityPaused(UnitActivity act) {
         mLogger.trace("Activity paused: {}", act.getClass().getSimpleName());
         if (mActiveResidentComponent != null) {
             ResidentComponent comp = mResidentComponents.get(act.getClass());
@@ -69,7 +69,7 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @Override
-    public void onActivityStopped(ActivityComponent act) {
+    public void onActivityStopped(UnitActivity act) {
         mLogger.trace("Activity stop: {}", act.getClass().getSimpleName());
         if (act.isFinishing()) {
             mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());
@@ -91,18 +91,18 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @ForUnitTestsOnly
-    Map<Class<? extends ActivityComponent>, ResidentComponent> getResidentComponents() {
+    Map<Class<? extends UnitActivity>, ResidentComponent> getResidentComponents() {
         return new HashMap<>(mResidentComponents);
     }
 
 
     @ForUnitTestsOnly
-    Map<ResidentComponent, Class<? extends ActivityComponent>> getResidentComponentsReverse() {
+    Map<ResidentComponent, Class<? extends UnitActivity>> getResidentComponentsReverse() {
         return new HashMap<>(mResidentComponentsReverse);
     }
 
 
-    private void createNewComponent(ActivityComponent act) {
+    private void createNewComponent(UnitActivity act) {
         ResidentComponent comp = act.createResidentComponent();
         addComponentPair(act.getClass(), comp);
 
@@ -112,14 +112,14 @@ public class UnitManagerImpl implements UnitManager {
     }
 
 
-    private void addComponentPair(Class<? extends ActivityComponent> clazz, ResidentComponent comp) {
+    private void addComponentPair(Class<? extends UnitActivity> clazz, ResidentComponent comp) {
         mResidentComponents.put(clazz, comp);
         mResidentComponentsReverse.put(comp, clazz);
     }
 
 
     private void removeComponentPair(ResidentComponent comp) {
-        Class<? extends ActivityComponent> clazz = mResidentComponentsReverse.remove(comp);
+        Class<? extends UnitActivity> clazz = mResidentComponentsReverse.remove(comp);
         mResidentComponents.remove(clazz);
     }
 }

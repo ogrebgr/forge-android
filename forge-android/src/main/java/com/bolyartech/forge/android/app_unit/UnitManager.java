@@ -16,12 +16,15 @@
 
 package com.bolyartech.forge.android.app_unit;
 
+import com.bolyartech.forge.android.mvp.Presenter;
+
+
 public interface UnitManager {
-    ResidentComponent onActivityResumed(ActivityComponent act);
+    ResidentComponent onActivityResumed(UnitActivity act);
 
-    void onActivityPaused(ActivityComponent act);
+    void onActivityPaused(UnitActivity act);
 
-    void onActivityStopped(ActivityComponent act);
+    void onActivityStopped(UnitActivity act);
 
     ResidentComponent getActiveResidentComponent();
 }

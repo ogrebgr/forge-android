@@ -32,8 +32,8 @@ abstract public class UnitApplication extends Application {
 
             @Override
             public void onActivityResumed(Activity activity) {
-                if (activity instanceof ActivityComponent) {
-                    ActivityComponent comp = (ActivityComponent) activity;
+                if (activity instanceof UnitActivity) {
+                    UnitActivity comp = (UnitActivity) activity;
                     comp.setResidentComponent(mUnitManager.onActivityResumed(comp));
                 }
             }
@@ -41,16 +41,16 @@ abstract public class UnitApplication extends Application {
 
             @Override
             public void onActivityPaused(Activity activity) {
-                if (activity instanceof ActivityComponent) {
-                    mUnitManager.onActivityPaused((ActivityComponent) activity);
+                if (activity instanceof UnitActivity) {
+                    mUnitManager.onActivityPaused((UnitActivity) activity);
                 }
             }
 
 
             @Override
             public void onActivityStopped(Activity activity) {
-                if (activity instanceof ActivityComponent) {
-                    mUnitManager.onActivityStopped((ActivityComponent) activity);
+                if (activity instanceof UnitActivity) {
+                    mUnitManager.onActivityStopped((UnitActivity) activity);
                 }
             }
 
