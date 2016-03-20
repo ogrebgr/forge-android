@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
  */
 abstract public class AbstractResidentComponent implements ResidentComponent {
     private volatile boolean mIsDead = false;
-    private ActivityComponent mActivity;
 
 
     @Override
@@ -19,8 +18,8 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
 
 
     @Override
-    public void onActivityResumed(@NonNull ActivityComponent act) {
-        mActivity = act;
+    public void onActivityResumed() {
+        // empty
     }
 
 
@@ -31,11 +30,8 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
 
 
     @Override
-    public void onActivityStop() {
-        if (mActivity.isFinishing()) {
-            die();
-        }
-        mActivity = null;
+    public void onActivityFinishing() {
+        // empty
     }
 
 
@@ -45,14 +41,8 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
     }
 
 
-    public final ActivityComponent getActivity() {
-        return mActivity;
-    }
-
-
-    @SuppressWarnings("WeakerAccess") // suppressed because subclass my want to die
+    @SuppressWarnings("WeakerAccess") // suppressed because subclass may want to die
     protected final void die() {
-        mActivity = null;
         mIsDead = true;
     }
 }

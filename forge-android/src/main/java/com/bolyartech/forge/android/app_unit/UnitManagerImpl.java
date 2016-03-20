@@ -42,7 +42,7 @@ public class UnitManagerImpl implements UnitManager {
                     mActiveResidentComponent = comp;
                 }
 
-                mActiveResidentComponent.onActivityResumed(act);
+                mActiveResidentComponent.onActivityResumed();
             }
         }
         act.setResidentComponent(mActiveResidentComponent);
@@ -74,10 +74,8 @@ public class UnitManagerImpl implements UnitManager {
         if (act.isFinishing()) {
             mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());
             ResidentComponent comp = mResidentComponents.get(act.getClass());
-            comp.onActivityStop();
-            if (comp.isDead()) {
-                removeComponentPair(comp);
-            }
+            comp.onActivityFinishing();
+            removeComponentPair(comp);
 
             if (mActiveResidentComponent == comp) {
                 mActiveResidentComponent = null;
@@ -110,7 +108,7 @@ public class UnitManagerImpl implements UnitManager {
 
         comp.onCreate();
         mActiveResidentComponent = comp;
-        comp.onActivityResumed(act);
+        comp.onActivityResumed();
     }
 
 
