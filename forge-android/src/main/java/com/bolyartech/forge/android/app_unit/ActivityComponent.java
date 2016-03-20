@@ -1,5 +1,8 @@
 package com.bolyartech.forge.android.app_unit;
 
+import android.os.Bundle;
+
+
 /**
  * Created by ogre on 2015-10-26
  */
@@ -11,4 +14,14 @@ public interface ActivityComponent {
     void setResidentComponent(ResidentComponent res);
 
     ResidentComponent getResidentComponent();
+
+    void onCreate(Bundle savedInstanceState);
+    void onRestart();
+    void onStart();
+    void onResume();
+    void onRestoreInstanceState(Bundle savedInstanceState);
+    void onPause();
+    void onStop();
+    void onDestroy();
+    void onSaveInstanceState (Bundle outState);
 }
