@@ -14,14 +14,4 @@ public interface ActivityComponent {
     void setResidentComponent(ResidentComponent res);
 
     ResidentComponent getResidentComponent();
-
-    void onCreate(Bundle savedInstanceState);
-    void onRestart();
-    void onStart();
-    void onResume();
-    void onRestoreInstanceState(Bundle savedInstanceState);
-    void onPause();
-    void onStop();
-    void onDestroy();
-    void onSaveInstanceState (Bundle outState);
 }
