@@ -23,5 +23,7 @@ public interface UnitManager {
 
     void onActivityStopped(ActivityComponent act);
 
+    void onActivityDestroyed(ActivityComponent act);
+
     ResidentComponent getActiveResidentComponent();
 }

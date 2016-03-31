@@ -84,6 +84,29 @@ public class UnitManagerImpl implements UnitManager {
     }
 
 
+    /**
+     * This method basically does the same as #onActivityStopped. It's purpose is the same but it covers the case
+     * when onStop() is not called because user called finish() in onCreate() in their activity (for example)
+     * @param act
+     */
+    @Override
+    public void onActivityDestroyed(ActivityComponent act) {
+        mLogger.trace("Activity destroy: {}", act.getClass().getSimpleName());
+
+        if (act.isFinishing()) {
+            ResidentComponent comp = mResidentComponents.get(act.getClass());
+            if (comp != null) {
+                comp.onActivityFinishing();
+                removeComponentPair(comp);
+
+                if (mActiveResidentComponent == comp) {
+                    mActiveResidentComponent = null;
+                }
+            }
+        }
+    }
+
+
     @Override
     public ResidentComponent getActiveResidentComponent() {
         return mActiveResidentComponent;
