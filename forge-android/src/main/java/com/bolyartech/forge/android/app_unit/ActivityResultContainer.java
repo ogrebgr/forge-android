@@ -32,6 +32,11 @@ public final class ActivityResultContainer {
     }
 
 
+    public int getRequestCode() {
+        return mRequestCode;
+    }
+
+
     public Intent getData() {
         return mData;
     }
