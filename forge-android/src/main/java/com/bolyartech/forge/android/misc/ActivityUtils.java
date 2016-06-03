@@ -53,7 +53,7 @@ public class ActivityUtils {
             if (intent != null) {
                 Bundle incoming = intent.getExtras();
                 if (incoming != null) {
-                    ret = incoming.getLong(paramName);
+                    ret = incoming.getLong(paramName, -1);
                 }
             }
         }
