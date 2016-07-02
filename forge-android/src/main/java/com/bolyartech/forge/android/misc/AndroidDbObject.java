@@ -4,5 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 
 public interface AndroidDbObject<T> {
-    T save(SQLiteDatabase dbc);
+    T save();
+    void setDbc(SQLiteDatabase dbc);
+    SQLiteDatabase getDbc();
+    boolean isDbcOpen();
 }
