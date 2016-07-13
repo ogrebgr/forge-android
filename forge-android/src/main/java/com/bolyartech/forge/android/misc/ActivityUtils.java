@@ -24,6 +24,7 @@ import android.os.Parcelable;
 /**
  * Utility class that contains static methods for working with activities
  */
+@SuppressWarnings("unused")
 public class ActivityUtils {
     /**
      * Noninstantiable utility class
@@ -41,7 +42,9 @@ public class ActivityUtils {
      * @param intent             Intent that was used to start current activity.
      * @param paramName          Name of the parameter to be intercepted
      * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both -1 is returned
+     * @deprecated Please use {@link #interceptLongParam(Bundle, Intent, String, long)}
      */
+    @Deprecated
     public static long interceptLongParam(Bundle savedInstanceState,
                                           Intent intent, String paramName
     ) {
@@ -54,6 +57,36 @@ public class ActivityUtils {
                 Bundle incoming = intent.getExtras();
                 if (incoming != null) {
                     ret = incoming.getLong(paramName, -1);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+
+    /**
+     * Intercepts long parameter from <code>savedInstanceState</code> or
+     * intent (that was used to launch activity with)
+     * @param savedInstanceState Instance state as passed to {@link android.app.Activity#onCreate(Bundle)}
+     * @param intent Intent that was used to start current activity.
+     * @param paramName Name of the parameter to be intercepted
+     * @param defaultValue Value to return if key does not exist
+     * @return  Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both defaultValue is returned
+     */
+    public static long interceptLongParam(Bundle savedInstanceState,
+                                          Intent intent, String paramName,
+                                          long defaultValue
+    ) {
+        long ret = defaultValue;
+
+        if (savedInstanceState != null) {
+            ret = savedInstanceState.getLong(paramName);
+        } else {
+            if (intent != null) {
+                Bundle incoming = intent.getExtras();
+                if (incoming != null) {
+                    ret = incoming.getLong(paramName, defaultValue);
                 }
             }
         }
@@ -130,7 +163,9 @@ public class ActivityUtils {
      * @param intent             Intent that was used to start current activity.
      * @param paramName          Name of the parameter to be intercepted
      * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both <code>false</code> is returned
+     * @deprecated Please use {@link #interceptBooleanParam(Bundle, Intent, String, boolean)}
      */
+    @Deprecated
     public static boolean interceptBooleanParam(Bundle savedInstanceState,
                                                 Intent intent, String paramName
     ) {
@@ -152,6 +187,37 @@ public class ActivityUtils {
 
 
     /**
+     * Intercepts boolean parameter from <code>savedInstanceState</code> or
+     * intent (that was used to launch activity with)
+     *
+     * @param savedInstanceState instance state as passed to {@link android.app.Activity#onCreate(Bundle)}
+     * @param intent             Intent that was used to start current activity.
+     * @param paramName          Name of the parameter to be intercepted
+     * @param defaultValue Value to return if key does not exist
+     * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both <code>defaultValue</code> is returned
+     */
+    public static boolean interceptBooleanParam(Bundle savedInstanceState,
+                                                Intent intent, String paramName,
+                                                boolean defaultValue
+    ) {
+        boolean ret = defaultValue;
+
+        if (savedInstanceState != null) {
+            ret = savedInstanceState.getBoolean(paramName, defaultValue);
+        } else {
+            if (intent != null) {
+                Bundle incoming = intent.getExtras();
+                if (incoming != null) {
+                    ret = incoming.getBoolean(paramName, defaultValue);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+
+    /**
      * Intercepts int parameter from <code>savedInstanceState</code> or
      * intent (that was used to launch activity with)
      *
@@ -159,7 +225,9 @@ public class ActivityUtils {
      * @param intent             Intent that was used to start current activity.
      * @param paramName          Name of the parameter to be intercepted
      * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both -1 is returned
+     * @deprecated Please use {@link #interceptIntParam(Bundle, Intent, String, int)}
      */
+    @Deprecated
     public static int interceptIntParam(Bundle savedInstanceState,
                                         Intent intent, String paramName
     ) {
@@ -181,6 +249,35 @@ public class ActivityUtils {
 
 
     /**
+     * Intercepts int parameter from <code>savedInstanceState</code> or
+     * intent (that was used to launch activity with)
+     *
+     * @param savedInstanceState instance state as passed to {@link android.app.Activity#onCreate(Bundle)}
+     * @param intent             Intent that was used to start current activity.
+     * @param paramName          Name of the parameter to be intercepted
+     * @param defaultValue      Value to return if key does not exist
+     * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both <code>defaultValue</code> is returned
+     */
+    public static int interceptIntParam(Bundle savedInstanceState,
+                                        Intent intent, String paramName,
+                                        int defaultValue
+    ) {
+        int ret = defaultValue;
+        if (savedInstanceState != null) {
+            ret = savedInstanceState.getInt(paramName, defaultValue);
+        } else {
+            if (intent != null) {
+                Bundle incoming = intent.getExtras();
+                if (incoming != null) {
+                    ret = incoming.getInt(paramName, defaultValue);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /**
      * Intercepts float parameter from <code>savedInstanceState</code> or
      * intent (that was used to launch activity with)
      *
@@ -188,7 +285,9 @@ public class ActivityUtils {
      * @param intent             Intent that was used to start current activity.
      * @param paramName          Name of the parameter to be intercepted
      * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both 0 is returned
+     * @deprecated Please use {@link #interceptFloatParam(Bundle, Intent, String, float)}
      */
+    @Deprecated
     public static float interceptFloatParam(Bundle savedInstanceState,
                                             Intent intent, String paramName
     ) {
@@ -210,6 +309,36 @@ public class ActivityUtils {
 
 
     /**
+     * Intercepts float parameter from <code>savedInstanceState</code> or
+     * intent (that was used to launch activity with)
+     *
+     * @param savedInstanceState instance state as passed to {@link android.app.Activity#onCreate(Bundle)}
+     * @param intent             Intent that was used to start current activity.
+     * @param paramName          Name of the parameter to be intercepted
+     * @param defaultValue Value to return if key does not exist
+     * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both <code>defaultValue</code> is returned
+     */
+    public static float interceptFloatParam(Bundle savedInstanceState,
+                                            Intent intent, String paramName,
+                                            float defaultValue
+    ) {
+        float ret = defaultValue;
+
+        if (savedInstanceState != null) {
+            ret = savedInstanceState.getFloat(paramName, defaultValue);
+        } else {
+            if (intent != null) {
+                Bundle incoming = intent.getExtras();
+                if (incoming != null) {
+                    ret = incoming.getFloat(paramName, defaultValue);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /**
      * Intercepts double parameter from <code>savedInstanceState</code> or
      * intent (that was used to launch activity with)
      *
@@ -217,7 +346,9 @@ public class ActivityUtils {
      * @param intent             Intent that was used to start current activity.
      * @param paramName          Name of the parameter to be intercepted
      * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both 0 is returned
+     * @deprecated Please use {@link #interceptDoubleParam(Bundle, Intent, String, double)}
      */
+    @Deprecated
     public static double interceptDoubleParam(Bundle savedInstanceState,
                                               Intent intent, String paramName
     ) {
@@ -239,6 +370,37 @@ public class ActivityUtils {
 
 
     /**
+     * Intercepts double parameter from <code>savedInstanceState</code> or
+     * intent (that was used to launch activity with)
+     *
+     * @param savedInstanceState instance state as passed to {@link android.app.Activity#onCreate(Bundle)}
+     * @param intent             Intent that was used to start current activity.
+     * @param paramName          Name of the parameter to be intercepted
+     * @param defaultValue Value to return if key does not exist
+     * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both <code>defaultValue</code> is returned
+     */
+    public static double interceptDoubleParam(Bundle savedInstanceState,
+                                              Intent intent, String paramName,
+                                              double defaultValue
+    ) {
+        double ret = defaultValue;
+
+        if (savedInstanceState != null) {
+            ret = savedInstanceState.getDouble(paramName, defaultValue);
+        } else {
+            if (intent != null) {
+                Bundle incoming = intent.getExtras();
+                if (incoming != null) {
+                    ret = incoming.getDouble(paramName, defaultValue);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+
+    /**
      * Intercepts byte parameter from <code>savedInstanceState</code> or
      * intent (that was used to launch activity with)
      *
@@ -246,7 +408,9 @@ public class ActivityUtils {
      * @param intent             Intent that was used to start current activity.
      * @param paramName          Name of the parameter to be intercepted
      * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both 0 is returned
+     * @deprecated Please use {@link #interceptByteParam(Bundle, Intent, String, byte)}
      */
+    @Deprecated
     public static byte interceptByteParam(Bundle savedInstanceState,
                                           Intent intent, String paramName
     ) {
@@ -268,6 +432,37 @@ public class ActivityUtils {
 
 
     /**
+     * Intercepts byte parameter from <code>savedInstanceState</code> or
+     * intent (that was used to launch activity with)
+     *
+     * @param savedInstanceState instance state as passed to {@link android.app.Activity#onCreate(Bundle)}
+     * @param intent             Intent that was used to start current activity.
+     * @param paramName          Name of the parameter to be intercepted
+     * @param defaultValue Value to return if key does not exist
+     * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both <code>defaultValue</code> is returned
+     */
+    public static byte interceptByteParam(Bundle savedInstanceState,
+                                          Intent intent, String paramName,
+                                          byte defaultValue
+    ) {
+        byte ret = defaultValue;
+
+        if (savedInstanceState != null) {
+            ret = savedInstanceState.getByte(paramName, defaultValue);
+        } else {
+            if (intent != null) {
+                Bundle incoming = intent.getExtras();
+                if (incoming != null) {
+                    ret = incoming.getByte(paramName, defaultValue);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+
+    /**
      * Intercepts char parameter from <code>savedInstanceState</code> or
      * intent (that was used to launch activity with)
      *
@@ -275,7 +470,9 @@ public class ActivityUtils {
      * @param intent             Intent that was used to start current activity.
      * @param paramName          Name of the parameter to be intercepted
      * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both 0 is returned
+     * @deprecated Please use {@link #interceptCharParam(Bundle, Intent, String, char)}
      */
+    @Deprecated
     public static char interceptCharParam(Bundle savedInstanceState,
                                           Intent intent, String paramName
     ) {
@@ -288,6 +485,37 @@ public class ActivityUtils {
                 Bundle incoming = intent.getExtras();
                 if (incoming != null) {
                     ret = incoming.getChar(paramName, (char) 0);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+
+    /**
+     * Intercepts char parameter from <code>savedInstanceState</code> or
+     * intent (that was used to launch activity with)
+     *
+     * @param savedInstanceState instance state as passed to {@link android.app.Activity#onCreate(Bundle)}
+     * @param intent             Intent that was used to start current activity.
+     * @param paramName          Name of the parameter to be intercepted
+     * @param defaultValue Value to return if key does not exist
+     * @return Parameter's value as found in 1. savedInstanceState or 2. intent.getExtras(). If not found in both <code>defaultValue</code> is returned
+     */
+    public static char interceptCharParam(Bundle savedInstanceState,
+                                          Intent intent, String paramName,
+                                          char defaultValue
+    ) {
+        char ret = defaultValue;
+
+        if (savedInstanceState != null) {
+            ret = savedInstanceState.getChar(paramName, defaultValue);
+        } else {
+            if (intent != null) {
+                Bundle incoming = intent.getExtras();
+                if (incoming != null) {
+                    ret = incoming.getChar(paramName, defaultValue);
                 }
             }
         }
