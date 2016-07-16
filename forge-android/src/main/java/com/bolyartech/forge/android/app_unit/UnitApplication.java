@@ -63,7 +63,9 @@ abstract public class UnitApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-
+                if (activity instanceof UnitActivity) {
+                    mUnitManager.onActivityDestroyed((UnitActivity) activity);
+                }
             }
         });
     }

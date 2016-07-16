@@ -24,5 +24,7 @@ public interface UnitManager {
 
     void onActivityStopped(UnitActivity act);
 
+    void onActivityDestroyed(UnitActivity act);
+
     ResidentComponent getActiveResidentComponent();
 }
