@@ -2,13 +2,14 @@ package com.bolyartech.forge.android.app_unit;
 
 
 import com.bolyartech.forge.android.misc.AndroidEventPoster;
+import com.bolyartech.forge.android.misc.EventPoster;
 
 
 public class StateManagerImpl<T extends Enum<T>> implements StateManager<T> {
     private static final StateChangedEvent mStateChangedEvent = new StateChangedEvent();
     private T mState;
     private T mDefaultState;
-    private final AndroidEventPoster mPoster;
+    private final EventPoster mPoster;
 
 
     public StateManagerImpl(AndroidEventPoster poster, T initialState) {
