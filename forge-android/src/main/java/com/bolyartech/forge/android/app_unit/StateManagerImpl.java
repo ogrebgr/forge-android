@@ -1,20 +1,20 @@
 package com.bolyartech.forge.android.app_unit;
 
 
-import com.bolyartech.forge.android.misc.EventPoster;
+import com.squareup.otto.Bus;
 
 
 public class StateManagerImpl<T extends Enum<T>> implements StateManager<T> {
     private static final StateChangedEvent mStateChangedEvent = new StateChangedEvent();
     private T mState;
-    private T mDefaultState;
-    private final EventPoster mPoster;
+    private T mInitialState;
+    private final Bus mBus;
 
 
-    public StateManagerImpl(EventPoster poster, T initialState) {
-        mPoster = poster;
+    public StateManagerImpl(Bus bus, T initialState) {
+        mBus = bus;
         mState = initialState;
-        mDefaultState = initialState;
+        mInitialState = initialState;
     }
 
 
@@ -25,12 +25,12 @@ public class StateManagerImpl<T extends Enum<T>> implements StateManager<T> {
 
     public void switchToState(T state) {
         mState = state;
-        mPoster.postEvent(mStateChangedEvent);
+        mBus.post(mStateChangedEvent);
     }
 
 
     @Override
     public void reset() {
-        mState = mDefaultState;
+        mState = mInitialState;
     }
 }

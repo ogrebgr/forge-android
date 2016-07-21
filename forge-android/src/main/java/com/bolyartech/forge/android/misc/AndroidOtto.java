@@ -5,32 +5,32 @@ import android.os.Looper;
 
 import com.squareup.otto.Bus;
 
-import javax.inject.Inject;
+
+@SuppressWarnings("unused")
+public class AndroidOtto extends Bus {
+    private final Handler mHandler = new Handler();
 
 
-public class AndroidEventPoster implements EventPoster {
-    private final Handler mHandler = new Handler(Looper.getMainLooper());
-
-    private final Bus mBus;
+    public AndroidOtto() {
+    }
 
 
-    @Inject
-    public AndroidEventPoster(Bus bus) {
-        mBus = bus;
+    public AndroidOtto(String identifier) {
+        super(identifier);
     }
 
 
     @Override
-    public void postEvent(final Object o) {
+    public void post(final Object event) {
         if (Looper.getMainLooper() != Looper.myLooper()) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mBus.post(o);
+                    AndroidOtto.super.post(event);
                 }
             });
         } else {
-            mBus.post(o);
+            AndroidOtto.super.post(event);
         }
     }
 }
