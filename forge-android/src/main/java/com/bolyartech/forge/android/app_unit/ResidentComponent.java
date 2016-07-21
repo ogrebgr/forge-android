@@ -17,4 +17,6 @@ public interface ResidentComponent {
     void onActivityFinishing();
 
     boolean isDead();
+
+    ResidentComponentState getState();
 }
