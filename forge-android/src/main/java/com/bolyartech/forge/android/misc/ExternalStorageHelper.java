@@ -10,8 +10,8 @@ public class ExternalStorageHelper {
 
 
     public static ExternalStorageState checkState() {
-        boolean externalStorageAvailable = false;
-        boolean externalStorageWritable = false;
+        boolean externalStorageAvailable;
+        boolean externalStorageWritable;
 
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {

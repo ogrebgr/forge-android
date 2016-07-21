@@ -4,7 +4,7 @@ package com.bolyartech.forge.android.app_unit;
 import com.squareup.otto.Bus;
 
 
-public class StateManagerImpl<T extends Enum<T>> implements StateManager<T> {
+public class StateManagerImpl<T extends Enum<T> & ResidentComponentState> implements StateManager<T> {
     private static final StateChangedEvent mStateChangedEvent = new StateChangedEvent();
     private T mState;
     private T mInitialState;
