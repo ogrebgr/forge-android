@@ -4,7 +4,7 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T> & Resi
         extends AbstractResidentComponent implements StatefulResidentComponent<T> {
 
     
-    protected final StateManager<T> mStateManager;
+    private final StateManager<T> mStateManager;
 
 
     public AbstractStatefulResidentComponent(StateManager<T> stateManager) {
@@ -15,6 +15,12 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T> & Resi
     @Override
     public T getState() {
         return mStateManager.getState();
+    }
+
+
+    @Override
+    public void switchToState(T state) {
+        mStateManager.switchToState(state);
     }
 
 
