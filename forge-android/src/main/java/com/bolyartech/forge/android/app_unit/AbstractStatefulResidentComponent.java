@@ -1,6 +1,6 @@
 package com.bolyartech.forge.android.app_unit;
 
-abstract public class AbstractStatefulResidentComponent<T extends Enum<T> & ResidentComponentState>
+abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
         extends AbstractResidentComponent implements StatefulResidentComponent<T> {
 
     
@@ -18,16 +18,38 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T> & Resi
     }
 
 
+
     @Override
-    public void switchToState(T state) {
-        mStateManager.switchToState(state);
+    public boolean isInState(T state) {
+        return mStateManager.getState() == state;
     }
 
 
+    @SafeVarargs
     @Override
-    public void stateHandled() {
-        if (mStateManager.getState().getType() == ResidentComponentState.Type.END) {
-            mStateManager.reset();
+    public final boolean isInOneOf(T state, T... states) {
+        if (mStateManager.getState() == state) {
+            return true;
         }
+
+        if (states.length > 0) {
+            for(T st : states) {
+                if (mStateManager.getState() == st) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+
+    protected void switchToState(T state) {
+        mStateManager.switchToState(state);
+    }
+
+    protected void resetState() {
+        mStateManager.reset();
     }
 }

@@ -1,7 +1,10 @@
 package com.bolyartech.forge.android.app_unit;
 
-public interface StatefulResidentComponent<T extends Enum<T> & ResidentComponentState> extends ResidentComponent {
+public interface StatefulResidentComponent<T extends Enum<T>> extends ResidentComponent {
     T getState();
-    void switchToState(T state);
     void stateHandled();
+    boolean isInState(T state);
+    @SuppressWarnings("unchecked")
+    boolean isInOneOf(T state, T... states);
+
 }
