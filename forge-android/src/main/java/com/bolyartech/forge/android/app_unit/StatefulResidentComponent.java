@@ -5,6 +5,6 @@ public interface StatefulResidentComponent<T extends Enum<T>> extends ResidentCo
     void stateHandled();
     boolean isInState(T state);
     @SuppressWarnings("unchecked")
-    boolean isInOneOf(T state, T... states);
+    boolean isInOneOfStates(T state, T... states);
 
 }

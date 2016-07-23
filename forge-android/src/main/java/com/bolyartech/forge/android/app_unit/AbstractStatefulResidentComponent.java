@@ -27,7 +27,7 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
 
     @SafeVarargs
     @Override
-    public final boolean isInOneOf(T state, T... states) {
+    public final boolean isInOneOfStates(T state, T... states) {
         if (mStateManager.getState() == state) {
             return true;
         }
