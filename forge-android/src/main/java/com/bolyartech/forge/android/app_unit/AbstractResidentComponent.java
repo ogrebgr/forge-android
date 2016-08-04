@@ -15,7 +15,7 @@ abstract public class AbstractResidentComponent implements ResidentComponent {
 
 
     @Override
-    public void onActivityResumed() {
+    public void onActivityResumed(UnitActivity activity) {
         // empty
     }
 

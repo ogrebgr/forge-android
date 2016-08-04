@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'maven-publish'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
@@ -18,8 +19,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -73,5 +74,5 @@ dependencies {
         exclude group: 'javax.annotation', module: 'javax.annotation-api'
     }
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.1'
-    compile 'com.squareup:otto:1.3.6'
+    compile "net.sourceforge.streamsupport:streamsupport:1.5.1"
 }

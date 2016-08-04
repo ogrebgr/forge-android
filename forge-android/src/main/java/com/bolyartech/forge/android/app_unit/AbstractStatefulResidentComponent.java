@@ -3,38 +3,41 @@ package com.bolyartech.forge.android.app_unit;
 abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
         extends AbstractResidentComponent implements StatefulResidentComponent<T> {
 
-    
-    private final StateManager<T> mStateManager;
+    private T mState;
+    private T mInitialState;
+
+    private UnitActivity mActivity;
 
 
-    public AbstractStatefulResidentComponent(StateManager<T> stateManager) {
-        mStateManager = stateManager;
+    public AbstractStatefulResidentComponent(T initialState) {
+        mInitialState = initialState;
+        mState = initialState;
     }
 
 
     @Override
     public T getState() {
-        return mStateManager.getState();
+        return mState;
     }
 
 
 
     @Override
     public boolean isInState(T state) {
-        return mStateManager.getState() == state;
+        return mState == state;
     }
 
 
     @SafeVarargs
     @Override
     public final boolean isInOneOfStates(T state, T... states) {
-        if (mStateManager.getState() == state) {
+        if (mState == state) {
             return true;
         }
 
         if (states.length > 0) {
             for(T st : states) {
-                if (mStateManager.getState() == st) {
+                if (mState == st) {
                     return true;
                 }
             }
@@ -45,11 +48,28 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
     }
 
 
-    protected void switchToState(T state) {
-        mStateManager.switchToState(state);
+    @Override
+    public synchronized void onActivityResumed(UnitActivity activity) {
+        super.onActivityResumed(activity);
+        mActivity = activity;
+    }
+
+
+    @Override
+    public synchronized void onActivityPaused() {
+        super.onActivityPaused();
+        mActivity = null;
+    }
+
+
+    protected synchronized void switchToState(T state) {
+        mState = state;
+        if (mActivity != null) {
+            mActivity.stateChanged();
+        }
     }
 
     protected void resetState() {
-        mStateManager.reset();
+        mState = mInitialState;
     }
 }

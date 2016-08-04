@@ -42,7 +42,7 @@ public class UnitManagerImpl implements UnitManager {
                     mActiveResidentComponent = comp;
                 }
 
-                mActiveResidentComponent.onActivityResumed();
+                mActiveResidentComponent.onActivityResumed(act);
             }
         }
         act.setResidentComponent(mActiveResidentComponent);
@@ -131,7 +131,7 @@ public class UnitManagerImpl implements UnitManager {
 
         comp.onCreate();
         mActiveResidentComponent = comp;
-        comp.onActivityResumed();
+        comp.onActivityResumed(act);
     }
 
 

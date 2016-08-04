@@ -7,7 +7,7 @@ package com.bolyartech.forge.android.app_unit;
 public interface ResidentComponent {
     void onCreate();
 
-    void onActivityResumed();
+    void onActivityResumed(UnitActivity activity);
 
     @SuppressWarnings("EmptyMethod")
     void onActivityPaused();

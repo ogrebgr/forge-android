@@ -6,4 +6,6 @@ public interface UnitActivity {
     ResidentComponent createResidentComponent();
     void setResidentComponent(ResidentComponent res);
     ResidentComponent getResidentComponent();
+
+    void stateChanged();
 }
