@@ -1,5 +1,9 @@
 package com.bolyartech.forge.android.app_unit;
 
+import android.os.Handler;
+import android.os.Looper;
+
+
 abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
         extends AbstractResidentComponent implements StatefulResidentComponent<T> {
 
@@ -7,6 +11,8 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
     private T mInitialState;
 
     private UnitActivity mActivity;
+
+    private Handler mHandler = new Handler();
 
 
     public AbstractStatefulResidentComponent(T initialState) {
@@ -19,7 +25,6 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
     public T getState() {
         return mState;
     }
-
 
 
     @Override
@@ -36,7 +41,7 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
         }
 
         if (states.length > 0) {
-            for(T st : states) {
+            for (T st : states) {
                 if (mState == st) {
                     return true;
                 }
@@ -65,9 +70,19 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
     protected synchronized void switchToState(T state) {
         mState = state;
         if (mActivity != null) {
-            mActivity.stateChanged();
+            if (Looper.getMainLooper() != Looper.myLooper()) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mActivity.stateChanged();
+                    }
+                });
+            } else {
+                mActivity.stateChanged();
+            }
         }
     }
+
 
     protected void resetState() {
         mState = mInitialState;
