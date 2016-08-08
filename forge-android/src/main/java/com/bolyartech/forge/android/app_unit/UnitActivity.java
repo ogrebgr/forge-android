@@ -1,11 +1,11 @@
 package com.bolyartech.forge.android.app_unit;
 
-public interface UnitActivity {
+public interface UnitActivity<T extends ResidentComponent> {
     boolean isFinishing();
 
-    ResidentComponent createResidentComponent();
-    void setResidentComponent(ResidentComponent res);
-    ResidentComponent getResidentComponent();
+    T createResidentComponent();
+    void setResidentComponent(T res);
+    T getResidentComponent();
 
     void stateChanged();
 }

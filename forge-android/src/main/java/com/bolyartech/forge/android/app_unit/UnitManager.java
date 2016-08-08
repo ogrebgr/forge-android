@@ -18,7 +18,9 @@ package com.bolyartech.forge.android.app_unit;
 
 
 public interface UnitManager {
-    ResidentComponent onActivityResumed(UnitActivity act);
+    ResidentComponent onActivityCreated(UnitActivity act);
+
+    void onActivityResumed(UnitActivity act);
 
     void onActivityPaused(UnitActivity act);
 

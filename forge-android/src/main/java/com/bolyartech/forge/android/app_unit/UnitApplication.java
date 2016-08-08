@@ -22,6 +22,10 @@ abstract public class UnitApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                if (activity instanceof UnitActivity) {
+                    UnitActivity act = (UnitActivity) activity;
+                    mUnitManager.onActivityCreated(act);
+                }
             }
 
 
@@ -33,8 +37,8 @@ abstract public class UnitApplication extends Application {
             @Override
             public void onActivityResumed(Activity activity) {
                 if (activity instanceof UnitActivity) {
-                    UnitActivity comp = (UnitActivity) activity;
-                    comp.setResidentComponent(mUnitManager.onActivityResumed(comp));
+                    UnitActivity act = (UnitActivity) activity;
+                    mUnitManager.onActivityResumed(act);
                 }
             }
 

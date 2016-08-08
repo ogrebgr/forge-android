@@ -28,25 +28,36 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @Override
-    public ResidentComponent onActivityResumed(UnitActivity act) {
-        mLogger.trace("Activity resumed: {}", act.getClass().getSimpleName());
+    public ResidentComponent onActivityCreated(UnitActivity act) {
+        mLogger.trace("Activity created: {}", act.getClass().getSimpleName());
         ResidentComponent comp = mResidentComponents.get(act.getClass());
         if (comp == null) {
             createNewComponent(act);
         } else {
-            if (comp.isDead()) {
-                removeComponentPair(comp);
-                createNewComponent(act);
-            } else {
-                if (comp != mActiveResidentComponent) {
-                    mActiveResidentComponent = comp;
-                }
-
-                mActiveResidentComponent.onActivityResumed(act);
+            if (comp != mActiveResidentComponent) {
+                mActiveResidentComponent = comp;
             }
         }
+
+        // activity will create the correct type of resident component, so suppressing:
+        //noinspection unchecked
         act.setResidentComponent(mActiveResidentComponent);
         return mActiveResidentComponent;
+    }
+
+
+    @Override
+    public void onActivityResumed(UnitActivity act) {
+        mLogger.trace("Activity resumed: {}", act.getClass().getSimpleName());
+
+        if (mActiveResidentComponent != null) {
+            ResidentComponent comp = mResidentComponents.get(act.getClass());
+            if (mActiveResidentComponent != comp) {
+                mActiveResidentComponent = comp;
+            }
+
+            mActiveResidentComponent.onActivityResumed(act);
+        }
     }
 
 
@@ -57,9 +68,6 @@ public class UnitManagerImpl implements UnitManager {
             ResidentComponent comp = mResidentComponents.get(act.getClass());
             if (mActiveResidentComponent == comp) {
                 mActiveResidentComponent.onActivityPaused();
-                if (mActiveResidentComponent.isDead()) {
-                    removeComponentPair(mActiveResidentComponent);
-                }
             } else {
                 throw new IllegalStateException("mActiveResidentComponent not present in mResidentComponents: "
                         + mActiveResidentComponent.getClass().getSimpleName());
