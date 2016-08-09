@@ -10,7 +10,7 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
     private T mState;
     private T mInitialState;
 
-    private UnitActivity mActivity;
+    private StatefulResidentComponent.Listener mListener;
 
     private Handler mHandler = new Handler();
 
@@ -56,29 +56,26 @@ abstract public class AbstractStatefulResidentComponent<T extends Enum<T>>
     @Override
     public synchronized void onActivityResumed(UnitActivity activity) {
         super.onActivityResumed(activity);
-        mActivity = activity;
+        if (activity instanceof StatefulResidentComponent.Listener) {
+            mListener = (StatefulResidentComponent.Listener) activity;
+        }
     }
 
 
     @Override
     public synchronized void onActivityPaused() {
         super.onActivityPaused();
-        mActivity = null;
+        mListener = null;
     }
 
 
     protected synchronized void switchToState(T state) {
         mState = state;
-        if (mActivity != null) {
+        if (mListener != null) {
             if (Looper.getMainLooper() != Looper.myLooper()) {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mActivity.stateChanged();
-                    }
-                });
+                mHandler.post(() -> mListener.onResidentStateChanged());
             } else {
-                mActivity.stateChanged();
+                mListener.onResidentStateChanged();
             }
         }
     }
