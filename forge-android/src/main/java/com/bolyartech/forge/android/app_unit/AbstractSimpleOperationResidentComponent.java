@@ -3,9 +3,12 @@ package com.bolyartech.forge.android.app_unit;
 import android.os.Handler;
 import android.os.Looper;
 
+import org.slf4j.LoggerFactory;
+
 
 @SuppressWarnings("unused")
-public class AbstractOperationResidentComponent extends AbstractResidentComponent implements OperationResidentComponent {
+abstract public class AbstractSimpleOperationResidentComponent extends AbstractResidentComponent implements SimpleOperationResidentComponent {
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     private OperationState mState;
 
@@ -13,8 +16,11 @@ public class AbstractOperationResidentComponent extends AbstractResidentComponen
 
     private Handler mHandler = new Handler();
 
+    private boolean mIsSuccess;
+    private int mLastError;
 
-    public AbstractOperationResidentComponent() {
+
+    public AbstractSimpleOperationResidentComponent() {
         mState = OperationState.IDLE;
     }
 
@@ -31,20 +37,56 @@ public class AbstractOperationResidentComponent extends AbstractResidentComponen
     }
 
 
+    @Override
+    public boolean isSuccess() {
+        return mIsSuccess;
+    }
+
+
+    @Override
+    public int getLastError() {
+        return mLastError;
+    }
+
+
     @SuppressWarnings("unused")
     protected synchronized void switchToBusyState() {
+        mLastError = 0;
         mState = OperationState.BUSY;
         notifyStateChanged();
     }
 
 
     @SuppressWarnings("unused")
-    protected synchronized void switchToCompletedState() {
+    protected synchronized void switchToCompletedStateSuccess() {
+        mIsSuccess = true;
+        completed();
+    }
+
+
+    protected synchronized void switchToCompletedStateFail() {
+        mIsSuccess = false;
+        mLastError = 0;
+        completed();
+    }
+
+
+    protected synchronized void switchToCompletedStateFail(int error) {
+        mIsSuccess = false;
+        mLastError = error;
+        completed();
+    }
+
+
+    private void completed() {
         mState = OperationState.COMPLETED;
         notifyStateChanged();
     }
 
 
+    /**
+     * You should normally not call this method but use {@see #completedStateAcknowledged} instead
+     */
     @SuppressWarnings("unused")
     protected synchronized void switchToIdleState() {
         mState = OperationState.IDLE;
@@ -54,7 +96,11 @@ public class AbstractOperationResidentComponent extends AbstractResidentComponen
 
     @Override
     public synchronized void completedStateAcknowledged() {
-        mState = OperationState.IDLE;
+        if (mState == OperationState.COMPLETED) {
+            mState = OperationState.IDLE;
+        } else {
+            mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
+        }
     }
 
 

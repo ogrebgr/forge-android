@@ -11,6 +11,7 @@ public interface OperationResidentComponent extends ResidentComponent {
     void completedStateAcknowledged();
     boolean isInOperationState(OperationState state);
 
+
     interface Listener {
         void onResidentOperationStateChanged();
     }
