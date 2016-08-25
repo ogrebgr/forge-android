@@ -9,8 +9,14 @@ public interface UnitActivity<T extends ResidentComponent> {
     @NonNull
     T createResidentComponent();
 
-    void setResidentComponent(@NonNull T res);
+    void setResident(@NonNull T res);
 
     @NonNull
-    T getResidentComponent();
+    T getResident();
+    /**
+     * Convenience alias of {@link #getResident}
+     * @return
+     */
+    @NonNull
+    T getRes();
 }

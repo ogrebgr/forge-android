@@ -1,16 +1,34 @@
 package com.bolyartech.forge.android.app_unit;
 
 public interface OperationResidentComponent extends ResidentComponent {
-    enum OperationState {
+    enum OpState {
         IDLE,
         BUSY,
         COMPLETED
     }
 
-    OperationState getOperationState();
+    OpState getOpState();
+    boolean isInOpState(OpState opState);
     void completedStateAcknowledged();
-    boolean isInOperationState(OperationState state);
+    /**
+     * Convenience alias of {@link #completedStateAcknowledged}
+     */
+    void ack();
 
+
+    /**
+     * Convenience alias of {@link #isCompletedSuccessfully}
+     * @return
+     */
+    boolean isSuccess();
+    boolean isCompletedSuccessfully();
+
+    /**
+     * Convenience alias of {@link #isInIdleState}
+     * @return
+     */
+    boolean isIdle();
+    boolean isInIdleState();
 
     interface Listener {
         void onResidentOperationStateChanged();

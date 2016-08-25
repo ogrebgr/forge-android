@@ -6,24 +6,24 @@ import android.os.Looper;
 import org.slf4j.LoggerFactory;
 
 
-abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
-        extends AbstractResidentComponent implements MultiOperationResidentComponent<T> {
+@SuppressWarnings("unused")
+abstract public class AbstractIntOperationResidentComponent extends AbstractResidentComponent
+        implements IntOperationResidentComponent {
+
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-
     private OpState mOpState;
-
-    private T mCurrentOperation;
 
     private OperationResidentComponent.Listener mListener;
 
     private Handler mHandler = new Handler();
 
     private boolean mIsSuccess;
+    private int mLastError;
 
 
-    public AbstractMultiOperationResidentComponent() {
+    public AbstractIntOperationResidentComponent() {
         mOpState = OpState.IDLE;
     }
 
@@ -41,26 +41,27 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
 
     @Override
-    public synchronized void onActivityResumed(UnitActivity activity) {
-        super.onActivityResumed(activity);
-        if (activity instanceof OperationResidentComponent.Listener) {
-            mListener = (OperationResidentComponent.Listener) activity;
-        }
+    public boolean isSuccess() {
+        return isCompletedSuccessfully();
     }
 
 
     @Override
-    public synchronized void onActivityPaused() {
-        super.onActivityPaused();
-        mListener = null;
+    public boolean isCompletedSuccessfully() {
+        return mIsSuccess;
+    }
+
+
+    @Override
+    public int getLastError() {
+        return mLastError;
     }
 
 
     @SuppressWarnings("unused")
-    protected synchronized void switchToBusyState(T operation) {
-        mIsSuccess = false;
+    protected synchronized void switchToBusyState() {
+        mLastError = 0;
         mOpState = OpState.BUSY;
-        mCurrentOperation = operation;
         notifyStateChanged();
     }
 
@@ -68,20 +69,33 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
     @SuppressWarnings("unused")
     protected synchronized void switchToCompletedStateSuccess() {
         mIsSuccess = true;
-        mOpState = OpState.COMPLETED;
-        notifyStateChanged();
+        completed();
     }
 
 
-    @SuppressWarnings("unused")
     protected synchronized void switchToCompletedStateFail() {
         mIsSuccess = false;
+        mLastError = 0;
+        completed();
+    }
+
+
+    protected synchronized void switchToCompletedStateFail(int error) {
+        mIsSuccess = false;
+        mLastError = error;
+        completed();
+    }
+
+
+    private void completed() {
         mOpState = OpState.COMPLETED;
         notifyStateChanged();
     }
 
 
-
+    /**
+     * You should normally not call this method but use {@see #completedStateAcknowledged} instead
+     */
     @SuppressWarnings("unused")
     protected synchronized void switchToIdleState() {
         mOpState = OpState.IDLE;
@@ -96,8 +110,6 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
         } else {
             mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
         }
-
-        mCurrentOperation = null;
     }
 
 
@@ -119,21 +131,20 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
 
     @Override
-    public T getCurrentOperation() {
-        return mCurrentOperation;
+    public synchronized void onActivityResumed(UnitActivity activity) {
+        super.onActivityResumed(activity);
+        if (activity instanceof OperationResidentComponent.Listener) {
+            mListener = (OperationResidentComponent.Listener) activity;
+        }
     }
 
 
     @Override
-    public boolean isSuccess() {
-        return isCompletedSuccessfully();
+    public synchronized void onActivityPaused() {
+        super.onActivityPaused();
+        mListener = null;
     }
 
-
-    @Override
-    public boolean isCompletedSuccessfully() {
-        return mIsSuccess;
-    }
 
     @Override
     public boolean isIdle() {

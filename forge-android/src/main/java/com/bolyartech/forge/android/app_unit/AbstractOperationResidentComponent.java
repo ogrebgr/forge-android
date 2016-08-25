@@ -6,53 +6,62 @@ import android.os.Looper;
 import org.slf4j.LoggerFactory;
 
 
-@SuppressWarnings("unused")
-abstract public class AbstractSimpleOperationResidentComponent extends AbstractResidentComponent implements SimpleOperationResidentComponent {
+public class AbstractOperationResidentComponent extends AbstractResidentComponent implements OperationResidentComponent {
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    private OperationState mState;
+    private OpState mOpState;
 
     private OperationResidentComponent.Listener mListener;
 
     private Handler mHandler = new Handler();
 
     private boolean mIsSuccess;
-    private int mLastError;
 
 
-    public AbstractSimpleOperationResidentComponent() {
-        mState = OperationState.IDLE;
+    public AbstractOperationResidentComponent() {
+        mOpState = OpState.IDLE;
     }
 
 
     @Override
-    public synchronized OperationState getOperationState() {
-        return mState;
+    public synchronized OpState getOpState() {
+        return mOpState;
     }
 
 
     @Override
-    public boolean isInOperationState(OperationState state) {
-        return mState == state;
+    public boolean isInOpState(OpState opState) {
+        return mOpState == opState;
     }
 
 
     @Override
     public boolean isSuccess() {
+        return isCompletedSuccessfully();
+    }
+
+
+    @Override
+    public boolean isCompletedSuccessfully() {
         return mIsSuccess;
     }
 
 
     @Override
-    public int getLastError() {
-        return mLastError;
+    public boolean isIdle() {
+        return isInIdleState();
+    }
+
+
+    @Override
+    public boolean isInIdleState() {
+        return mOpState == OpState.IDLE;
     }
 
 
     @SuppressWarnings("unused")
     protected synchronized void switchToBusyState() {
-        mLastError = 0;
-        mState = OperationState.BUSY;
+        mOpState = OpState.BUSY;
         notifyStateChanged();
     }
 
@@ -66,41 +75,41 @@ abstract public class AbstractSimpleOperationResidentComponent extends AbstractR
 
     protected synchronized void switchToCompletedStateFail() {
         mIsSuccess = false;
-        mLastError = 0;
-        completed();
-    }
-
-
-    protected synchronized void switchToCompletedStateFail(int error) {
-        mIsSuccess = false;
-        mLastError = error;
         completed();
     }
 
 
     private void completed() {
-        mState = OperationState.COMPLETED;
+        mOpState = OpState.COMPLETED;
         notifyStateChanged();
     }
 
 
     /**
-     * You should normally not call this method but use {@see #completedStateAcknowledged} instead
+     * You should normally not call this method but use {@see #completedStateAcknowledged} instead.
+     * This method is intended to be called after aborting given operation in the middle in order to
+     * put the resident in IDLE state
      */
     @SuppressWarnings("unused")
     protected synchronized void switchToIdleState() {
-        mState = OperationState.IDLE;
+        mOpState = OpState.IDLE;
         notifyStateChanged();
     }
 
 
     @Override
     public synchronized void completedStateAcknowledged() {
-        if (mState == OperationState.COMPLETED) {
-            mState = OperationState.IDLE;
+        if (mOpState == OpState.COMPLETED) {
+            mOpState = OpState.IDLE;
         } else {
             mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
         }
+    }
+
+
+    @Override
+    public synchronized void ack() {
+        completedStateAcknowledged();
     }
 
 
@@ -129,4 +138,6 @@ abstract public class AbstractSimpleOperationResidentComponent extends AbstractR
         super.onActivityPaused();
         mListener = null;
     }
+
+
 }

@@ -13,7 +13,12 @@ public final class ActivityResult {
     public ActivityResult(int requestCode, int resultCode, Intent data) {
         this.requestCode = requestCode;
         this.resultCode = resultCode;
-        this.data = new Intent(data);
+        if (data != null) {
+            this.data = new Intent(data);
+        } else {
+            this.data = null;
+        }
+
     }
 
 
