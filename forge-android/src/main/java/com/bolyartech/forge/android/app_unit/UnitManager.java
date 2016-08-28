@@ -16,9 +16,13 @@
 
 package com.bolyartech.forge.android.app_unit;
 
-
+/**
+ * Manages the lifecycle of the resident components. Its job is to listen for activity
+ * lifecycle events (which are fed to it by {@link UnitApplication})
+ *
+ */
 public interface UnitManager {
-    ResidentComponent onActivityCreated(UnitActivity act);
+    void onActivityCreated(UnitActivity act);
 
     void onActivityResumed(UnitActivity act);
 

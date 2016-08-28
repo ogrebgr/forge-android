@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
+@SuppressWarnings("WeakerAccess")
 public class AndroidTaskExecutorImpl<T> extends TaskExecutorImpl<T> implements AndroidTaskExecutor<T> {
-    private List<ResourceCallback> mResourceCallbacks = new CopyOnWriteArrayList<ResourceCallback>();
+    private final List<ResourceCallback> mResourceCallbacks = new CopyOnWriteArrayList<>();
 
 
 

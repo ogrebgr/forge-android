@@ -13,11 +13,12 @@ public class AbstractOperationResidentComponent extends AbstractResidentComponen
 
     private OperationResidentComponent.Listener mListener;
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
     private boolean mIsSuccess;
 
 
+    @SuppressWarnings("unused")
     public AbstractOperationResidentComponent() {
         mOpState = OpState.IDLE;
     }
@@ -116,7 +117,11 @@ public class AbstractOperationResidentComponent extends AbstractResidentComponen
     private void notifyStateChanged() {
         if (mListener != null) {
             if (Looper.getMainLooper() != Looper.myLooper()) {
-                mHandler.post(() -> mListener.onResidentOperationStateChanged());
+                mHandler.post(() -> {
+                    if (mListener != null) {
+                        mListener.onResidentOperationStateChanged();
+                    }
+                });
             } else {
                 mListener.onResidentOperationStateChanged();
             }

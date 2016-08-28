@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 
 @SuppressWarnings("unused")
-abstract public class AbstractIntOperationResidentComponent extends AbstractResidentComponent
-        implements IntOperationResidentComponent {
+abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends AbstractResidentComponent
+        implements SideEffectOperationResidentComponent<RESULT, ERROR> {
 
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -20,10 +20,11 @@ abstract public class AbstractIntOperationResidentComponent extends AbstractResi
     private Handler mHandler = new Handler();
 
     private boolean mIsSuccess;
-    private int mLastError;
+    private ERROR mLastError;
+    private RESULT mLastResult;
 
 
-    public AbstractIntOperationResidentComponent() {
+    public AbstractSideEffectOperationResidentComponent() {
         mOpState = OpState.IDLE;
     }
 
@@ -53,34 +54,40 @@ abstract public class AbstractIntOperationResidentComponent extends AbstractResi
 
 
     @Override
-    public int getLastError() {
+    public ERROR getLastError() {
         return mLastError;
     }
 
 
-    @SuppressWarnings("unused")
     protected synchronized void switchToBusyState() {
-        mLastError = 0;
+        mLastError = null;
         mOpState = OpState.BUSY;
         notifyStateChanged();
     }
 
 
-    @SuppressWarnings("unused")
     protected synchronized void switchToCompletedStateSuccess() {
         mIsSuccess = true;
+        mLastResult = null;
+        completed();
+    }
+
+
+    protected synchronized void switchToCompletedStateSuccess(RESULT rez) {
+        mIsSuccess = true;
+        mLastResult = rez;
         completed();
     }
 
 
     protected synchronized void switchToCompletedStateFail() {
         mIsSuccess = false;
-        mLastError = 0;
+        mLastError = null;
         completed();
     }
 
 
-    protected synchronized void switchToCompletedStateFail(int error) {
+    protected synchronized void switchToCompletedStateFail(ERROR error) {
         mIsSuccess = false;
         mLastError = error;
         completed();
@@ -157,4 +164,8 @@ abstract public class AbstractIntOperationResidentComponent extends AbstractResi
         return mOpState == OpState.IDLE;
     }
 
+
+    public RESULT getLastResult() {
+        return mLastResult;
+    }
 }

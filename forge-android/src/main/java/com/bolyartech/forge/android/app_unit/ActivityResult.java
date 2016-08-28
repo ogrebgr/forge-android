@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 
 
+@SuppressWarnings("unused")
 public final class ActivityResult {
     public final int requestCode;
     public final int resultCode;
+    @SuppressWarnings("WeakerAccess")
     public final Intent data;
 
 

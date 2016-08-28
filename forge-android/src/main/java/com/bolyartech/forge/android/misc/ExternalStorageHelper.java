@@ -3,6 +3,7 @@ package com.bolyartech.forge.android.misc;
 import android.os.Environment;
 
 
+@SuppressWarnings("unused")
 public class ExternalStorageHelper {
     private ExternalStorageHelper() {
         throw new AssertionError("Non-instantiable utility class");

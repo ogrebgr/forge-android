@@ -1,5 +1,6 @@
 package com.bolyartech.forge.android.app_unit;
 
+@SuppressWarnings("unused")
 public interface OperationResidentComponent extends ResidentComponent {
     enum OpState {
         IDLE,
@@ -18,16 +19,25 @@ public interface OperationResidentComponent extends ResidentComponent {
 
     /**
      * Convenience alias of {@link #isCompletedSuccessfully}
-     * @return
+     * @return true if last operation was marked as successful, false otherwise
      */
     boolean isSuccess();
+
+    /**
+     *
+     * @return true if last operation was marked as successful, false otherwise
+     */
     boolean isCompletedSuccessfully();
 
     /**
      * Convenience alias of {@link #isInIdleState}
-     * @return
+     * @return true if resident component is in {@link OpState#IDLE}
      */
     boolean isIdle();
+
+    /**
+     * @return true if resident component is in {@link OpState#IDLE}
+     */
     boolean isInIdleState();
 
     interface Listener {

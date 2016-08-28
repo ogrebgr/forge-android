@@ -4,8 +4,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 24
+    buildToolsVersion '23.0.3'
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
@@ -52,9 +52,8 @@ publishing {
 
 
 dependencies {
-//    releaseCompile ('com.bolyartech.forge:forge:2.7-SNAPSHOT')
+    //    releaseCompile ('com.bolyartech.forge:forge:2.7-SNAPSHOT')
     compile project(':forge-base')
-
     compile 'com.google.dagger:dagger:2.0'
     provided 'com.google.dagger:dagger-compiler:2.0'
     testCompile 'junit:junit:4.12'
@@ -64,15 +63,14 @@ dependencies {
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile 'com.android.support.test:runner:0.4.1'
     androidTestCompile 'com.android.support.test:rules:0.4.1'
-    compile 'com.android.support:support-annotations:23.4.0'
+    compile 'com.android.support:support-annotations:24.2.0'
     apt 'com.google.dagger:dagger-compiler:2.0'
     compile 'javax.annotation:jsr250-api:1.0'
-
     androidTestCompile 'com.google.dagger:dagger:2.0'
     androidTestApt 'com.google.dagger:dagger-compiler:2.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
         exclude group: 'javax.annotation', module: 'javax.annotation-api'
     }
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.1'
-    compile "net.sourceforge.streamsupport:streamsupport:1.5.1"
+    compile 'net.sourceforge.streamsupport:streamsupport:1.5.1'
 }

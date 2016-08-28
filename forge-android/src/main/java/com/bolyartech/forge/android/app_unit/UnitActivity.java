@@ -15,7 +15,7 @@ public interface UnitActivity<T extends ResidentComponent> {
     T getResident();
     /**
      * Convenience alias of {@link #getResident}
-     * @return
+     * @return resident component
      */
     @NonNull
     T getRes();

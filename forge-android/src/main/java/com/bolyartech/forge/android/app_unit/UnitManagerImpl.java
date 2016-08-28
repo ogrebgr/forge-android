@@ -28,7 +28,7 @@ public class UnitManagerImpl implements UnitManager {
 
 
     @Override
-    public ResidentComponent onActivityCreated(UnitActivity act) {
+    public void onActivityCreated(UnitActivity act) {
         mLogger.trace("Activity created: {}", act.getClass().getSimpleName());
         ResidentComponent comp = mResidentComponents.get(act.getClass());
         if (comp == null) {
@@ -42,7 +42,6 @@ public class UnitManagerImpl implements UnitManager {
         // activity will create the correct type of resident component, so suppressing:
         //noinspection unchecked
         act.setResident(mActiveResidentComponent);
-        return mActiveResidentComponent;
     }
 
 
@@ -95,7 +94,7 @@ public class UnitManagerImpl implements UnitManager {
     /**
      * This method basically does the same as #onActivityStopped. It's purpose is the same but it covers the case
      * when onStop() is not called because user called finish() in onCreate() in their activity (for example)
-     * @param act
+     * @param act Activity of type UnitActivity
      */
     @Override
     public void onActivityDestroyed(UnitActivity act) {
@@ -121,12 +120,14 @@ public class UnitManagerImpl implements UnitManager {
     }
 
 
+    @SuppressWarnings("unused")
     @ForUnitTestsOnly
     Map<Class<? extends UnitActivity>, ResidentComponent> getResidentComponents() {
         return new HashMap<>(mResidentComponents);
     }
 
 
+    @SuppressWarnings("unused")
     @ForUnitTestsOnly
     Map<ResidentComponent, Class<? extends UnitActivity>> getResidentComponentsReverse() {
         return new HashMap<>(mResidentComponentsReverse);

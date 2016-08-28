@@ -18,7 +18,7 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
     private OperationResidentComponent.Listener mListener;
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
     private boolean mIsSuccess;
 

@@ -75,6 +75,7 @@ abstract public class UnitApplication extends Application {
     }
 
 
+    @SuppressWarnings("unused")
     protected void setUnitManager(UnitManager unitManager) {
         mUnitManager = unitManager;
     }
