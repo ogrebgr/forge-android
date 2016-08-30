@@ -110,7 +110,13 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
     private void notifyStateChanged() {
         if (mListener != null) {
             if (Looper.getMainLooper() != Looper.myLooper()) {
-                mHandler.post(() -> mListener.onResidentOperationStateChanged());
+                mHandler.post(() -> {
+                    synchronized (AbstractMultiOperationResidentComponent.this) {
+                        if (mListener != null) {
+                            mListener.onResidentOperationStateChanged();
+                        }
+                    }
+                });
             } else {
                 mListener.onResidentOperationStateChanged();
             }
