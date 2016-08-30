@@ -6,7 +6,7 @@ import android.os.Looper;
 import org.slf4j.LoggerFactory;
 
 
-public class AbstractOperationResidentComponent extends AbstractResidentComponent implements OperationResidentComponent {
+abstract public class AbstractOperationResidentComponent extends AbstractResidentComponent implements OperationResidentComponent {
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     private OpState mOpState;
@@ -118,8 +118,10 @@ public class AbstractOperationResidentComponent extends AbstractResidentComponen
         if (mListener != null) {
             if (Looper.getMainLooper() != Looper.myLooper()) {
                 mHandler.post(() -> {
-                    if (mListener != null) {
-                        mListener.onResidentOperationStateChanged();
+                    synchronized (AbstractOperationResidentComponent.this) {
+                        if (mListener != null) {
+                            mListener.onResidentOperationStateChanged();
+                        }
                     }
                 });
             } else {
