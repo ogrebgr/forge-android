@@ -13,10 +13,10 @@ import java.util.WeakHashMap;
  * to prevent 'double clicks' or rapid multiple clicks
  */
 abstract public class DebouncedOnItemClickListener implements AdapterView.OnItemClickListener {
-    public static long DEFAULT_DEBOUNCE_INTERVAL_MILLIS = 1000;
+    public static final long DEFAULT_DEBOUNCE_INTERVAL_MILLIS = 1000;
 
-    private final long minimumInterval;
-    private Map<View, Long> lastClickMap;
+    private final long mMinimumInterval;
+    private final Map<View, Long> mLastClickMap;
 
 
     /**
@@ -31,8 +31,8 @@ abstract public class DebouncedOnItemClickListener implements AdapterView.OnItem
      * @param minimumIntervalMillis The minimum allowed time between clicks - any click sooner than this after a previous click will be rejected
      */
     public DebouncedOnItemClickListener(long minimumIntervalMillis) {
-        this.minimumInterval = minimumIntervalMillis;
-        this.lastClickMap = new WeakHashMap<View, Long>();
+        this.mMinimumInterval = minimumIntervalMillis;
+        this.mLastClickMap = new WeakHashMap<>();
     }
 
 
@@ -43,11 +43,11 @@ abstract public class DebouncedOnItemClickListener implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Long previousClickTimestamp = lastClickMap.get(view);
+        Long previousClickTimestamp = mLastClickMap.get(view);
         long currentTimestamp = SystemClock.uptimeMillis();
 
-        lastClickMap.put(view, currentTimestamp);
-        if (previousClickTimestamp == null || (currentTimestamp - previousClickTimestamp > minimumInterval)) {
+        mLastClickMap.put(view, currentTimestamp);
+        if (previousClickTimestamp == null || (currentTimestamp - previousClickTimestamp > mMinimumInterval)) {
             onDebouncedItemClick(adapterView, view, i, l);
         }
     }

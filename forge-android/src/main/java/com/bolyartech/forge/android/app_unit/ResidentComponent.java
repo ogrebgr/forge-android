@@ -12,5 +12,6 @@ public interface ResidentComponent {
     @SuppressWarnings("EmptyMethod")
     void onActivityPaused();
 
+    @SuppressWarnings("EmptyMethod")
     void onActivityFinishing();
 }

@@ -12,9 +12,9 @@ import java.util.WeakHashMap;
  * to prevent 'double clicks' or rapid multiple clicks
  */
 public abstract class DebouncedOnClickListener implements View.OnClickListener {
-    public static long DEFAULT_DEBOUNCE_INTERVAL_MILLIS = 1000;
-    private final long minimumInterval;
-    private Map<View, Long> lastClickMap;
+    public static final long DEFAULT_DEBOUNCE_INTERVAL_MILLIS = 1000;
+    private final long mMinimumInterval;
+    private final Map<View, Long> mLastClickMap;
 
 
     /**
@@ -29,8 +29,8 @@ public abstract class DebouncedOnClickListener implements View.OnClickListener {
      * @param minimumIntervalMillis The minimum allowed time between clicks - any click sooner than this after a previous click will be rejected
      */
     public DebouncedOnClickListener(long minimumIntervalMillis) {
-        this.minimumInterval = minimumIntervalMillis;
-        this.lastClickMap = new WeakHashMap<View, Long>();
+        this.mMinimumInterval = minimumIntervalMillis;
+        this.mLastClickMap = new WeakHashMap<>();
     }
 
 
@@ -41,11 +41,11 @@ public abstract class DebouncedOnClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View clickedView) {
-        Long previousClickTimestamp = lastClickMap.get(clickedView);
+        Long previousClickTimestamp = mLastClickMap.get(clickedView);
         long currentTimestamp = SystemClock.uptimeMillis();
 
-        lastClickMap.put(clickedView, currentTimestamp);
-        if (previousClickTimestamp == null || (currentTimestamp - previousClickTimestamp > minimumInterval)) {
+        mLastClickMap.put(clickedView, currentTimestamp);
+        if (previousClickTimestamp == null || (currentTimestamp - previousClickTimestamp > mMinimumInterval)) {
             onDebouncedClick(clickedView);
         }
     }
