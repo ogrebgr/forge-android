@@ -2,11 +2,9 @@ package com.bolyartech.forge.android.app_unit;
 
 
 /**
- * Created by ogre on 2015-10-22
+ * Base interface for resident components
  */
 public interface ResidentComponent {
-    void onCreate();
-
     void onActivityResumed(UnitActivity activity);
 
     @SuppressWarnings("EmptyMethod")

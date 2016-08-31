@@ -138,9 +138,7 @@ public class UnitManagerImpl implements UnitManager {
         ResidentComponent comp = act.createResidentComponent();
         addComponentPair(act.getClass(), comp);
 
-        comp.onCreate();
         mActiveResidentComponent = comp;
-        comp.onActivityResumed(act);
     }
 
 
