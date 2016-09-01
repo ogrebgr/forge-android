@@ -1,16 +1,17 @@
 # forge-android
-Forge framework's Android part. Provides auxiliary infrastructure which helps you create easily professional applications. Convenient handling
+Forge framework's Android part. Provides auxiliary infrastructure which helps you create easily professional applications. It gives you convenient handling
 of device rotation, task execution, HTTP **exchanges** and unit testing.
 
-Documentation is [here](https://github.com/ogrebgr/forge-android/wiki).
+## Documentation
+is [here](https://github.com/ogrebgr/forge-android/wiki).
 
-Download
+## Download
 
 Gradle: TODO
 
 
 
-The other parts of the Forge framework:
+## The other parts of the Forge framework:
 
 * [forge-base](https://github.com/ogrebgr/forge) - Base client classes of Forge framework.
 `forge-android` depends on `forge-base`
