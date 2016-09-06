@@ -7,92 +7,56 @@ import org.slf4j.LoggerFactory;
 
 
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
-        extends AbstractResidentComponent implements MultiOperationResidentComponent<T> {
+        extends AbstractOperationResidentComponent
+        implements MultiOperationResidentComponent<T>,
+        MorcActivityInterface<T> {
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
 
-    private OpState mOpState;
-
     private T mCurrentOperation;
-
-    private OperationResidentComponent.Listener mListener;
-
-    private final Handler mHandler = new Handler();
 
     private boolean mIsSuccess;
 
 
-    public AbstractMultiOperationResidentComponent() {
-        mOpState = OpState.IDLE;
-    }
-
-
-    @Override
-    public synchronized OpState getOpState() {
-        return mOpState;
-    }
-
-
-    @Override
-    public boolean isInOpState(OpState opState) {
-        return mOpState == opState;
-    }
-
-
-    @Override
-    public synchronized void onActivityResumed(UnitActivity activity) {
-        super.onActivityResumed(activity);
-        if (activity instanceof OperationResidentComponent.Listener) {
-            mListener = (OperationResidentComponent.Listener) activity;
-        }
-    }
-
-
-    @Override
-    public synchronized void onActivityPaused() {
-        super.onActivityPaused();
-        mListener = null;
-    }
-
-
     @SuppressWarnings("unused")
-    protected synchronized void switchToBusyState(T operation) {
+    @Override
+    public synchronized void switchToBusyState(T operation) {
         mIsSuccess = false;
-        mOpState = OpState.BUSY;
+
         mCurrentOperation = operation;
-        notifyStateChanged();
+        switchToState(OpState.BUSY);
     }
 
 
     @SuppressWarnings("unused")
-    protected synchronized void switchToCompletedStateSuccess() {
+    @Override
+    public synchronized void switchToCompletedStateSuccess() {
         mIsSuccess = true;
-        mOpState = OpState.COMPLETED;
-        notifyStateChanged();
+        switchToState(OpState.COMPLETED);
     }
 
 
     @SuppressWarnings("unused")
-    protected synchronized void switchToCompletedStateFail() {
+    @Override
+    public synchronized void switchToCompletedStateFail() {
         mIsSuccess = false;
-        mOpState = OpState.COMPLETED;
-        notifyStateChanged();
+        switchToState(OpState.COMPLETED);
     }
 
 
 
     @SuppressWarnings("unused")
-    protected synchronized void switchToIdleState() {
-        mOpState = OpState.IDLE;
-        notifyStateChanged();
+    @Override
+    public synchronized void switchToIdleState() {
+        switchToState(OpState.IDLE);
     }
 
 
     @Override
     public synchronized void completedStateAcknowledged() {
-        if (mOpState == OpState.COMPLETED) {
-            mOpState = OpState.IDLE;
+        if (getOpState() == OpState.COMPLETED) {
+            switchToIdleState();
         } else {
             mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
         }
@@ -104,23 +68,6 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
     @Override
     public synchronized void ack() {
         completedStateAcknowledged();
-    }
-
-
-    private void notifyStateChanged() {
-        if (mListener != null) {
-            if (Looper.getMainLooper() != Looper.myLooper()) {
-                mHandler.post(() -> {
-                    synchronized (AbstractMultiOperationResidentComponent.this) {
-                        if (mListener != null) {
-                            mListener.onResidentOperationStateChanged();
-                        }
-                    }
-                });
-            } else {
-                mListener.onResidentOperationStateChanged();
-            }
-        }
     }
 
 
@@ -149,7 +96,13 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
     @Override
     public boolean isInIdleState() {
-        return mOpState == OpState.IDLE;
+        return getOpState() == OpState.IDLE;
     }
 
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Override
+    public MorcActivityInterface getActivityInterface() {
+        return this;
+    }
 }

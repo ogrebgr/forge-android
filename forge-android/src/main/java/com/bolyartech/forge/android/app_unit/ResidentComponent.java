@@ -4,7 +4,7 @@ package com.bolyartech.forge.android.app_unit;
 /**
  * Base interface for resident components
  */
-public interface ResidentComponent {
+public interface ResidentComponent extends ActivityInterface {
     /**
      * Called after activity is resumed
      * @param activity Activity
@@ -23,4 +23,7 @@ public interface ResidentComponent {
      */
     @SuppressWarnings("EmptyMethod")
     void onActivityFinishing();
+
+
+    ActivityInterface getActivityInterface();
 }

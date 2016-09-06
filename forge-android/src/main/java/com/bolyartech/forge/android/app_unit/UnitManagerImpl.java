@@ -39,7 +39,7 @@ public class UnitManagerImpl implements UnitManager {
 
         // activity will create the correct type of resident component, so suppressing:
         //noinspection unchecked
-        act.setResident(mActiveResidentComponent);
+        act.setResidentInterface(mActiveResidentComponent);
     }
 
 

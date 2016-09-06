@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
  *
  * @param <T>
  */
-public interface UnitActivity<T extends ResidentComponent> {
+public interface UnitActivity<T extends ActivityInterface> {
     boolean isFinishing();
 
     /**
@@ -17,7 +17,13 @@ public interface UnitActivity<T extends ResidentComponent> {
      * @return resident component
      */
     @NonNull
-    T createResidentComponent();
+    ResidentComponent createResidentComponent();
+
+    /**
+     * Sets the resident component
+     * @param ri activity interface
+     */
+    void setResidentInterface(@NonNull T ri);
 
 
     /**
@@ -26,30 +32,14 @@ public interface UnitActivity<T extends ResidentComponent> {
      * @return Activity's resident component
      */
     @NonNull
-    T getResidentComponent();
+    T getResidentInterface();
 
 
     /**
-     * Sets the resident component
-     * @param res resident component
-     */
-    void setResident(@NonNull T res);
-
-
-    /**
-     * Convenience alias of {@link #getResidentComponent}
+     * Convenience alias of {@link #getResidentInterface}
      *
      * @return
      */
     @NonNull
-    T getResident();
-
-
-    /**
-     * Convenience alias of {@link #getResidentComponent}
-     *
-     * @return resident component
-     */
-    @NonNull
-    T getRes();
+    T getRi();
 }
