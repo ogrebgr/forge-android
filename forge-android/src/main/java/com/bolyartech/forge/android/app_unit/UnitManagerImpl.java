@@ -11,9 +11,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 
-/**
- * Created by ogre on 2015-10-22
- */
+
 public class UnitManagerImpl implements UnitManager {
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 

@@ -16,11 +16,26 @@
 
 package com.bolyartech.forge.android.misc;
 
+/**
+ * Provides information about network connectivity
+ */
 @SuppressWarnings("unused")
 public interface NetworkInfoProvider {
+    /**
+     * Checks if WiFi is connected
+     * @return true if connected, false otherwise
+     */
     boolean isWifiConnected();
 
+    /**
+     * Checks if GSM/3G/LTE data is connected
+     * @return true if connected, false otherwise
+     */
     boolean isMobileConnected();
 
+    /**
+     * Checks if there is internet connectivity (WiFi and/or mobile)
+     * @return true if connected, false otherwise
+     */
     boolean isConnected();
 }

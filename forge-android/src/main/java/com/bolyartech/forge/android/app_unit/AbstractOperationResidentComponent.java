@@ -74,6 +74,7 @@ abstract public class AbstractOperationResidentComponent extends AbstractResiden
     }
 
 
+    @SuppressWarnings("unused")
     protected synchronized void switchToCompletedStateFail() {
         mIsSuccess = false;
         completed();

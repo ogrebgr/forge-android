@@ -1,9 +1,12 @@
-package com.bolyartech.forge.android.app_unit;
+package com.bolyartech.forge.android.misc;
 
 import android.app.Activity;
 import android.content.Intent;
 
 
+/**
+ * Helper class that encapsulates result for Activity after <code>startActivityForResult</code>
+ */
 @SuppressWarnings("unused")
 public final class ActivityResult {
     public final int requestCode;

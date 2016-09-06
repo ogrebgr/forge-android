@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 import com.bolyartech.forge.base.misc.TimeProvider;
 
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,9 @@ import javax.inject.Inject;
 
 
 /**
- * Created by ogre on 2016-01-10 11:45
+ * Application that uses {@link UnitManager} to manage Forge units
+ *
+ * Uses ActivityLifecycleCallbacks to notify the UnitManager for activity's lifecycle events
  */
 abstract public class UnitApplication extends Application {
     // how long after last activity is paused the onInterfacePaused() method will be called
@@ -47,11 +50,30 @@ abstract public class UnitApplication extends Application {
     };
 
 
+    /**
+     * Called when all activities are paused.
+     * <p>
+     * Use this method to 'shutdown' global TaskExecutors or other objects that need to free used resources.
+     * <p>
+     * If you have other application components aside activities like services or broadcast receivers that use those
+     * global objects you will have to take in account that they (may) need those objects too so you will have to
+     * manually take care for such cases and shutdown the global objects only when the services and broadcast receivers
+     * are finished.
+     * <p>
+     * Please note that this method is not called immediately after all activities are paused
+     * but after {@link #INTERFACE_PAUSED_TIMEOUT} expires. This is so because when new activity is starting on top
+     * of the old one, the old one is paused and there is a small 'gap' in time before new activity is created and
+     * resumed. Default value for INTERFACE_PAUSED_TIMEOUT is 10 seconds.
+     */
     protected void onInterfacePaused() {
         mLogger.debug("onInterfacePaused()");
     }
 
 
+    /**
+     * Called <b>only</b> when there is a resumed activity AFTER the interface have been paused (i.e. onInterfacePaused() was
+     * called some time in the past).
+     */
     protected void onInterfaceResumed() {
         mLogger.debug("onInterfaceResumed()");
     }
@@ -87,7 +109,7 @@ abstract public class UnitApplication extends Application {
                     onInterfaceResumed();
                 }
 
-                mLogger.trace("Activity resumed: {}", activity);
+                mLogger.trace("activity resumed: {}", activity);
 
                 if (activity instanceof UnitActivity) {
                     UnitActivity act = (UnitActivity) activity;

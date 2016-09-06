@@ -20,17 +20,43 @@ package com.bolyartech.forge.android.app_unit;
  * Manages the lifecycle of the resident components. Its job is to listen for activity
  * lifecycle events (which are fed to it by {@link UnitApplication})
  *
+ * All methods here are called <b>after</b> corresponding method in the activity is called, e.g. first Activity's
+ * onCreate() is called and then UnitManager's onActivityCreated()
  */
 public interface UnitManager {
+    /**
+     * Called after activity is created
+     * @param act Activity
+     */
     void onActivityCreated(UnitActivity act);
 
+    /**
+     * Called after activity is resumed
+     * @param act Activity
+     */
     void onActivityResumed(UnitActivity act);
 
+    /**
+     * Called after activity is paused
+     * @param act Activity
+     */
     void onActivityPaused(UnitActivity act);
 
+    /**
+     * Called after activity is stopped
+     * @param act Activity
+     */
     void onActivityStopped(UnitActivity act);
 
+    /**
+     * Called after activity is destroyed
+     * @param act Activity
+     */
     void onActivityDestroyed(UnitActivity act);
 
+    /**
+     * Returns active (current) resident component
+     * @return active resident componet
+     */
     ResidentComponent getActiveResidentComponent();
 }

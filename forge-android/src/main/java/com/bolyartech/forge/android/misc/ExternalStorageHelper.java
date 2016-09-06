@@ -3,6 +3,9 @@ package com.bolyartech.forge.android.misc;
 import android.os.Environment;
 
 
+/**
+ * Helper class for working with the external storage
+ */
 @SuppressWarnings("unused")
 public class ExternalStorageHelper {
     private ExternalStorageHelper() {
@@ -10,6 +13,10 @@ public class ExternalStorageHelper {
     }
 
 
+    /**
+     * Checks the state of the external storage
+     * @return State of the external storage
+     */
     public static ExternalStorageState checkState() {
         boolean externalStorageAvailable;
         boolean externalStorageWritable;
@@ -28,6 +35,9 @@ public class ExternalStorageHelper {
     }
 
 
+    /**
+     * Helper class
+     */
     public static class ExternalStorageState {
         public final boolean isAvailable;
         public final boolean isWritable;
