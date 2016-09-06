@@ -1,6 +1,10 @@
 package com.bolyartech.forge.android.app_unit;
 
-public interface OrcActivityInterface extends ActivityInterface {
+
+/**
+ * Interface exposed by OperationResidentComponent to activity
+ */
+public interface OperationStateInterface {
     /**
      * Return operation state
      * @return operation state

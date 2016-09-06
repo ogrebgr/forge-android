@@ -1,13 +1,10 @@
 package com.bolyartech.forge.android.app_unit;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import org.slf4j.LoggerFactory;
 
 
 abstract public class AbstractSingleOperationResidentComponent extends AbstractOperationResidentComponent
-        implements SingleOperationResidentComponent, ActivityInterface {
+        implements SingleOperationResidentComponent {
 
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -91,7 +88,7 @@ abstract public class AbstractSingleOperationResidentComponent extends AbstractO
 
 
     @Override
-    public OrcActivityInterface getActivityInterface() {
+    public OperationStateInterface getActivityInterface() {
         return this;
     }
 }

@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
  *
  * @param <T>
  */
-public interface UnitActivity<T extends ActivityInterface> {
+public interface UnitActivity<T> {
     boolean isFinishing();
 
     /**

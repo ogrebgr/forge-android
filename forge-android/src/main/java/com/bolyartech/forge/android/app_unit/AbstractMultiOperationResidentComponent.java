@@ -1,15 +1,12 @@
 package com.bolyartech.forge.android.app_unit;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import org.slf4j.LoggerFactory;
 
 
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
         extends AbstractOperationResidentComponent
         implements MultiOperationResidentComponent<T>,
-        MorcActivityInterface<T> {
+        MultiOprationStateInterface<T> {
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -102,7 +99,7 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
     @SuppressWarnings("SpellCheckingInspection")
     @Override
-    public MorcActivityInterface getActivityInterface() {
+    public MultiOprationStateInterface getActivityInterface() {
         return this;
     }
 }
