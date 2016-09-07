@@ -32,14 +32,14 @@ public interface UnitActivity<T> {
      * @return Activity's resident component
      */
     @NonNull
-    T getResidentInterface();
+    T getResidentToActivity();
 
 
     /**
-     * Convenience alias of {@link #getResidentInterface}
+     * Convenience alias of {@link #getResidentToActivity}
      *
      * @return
      */
     @NonNull
-    T getRi();
+    T getRta();
 }
