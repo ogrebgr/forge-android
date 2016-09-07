@@ -23,7 +23,7 @@ public interface UnitActivity<T> {
      * Sets the resident component
      * @param ri activity interface
      */
-    void setResidentInterface(@NonNull T ri);
+    void setResidentToActivity(@NonNull T ri);
 
 
     /**

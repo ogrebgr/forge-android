@@ -1,7 +1,7 @@
 package com.bolyartech.forge.android.app_unit;
 
 public interface MultiOperationResidentComponent<T extends Enum<T>> extends OperationResidentComponent,
-        MultiOprationStateInterface<T> {
+        MultiOperationResidentToActivity<T> {
 
 
     void switchToBusyState(T operation);
@@ -10,5 +10,5 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Oper
     void switchToIdleState();
 
     @SuppressWarnings("SpellCheckingInspection")
-    MultiOprationStateInterface getActivityInterface();
+    MultiOperationResidentToActivity getResidentToActivity();
 }

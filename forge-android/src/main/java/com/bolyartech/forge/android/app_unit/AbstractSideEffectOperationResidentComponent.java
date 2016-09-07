@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("unused")
 abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR>
         extends AbstractOperationResidentComponent
-        implements SideEffectOperationResidentComponent<RESULT, ERROR>, SideEffectStateInterface<RESULT, ERROR> {
+        implements SideEffectOperationResidentComponent<RESULT, ERROR>, SideEffectOperationResidentToActivity<RESULT, ERROR> {
 
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -106,7 +106,7 @@ abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR
 
 
     @Override
-    public OperationStateInterface getActivityInterface() {
+    public OperationResidentToActivity getResidentToActivity() {
         return this;
     }
 }

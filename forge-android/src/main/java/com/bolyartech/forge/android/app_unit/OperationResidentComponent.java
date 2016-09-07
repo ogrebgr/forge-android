@@ -12,7 +12,7 @@ package com.bolyartech.forge.android.app_unit;
  *
  */
 @SuppressWarnings("unused")
-public interface OperationResidentComponent extends ResidentComponent, OperationStateInterface {
+public interface OperationResidentComponent extends ResidentComponent, OperationResidentToActivity {
     enum OpState {
         IDLE,
         BUSY,
@@ -27,5 +27,5 @@ public interface OperationResidentComponent extends ResidentComponent, Operation
         void onResidentOperationStateChanged();
     }
 
-    OperationStateInterface getActivityInterface();
+    OperationResidentToActivity getResidentToActivity();
 }

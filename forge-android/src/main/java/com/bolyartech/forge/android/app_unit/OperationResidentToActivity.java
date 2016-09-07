@@ -4,7 +4,7 @@ package com.bolyartech.forge.android.app_unit;
 /**
  * Interface exposed by OperationResidentComponent to activity
  */
-public interface OperationStateInterface {
+public interface OperationResidentToActivity extends ResidentToActivity {
     /**
      * Return operation state
      * @return operation state

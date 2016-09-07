@@ -88,7 +88,7 @@ abstract public class AbstractSingleOperationResidentComponent extends AbstractO
 
 
     @Override
-    public OperationStateInterface getActivityInterface() {
+    public OperationResidentToActivity getResidentToActivity() {
         return this;
     }
 }

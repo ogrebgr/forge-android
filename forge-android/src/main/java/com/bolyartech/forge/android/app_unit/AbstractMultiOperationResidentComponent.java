@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
         extends AbstractOperationResidentComponent
         implements MultiOperationResidentComponent<T>,
-        MultiOprationStateInterface<T> {
+        MultiOperationResidentToActivity<T> {
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -99,7 +99,7 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
     @SuppressWarnings("SpellCheckingInspection")
     @Override
-    public MultiOprationStateInterface getActivityInterface() {
+    public MultiOperationResidentToActivity getResidentToActivity() {
         return this;
     }
 }

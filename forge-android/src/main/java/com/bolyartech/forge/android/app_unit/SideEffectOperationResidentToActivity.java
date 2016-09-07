@@ -6,7 +6,7 @@ package com.bolyartech.forge.android.app_unit;
  * @param <ERROR> Type of the error. Use Void if none
  */
 @SuppressWarnings("SpellCheckingInspection")
-public interface SideEffectStateInterface<RESULT, ERROR> extends OperationStateInterface {
+public interface SideEffectOperationResidentToActivity<RESULT, ERROR> extends OperationResidentToActivity {
     ERROR getLastError();
     RESULT getLastResult();
 }

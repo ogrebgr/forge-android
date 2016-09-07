@@ -5,6 +5,6 @@ package com.bolyartech.forge.android.app_unit;
  * @param <T>
  */
 @SuppressWarnings("SpellCheckingInspection")
-public interface MultiOprationStateInterface<T> extends OperationStateInterface {
+public interface MultiOperationResidentToActivity<T> extends OperationResidentToActivity {
     T getCurrentOperation();
 }
