@@ -11,6 +11,7 @@ import java.util.WeakHashMap;
  * Used to replace the regular click listener in order to provide 'debouncing' functionality, i.e.
  * to prevent 'double clicks' or rapid multiple clicks
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class DebouncedOnClickListener implements View.OnClickListener {
     public static final long DEFAULT_DEBOUNCE_INTERVAL_MILLIS = 1000;
     private final long mMinimumInterval;
@@ -28,12 +29,14 @@ public abstract class DebouncedOnClickListener implements View.OnClickListener {
     /**
      * @param minimumIntervalMillis The minimum allowed time between clicks - any click sooner than this after a previous click will be rejected
      */
+    @SuppressWarnings({"SameParameterValue", "unused"})
     public DebouncedOnClickListener(long minimumIntervalMillis) {
         this.mMinimumInterval = minimumIntervalMillis;
         this.mLastClickMap = new WeakHashMap<>();
     }
 
 
+    @SuppressWarnings("unused")
     public DebouncedOnClickListener() {
         this(DEFAULT_DEBOUNCE_INTERVAL_MILLIS);
     }

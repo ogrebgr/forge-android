@@ -103,10 +103,10 @@ public class ImageUtils {
     public static Bitmap getBitmapFromAsset(Context context, String strName) throws IOException {
         AssetManager assetManager = context.getAssets();
 
-        InputStream istr;
+        InputStream inputStream;
 
-        istr = assetManager.open(strName);
+        inputStream = assetManager.open(strName);
 
-        return BitmapFactory.decodeStream(istr);
+        return BitmapFactory.decodeStream(inputStream);
     }
 }

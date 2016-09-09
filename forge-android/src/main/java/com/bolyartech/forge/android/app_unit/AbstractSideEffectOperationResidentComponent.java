@@ -3,6 +3,11 @@ package com.bolyartech.forge.android.app_unit;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Skeleton implementations for resident component with single operation with side effect
+ * @param <RESULT>
+ * @param <ERROR>
+ */
 @SuppressWarnings("unused")
 abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR>
         extends AbstractOperationResidentComponent

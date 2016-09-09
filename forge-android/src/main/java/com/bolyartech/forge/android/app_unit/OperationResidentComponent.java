@@ -1,7 +1,7 @@
 package com.bolyartech.forge.android.app_unit;
 
 /**
- * Single operation resident component
+ * Operation resident component
  *
  * Uses simple finite state machine with 3 states:
  * <ul>
@@ -19,13 +19,35 @@ public interface OperationResidentComponent extends ResidentComponent, Operation
         COMPLETED
     }
 
+    /**
+     * Returns the operation state
+     * @return operation state
+     */
     OpState getOpState();
+
+    /**
+     * Switches to state <code>opState</code>
+     * @param opState operation state
+     */
     void switchToState(OpState opState);
+
+    /**
+     * Checks if in given state
+     * @param opState operation state
+     * @return true if state <code>opState</code>
+     */
     boolean isInOpState(OpState opState);
 
+    /**
+     * Listener to be notified when operation state changes
+     */
     interface Listener {
         void onResidentOperationStateChanged();
     }
 
+    /**
+     * Returns the resident to activity interface
+     * @return resident to activity interface
+     */
     OperationResidentToActivity getResidentToActivity();
 }

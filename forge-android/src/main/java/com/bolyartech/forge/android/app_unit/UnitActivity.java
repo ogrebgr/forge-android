@@ -38,7 +38,7 @@ public interface UnitActivity<T> {
     /**
      * Convenience alias of {@link #getResidentToActivity}
      *
-     * @return
+     * @return Activity's resident component
      */
     @NonNull
     T getRta();

@@ -5,7 +5,6 @@ import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 import com.bolyartech.forge.base.misc.TimeProvider;
 
 import org.slf4j.LoggerFactory;
@@ -121,6 +120,7 @@ abstract public class UnitApplication extends Application {
             @Override
             public void onActivityPaused(Activity activity) {
                 mHasResumedActivity = false;
+                mLastPausedTs = mTimeProvider.getTime();
 
                 mHandler.postDelayed(mPausedCheckRunnable,
                         INTERFACE_PAUSED_TIMEOUT);

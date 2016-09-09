@@ -2,9 +2,9 @@ package com.bolyartech.forge.android.app_unit;
 
 
 /**
- * Created by ogre on 2015-10-22
+ * Provides empty implementation of the methods of ResidentComponent
  */
-abstract public class AbstractResidentComponent implements ResidentComponent {
+abstract public class ResidentComponentAdapter implements ResidentComponent {
     @Override
     public void onActivityResumed(UnitActivity activity) {
         // empty

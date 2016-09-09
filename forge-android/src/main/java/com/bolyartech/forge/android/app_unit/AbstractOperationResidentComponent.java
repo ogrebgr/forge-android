@@ -6,7 +6,13 @@ import android.os.Looper;
 import org.slf4j.LoggerFactory;
 
 
-abstract public class AbstractOperationResidentComponent extends AbstractResidentComponent
+/**
+ * Skeleton implementation for operation component
+ *
+ * Initial state is set to IDLE
+ */
+@SuppressWarnings("WeakerAccess")
+abstract public class AbstractOperationResidentComponent extends ResidentComponentAdapter
         implements OperationResidentComponent {
 
 

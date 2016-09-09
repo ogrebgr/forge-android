@@ -4,6 +4,7 @@ package com.bolyartech.forge.android.app_unit;
 /**
  * Interface exposed by OperationResidentComponent to activity
  */
+@SuppressWarnings("unused")
 public interface OperationResidentToActivity extends ResidentToActivity {
     /**
      * Return operation state

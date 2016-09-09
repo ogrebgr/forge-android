@@ -3,6 +3,10 @@ package com.bolyartech.forge.android.app_unit;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Skeleton implementation for single operation resident component
+ */
+@SuppressWarnings("unused")
 abstract public class AbstractSingleOperationResidentComponent extends AbstractOperationResidentComponent
         implements SingleOperationResidentComponent {
 
@@ -39,23 +43,35 @@ abstract public class AbstractSingleOperationResidentComponent extends AbstractO
     @Override
     @SuppressWarnings("unused")
     public synchronized void switchToBusyState() {
-        switchToState(OpState.BUSY);
+        if (getOpState() == OpState.IDLE) {
+            switchToState(OpState.BUSY);
+        } else {
+            throw new IllegalStateException("switchToBusyState() called when not in IDLE state");
+        }
     }
 
 
     @Override
     @SuppressWarnings("unused")
     public synchronized void switchToCompletedStateSuccess() {
-        mIsSuccess = true;
-        switchToState(OpState.COMPLETED);
+        if (getOpState() == OpState.BUSY) {
+            mIsSuccess = true;
+            switchToState(OpState.COMPLETED);
+        } else {
+            throw new IllegalStateException("switchToCompletedStateSuccess() called when not in BUSY state");
+        }
     }
 
 
     @Override
     @SuppressWarnings("unused")
     public synchronized void switchToCompletedStateFail() {
-        mIsSuccess = false;
-        switchToState(OpState.COMPLETED);
+        if (getOpState() == OpState.BUSY) {
+            mIsSuccess = false;
+            switchToState(OpState.COMPLETED);
+        } else {
+            throw new IllegalStateException("switchToCompletedStateFail() called when not in BUSY state");
+        }
     }
 
 

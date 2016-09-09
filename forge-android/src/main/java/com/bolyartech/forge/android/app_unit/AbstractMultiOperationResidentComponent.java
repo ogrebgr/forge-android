@@ -3,6 +3,10 @@ package com.bolyartech.forge.android.app_unit;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Skeleton implementation for resident component with multiple operations
+ * @param <T> enum with operations
+ */
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
         extends AbstractOperationResidentComponent
         implements MultiOperationResidentComponent<T>,

@@ -22,6 +22,12 @@ package com.bolyartech.forge.android.app_unit;
  *
  * All methods here are called <b>after</b> corresponding method in the activity is called, e.g. first Activity's
  * onCreate() is called and then UnitManager's onActivityCreated()
+ *
+ * When activity is created for the first time UnitManager calls its <code>createResidentComponent()</code> method
+ * in order to create an instance of the resident an sets it back to the activity via
+ * <code>setResidentToActivity()</code> which takes ResidentToActivity as a parameter thus providing to the activity
+ * access to the resident functionality that is meant to be used by the activity and hiding methods that should be
+ * called only by the UnitManager or resident subclass.
  */
 public interface UnitManager {
     /**
@@ -56,7 +62,7 @@ public interface UnitManager {
 
     /**
      * Returns active (current) resident component
-     * @return active resident componet
+     * @return active resident component
      */
     ResidentComponent getActiveResidentComponent();
 }
