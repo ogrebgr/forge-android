@@ -31,7 +31,7 @@ abstract public class DebouncedOnItemClickListener implements AdapterView.OnItem
     /**
      * @param minimumIntervalMillis The minimum allowed time between clicks - any click sooner than this after a previous click will be rejected
      */
-    @SuppressWarnings({"SameParameterValue", "unused"})
+    @SuppressWarnings({"unused"})
     public DebouncedOnItemClickListener(long minimumIntervalMillis) {
         this.mMinimumInterval = minimumIntervalMillis;
         this.mLastClickMap = new WeakHashMap<>();

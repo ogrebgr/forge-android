@@ -30,6 +30,5 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Oper
      */
     void switchToIdleState();
 
-    @SuppressWarnings("SpellCheckingInspection")
     MultiOperationResidentToActivity getResidentToActivity();
 }

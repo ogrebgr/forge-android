@@ -5,7 +5,7 @@ package com.bolyartech.forge.android.app_unit;
  * @param <RESULT> Type of the result. Use Void if none
  * @param <ERROR> Type of the error. Use Void if none
  */
-@SuppressWarnings({"SpellCheckingInspection", "unused"})
+@SuppressWarnings({"unused"})
 public interface SideEffectOperationResidentToActivity<RESULT, ERROR> extends OperationResidentToActivity {
     ERROR getLastError();
     RESULT getLastResult();

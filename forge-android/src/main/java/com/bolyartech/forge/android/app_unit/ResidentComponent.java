@@ -14,7 +14,6 @@ public interface ResidentComponent extends ResidentToActivity {
     /**
      * Called after activity is paused
      */
-    @SuppressWarnings("EmptyMethod")
     void onActivityPaused();
 
 

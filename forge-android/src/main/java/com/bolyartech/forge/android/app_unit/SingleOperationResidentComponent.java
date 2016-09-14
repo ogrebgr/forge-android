@@ -5,7 +5,7 @@ package com.bolyartech.forge.android.app_unit;
  *
  * Use this class when your resident component has just one operation
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings({"unused"})
 public interface SingleOperationResidentComponent extends OperationResidentComponent {
     /**
      * Switches to busy state

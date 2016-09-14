@@ -29,7 +29,7 @@ public abstract class DebouncedOnClickListener implements View.OnClickListener {
     /**
      * @param minimumIntervalMillis The minimum allowed time between clicks - any click sooner than this after a previous click will be rejected
      */
-    @SuppressWarnings({"SameParameterValue", "unused"})
+    @SuppressWarnings({"unused"})
     public DebouncedOnClickListener(long minimumIntervalMillis) {
         this.mMinimumInterval = minimumIntervalMillis;
         this.mLastClickMap = new WeakHashMap<>();

@@ -101,7 +101,6 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
     }
 
 
-    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public MultiOperationResidentToActivity getResidentToActivity() {
         return this;

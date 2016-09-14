@@ -5,7 +5,7 @@ package com.bolyartech.forge.android.app_unit;
  * @param <RESULT>  type of the result of the operation. Use <code>Void</code> if not used
  * @param <ERROR>  type of the error of the operations. Use <code>Void</code> if not used
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings({"unused"})
 public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends OperationResidentComponent {
     /**
      * Switches to busy state
