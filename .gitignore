@@ -8,3 +8,4 @@ captures
 .idea
 *.iml
 /forge-android/src/main/assets/crashlytics-build.properties
+javadoc

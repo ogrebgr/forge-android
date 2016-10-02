@@ -1,5 +1,5 @@
 # forge-android
-Forge framework's Android part. Provides auxiliary infrastructure which helps you create easily professional applications. It gives you convenient handling
+Forge framework's Android part. Provides auxiliary infrastructure which helps you create easily professional applications. It gives you separation between business logic and presentation and also convenient handling
 of device rotation, task execution, HTTP **exchanges** and unit testing.
 
 Take a look at [forge-android-skeleton-basic](https://github.com/ogrebgr/forge-android-skeleton-basic) -  'skeleton' app to see `forge-android` in action or to use it as a base for your application.
