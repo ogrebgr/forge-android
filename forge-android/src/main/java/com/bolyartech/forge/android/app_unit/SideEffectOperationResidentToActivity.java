@@ -7,6 +7,15 @@ package com.bolyartech.forge.android.app_unit;
  */
 @SuppressWarnings({"unused"})
 public interface SideEffectOperationResidentToActivity<RESULT, ERROR> extends OperationResidentToActivity {
+    /**
+     * Gets the error of the operation
+     * @return Error of the operation
+     */
     ERROR getLastError();
+
+    /**
+     * Gets the result of the operation
+     * @return Result of the operation
+     */
     RESULT getLastResult();
 }

@@ -11,7 +11,9 @@ import java.util.Map;
 import javax.inject.Inject;
 
 
-
+/**
+ * {@link UnitManager} implementation
+ */
 public class UnitManagerImpl implements UnitManager {
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -20,6 +22,9 @@ public class UnitManagerImpl implements UnitManager {
     private ResidentComponent mActiveResidentComponent;
 
 
+    /**
+     * Create new UnitManagerImpl
+     */
     @Inject
     public UnitManagerImpl() {
     }

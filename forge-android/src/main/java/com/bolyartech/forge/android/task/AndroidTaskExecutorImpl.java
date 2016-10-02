@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
+/**
+ * Android specific task executor
+ *
+ * Implements IdlingResource so it can be used with mockito
+ * @param <T> Type of the result
+ */
 @SuppressWarnings("WeakerAccess")
 public class AndroidTaskExecutorImpl<T> extends TaskExecutorImpl<T> implements AndroidTaskExecutor<T> {
     private final List<ResourceCallback> mResourceCallbacks = new CopyOnWriteArrayList<>();

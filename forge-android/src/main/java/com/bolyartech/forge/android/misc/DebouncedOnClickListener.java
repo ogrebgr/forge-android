@@ -13,6 +13,9 @@ import java.util.WeakHashMap;
  */
 @SuppressWarnings("WeakerAccess")
 public abstract class DebouncedOnClickListener implements View.OnClickListener {
+    /**
+     * Default debounce interval in milliseconds
+     */
     public static final long DEFAULT_DEBOUNCE_INTERVAL_MILLIS = 1000;
     private final long mMinimumInterval;
     private final Map<View, Long> mLastClickMap;
@@ -36,6 +39,9 @@ public abstract class DebouncedOnClickListener implements View.OnClickListener {
     }
 
 
+    /**
+     * Creates DebouncedOnClickListener with the default debounce interval DEFAULT_DEBOUNCE_INTERVAL_MILLIS
+     */
     @SuppressWarnings("unused")
     public DebouncedOnClickListener() {
         this(DEFAULT_DEBOUNCE_INTERVAL_MILLIS);

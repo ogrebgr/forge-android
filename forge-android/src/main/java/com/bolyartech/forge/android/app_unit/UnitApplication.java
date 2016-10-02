@@ -40,7 +40,7 @@ abstract public class UnitApplication extends Application {
         @Override
         public void run() {
             if (!mHasResumedActivity) {
-                if (mLastPausedTs + INTERFACE_PAUSED_TIMEOUT < mTimeProvider.getTime()) {
+                if (mLastPausedTs + INTERFACE_PAUSED_TIMEOUT < mTimeProvider.getVmTime()) {
                     mInterfacePaused = true;
                     onInterfacePaused();
                 }
@@ -120,7 +120,7 @@ abstract public class UnitApplication extends Application {
             @Override
             public void onActivityPaused(Activity activity) {
                 mHasResumedActivity = false;
-                mLastPausedTs = mTimeProvider.getTime();
+                mLastPausedTs = mTimeProvider.getVmTime();
 
                 mHandler.postDelayed(mPausedCheckRunnable,
                         INTERFACE_PAUSED_TIMEOUT);

@@ -25,10 +25,17 @@ import android.os.Build;
 import javax.inject.Inject;
 
 
+/**
+ * Provides information about network state
+ */
 public class NetworkInfoProviderImpl implements NetworkInfoProvider {
     private final Context mContext;
 
 
+    /**
+     * Create new NetworkInfoProviderImpl
+     * @param context Context
+     */
     @Inject
     public NetworkInfoProviderImpl(Context context) {
         super();

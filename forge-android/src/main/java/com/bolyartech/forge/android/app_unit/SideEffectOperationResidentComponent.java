@@ -1,5 +1,8 @@
 package com.bolyartech.forge.android.app_unit;
 
+import android.support.annotation.Nullable;
+
+
 /**
  * Defines interface for operation resident component with single operation with side effects: result or error, or both
  * @param <RESULT>  type of the result of the operation. Use <code>Void</code> if not used
@@ -14,13 +17,15 @@ public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends Ope
 
     /**
      * Switches to completed state with success flag on and with result <code>rez</code>
+     * @param rez Result of the operation
      */
-    void switchToCompletedStateSuccess(RESULT rez);
+    void switchToCompletedStateSuccess(@Nullable RESULT rez);
 
     /**
      * Switches to completed state with success flag off and with error <code>error</code>
+     * @param error Resulting error
      */
-    void switchToCompletedStateFail(ERROR error);
+    void switchToCompletedStateFail(@Nullable ERROR error);
 
     /**
      * Switches to idle state

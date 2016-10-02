@@ -11,7 +11,13 @@ import com.bolyartech.forge.base.misc.TimeProvider;
 public class AndroidTimeProvider implements TimeProvider {
 
     @Override
-    public long getTime() {
+    public long getVmTime() {
         return SystemClock.elapsedRealtime();
+    }
+
+
+    @Override
+    public long getWallClockTime() {
+        return System.currentTimeMillis();
     }
 }

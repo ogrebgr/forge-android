@@ -39,10 +39,21 @@ public class ExternalStorageHelper {
      * Helper class
      */
     public static class ExternalStorageState {
+        /**
+         * Is external storage available
+         */
         public final boolean isAvailable;
+        /**
+         * Is external storage writable
+         */
         public final boolean isWritable;
 
 
+        /**
+         * Creates new ExternalStorageState
+         * @param isAvailable Is external storage available
+         * @param isWritable Is external storage writable
+         */
         public ExternalStorageState(boolean isAvailable, boolean isWritable) {
             this.isAvailable = isAvailable;
             this.isWritable = isWritable;

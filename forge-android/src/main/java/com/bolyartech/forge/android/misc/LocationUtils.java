@@ -21,6 +21,9 @@ package com.bolyartech.forge.android.misc;
  */
 @SuppressWarnings("WeakerAccess")
 public class LocationUtils {
+    /**
+     * Earth radius
+     */
     @SuppressWarnings("WeakerAccess")
     public static final double EARTH_RADIUS = 6371 * 1000;
 

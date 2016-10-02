@@ -176,6 +176,7 @@ public class ViewUtils {
      * Initialize EditText with TextWatcher
      * @param view  Parent view
      * @param resourceId  ID of the EditText
+     * @param watcher  TextWatcher
      * @return  edit text
      * @throws  IllegalStateException  if view with such ID is not found
      */
@@ -210,6 +211,7 @@ public class ViewUtils {
      * @param view  Parent view
      * @param resourceId  ID of the RadioGroup
      * @throws IllegalStateException  if view with such ID is not found
+     * @return RadioGroup
      */
     public static RadioGroup findRadioGroupX(View view, int resourceId) {
         RadioGroup ret = (RadioGroup) view.findViewById(resourceId);
@@ -225,7 +227,9 @@ public class ViewUtils {
      * Initialize RadioGroup view with OnCheckedChangeListener
      * @param view  Parent view
      * @param resourceId  ID of the RadioGroup
+     * @param listener Listener
      * @throws IllegalStateException  if view with such ID is not found
+     * @return RadioGroup
      */
     public static RadioGroup initRadioGroup(View view,
                                             int resourceId,
@@ -275,6 +279,7 @@ public class ViewUtils {
      * Initialize CheckBox with OnCheckedChangeListener
      * @param view  Parent view
      * @param resourceId  ID of the view
+     * @param listener Listener
      * @return  check box
      * @throws IllegalStateException  if view with such ID is not found
      */
@@ -326,6 +331,7 @@ public class ViewUtils {
      * Initialize ToggleButton with OnCheckedChangeListener
      * @param view  Parent view
      * @param resourceId  ID of the view
+     * @param listener Listener
      * @return ToggleButton
      * @throws IllegalStateException  if view with such ID is not found
      */
@@ -543,6 +549,7 @@ public class ViewUtils {
      * Initialize RadioButton with OnCheckedChangeListener
      * @param view       The parent view
      * @param resourceId ID of the resource
+     * @param listener Listener
      * @return RadioButton or null if not found
      * @throws IllegalStateException  if view with such ID is not found
      */
@@ -597,6 +604,7 @@ public class ViewUtils {
      *
      * @param view       The parent view
      * @param resourceId ID of the resource
+     * @param listener Listener
      * @return ImageButton if successful
      * @throws IllegalStateException  if view with such ID is not found
      */

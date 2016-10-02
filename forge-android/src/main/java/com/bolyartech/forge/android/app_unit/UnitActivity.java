@@ -9,6 +9,10 @@ import android.support.annotation.NonNull;
  * @param <T>
  */
 public interface UnitActivity<T> {
+    /**
+     * Is activity finishing?
+     * @return true if it is finishing
+     */
     boolean isFinishing();
 
     /**

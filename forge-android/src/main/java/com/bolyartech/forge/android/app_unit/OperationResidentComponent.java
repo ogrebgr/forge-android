@@ -14,8 +14,17 @@ package com.bolyartech.forge.android.app_unit;
 @SuppressWarnings("unused")
 public interface OperationResidentComponent extends ResidentComponent, OperationResidentToActivity {
     enum OpState {
+        /**
+         * Defines idle state, i.e. not working on operation, just waiting
+         */
         IDLE,
+        /**
+         * Defines busy state, i.e. working on operation
+         */
         BUSY,
+        /**
+         * Defines completed state, i.e. operation has completed (and result or error may be available)
+         */
         COMPLETED
     }
 
@@ -42,6 +51,9 @@ public interface OperationResidentComponent extends ResidentComponent, Operation
      * Listener to be notified when operation state changes
      */
     interface Listener {
+        /**
+         * Called when resident operation state changed
+         */
         void onResidentOperationStateChanged();
     }
 

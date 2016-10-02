@@ -25,6 +25,11 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
     private final Handler mHandler = new Handler();
 
 
+    /**
+     * Default constructor
+     *
+     * Sets initial state to IDLE
+     */
     public AbstractOperationResidentComponent() {
         mOpState = OpState.IDLE;
     }
@@ -56,10 +61,13 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
     private void notifyStateChanged() {
         if (mListener != null) {
             if (Looper.getMainLooper() != Looper.myLooper()) {
-                mHandler.post(() -> {
-                    synchronized (AbstractOperationResidentComponent.this) {
-                        if (mListener != null) {
-                            mListener.onResidentOperationStateChanged();
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        synchronized (AbstractOperationResidentComponent.this) {
+                            if (mListener != null) {
+                                mListener.onResidentOperationStateChanged();
+                            }
                         }
                     }
                 });

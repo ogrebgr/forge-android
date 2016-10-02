@@ -12,6 +12,7 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Oper
 
     /**
      * Switches to busy state and sets current operation to <code>operation</code>
+     * @param operation Operation enum value
      */
     void switchToBusyState(T operation);
 

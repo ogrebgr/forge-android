@@ -14,6 +14,9 @@ import java.util.WeakHashMap;
  */
 @SuppressWarnings("WeakerAccess")
 abstract public class DebouncedOnItemClickListener implements AdapterView.OnItemClickListener {
+    /**
+     * Default debounce interval in milliseconds
+     */
     public static final long DEFAULT_DEBOUNCE_INTERVAL_MILLIS = 1000;
 
     private final long mMinimumInterval;
@@ -22,10 +25,12 @@ abstract public class DebouncedOnItemClickListener implements AdapterView.OnItem
 
     /**
      * Implement this in your subclass instead of onClick
-     *
-     * @param view The view that was clicked
+     * @param adapterView  The AdapterView where the click happened.
+     * @param view The view within the AdapterView that was clicked (this will be a view provided by the adapter)
+     * @param position The position of the view in the adapter.
+     * @param id The row id of the item that was clicked.
      */
-    public abstract void onDebouncedItemClick(AdapterView<?> adapterView, View view, int i, long l);
+    public abstract void onDebouncedItemClick(AdapterView<?> adapterView, View view,  int position, long id);
 
 
     /**
@@ -38,6 +43,9 @@ abstract public class DebouncedOnItemClickListener implements AdapterView.OnItem
     }
 
 
+    /**
+     * Creates DebouncedOnItemClickListener with default debounce interval DEFAULT_DEBOUNCE_INTERVAL_MILLIS
+     */
     @SuppressWarnings("unused")
     public DebouncedOnItemClickListener() {
         this(DEFAULT_DEBOUNCE_INTERVAL_MILLIS);
