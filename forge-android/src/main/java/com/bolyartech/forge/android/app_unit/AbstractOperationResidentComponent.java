@@ -16,7 +16,7 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
         implements OperationResidentComponent {
 
 
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
     private OpState mOpState;
 

@@ -11,6 +11,5 @@ import com.bolyartech.forge.base.task.TaskExecutor;
  *
  * @param <T>
  */
-@SuppressWarnings("WeakerAccess")
 public interface AndroidTaskExecutor<T> extends TaskExecutor<T>, IdlingResource {
 }

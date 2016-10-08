@@ -11,7 +11,7 @@ abstract public class AbstractSingleOperationResidentComponent extends AbstractO
         implements SingleOperationResidentComponent {
 
 
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
     private boolean mIsSuccess;
 

@@ -15,7 +15,7 @@ import javax.inject.Inject;
  * {@link UnitManager} implementation
  */
 public class UnitManagerImpl implements UnitManager {
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
     private final Map<Class<? extends UnitActivity>, ResidentComponent> mResidentComponents = new HashMap<>();
     private final Map<ResidentComponent, Class<? extends UnitActivity>> mResidentComponentsReverse = new HashMap<>();

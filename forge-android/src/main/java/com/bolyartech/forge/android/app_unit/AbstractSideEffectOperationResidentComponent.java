@@ -14,7 +14,7 @@ abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR
         implements SideEffectOperationResidentComponent<RESULT, ERROR>, SideEffectOperationResidentToActivity<RESULT, ERROR> {
 
 
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
     private boolean mIsSuccess;
     private ERROR mLastError;

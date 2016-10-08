@@ -20,6 +20,5 @@ public interface ResidentComponent extends ResidentToActivity {
     /**
      * Called after activity is stopped AND it is finishing (i.e. isFinishing() == true)
      */
-    @SuppressWarnings("EmptyMethod")
     void onActivityFinishing();
 }

@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 import com.bolyartech.forge.base.misc.TimeProvider;
 
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ abstract public class UnitApplication extends Application {
     // how long after last activity is paused the onInterfacePaused() method will be called
     private final long INTERFACE_PAUSED_TIMEOUT = 10_000;
 
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
     @Inject
     UnitManager mUnitManager;
@@ -86,6 +87,7 @@ abstract public class UnitApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                mLogger.trace("activity created: {}", activity);
                 if (activity instanceof UnitActivity) {
                     UnitActivity act = (UnitActivity) activity;
                     mUnitManager.onActivityCreated(act);
@@ -156,6 +158,11 @@ abstract public class UnitApplication extends Application {
     }
 
 
+    /**
+     * Use this method to set the unit manager if you don't use dependency injection (like Dagger 2 for example)
+     * You will have to create {@link UnitManagerImpl} in {@link #onCreate()} and call this method.
+     * @param unitManager UnitManager implementation, usually {@link UnitManagerImpl}
+     */
     @SuppressWarnings("unused")
     protected void setUnitManager(UnitManager unitManager) {
         mUnitManager = unitManager;

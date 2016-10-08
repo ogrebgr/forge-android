@@ -5,6 +5,5 @@ package com.bolyartech.forge.android.app_unit;
  *
  * All residents must implement this or descendant interfaces
  */
-@SuppressWarnings("WeakerAccess")
 public interface ResidentToActivity {
 }

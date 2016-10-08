@@ -12,7 +12,7 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
         implements MultiOperationResidentComponent<T>,
         MultiOperationResidentToActivity<T> {
 
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
 
     private T mCurrentOperation;
