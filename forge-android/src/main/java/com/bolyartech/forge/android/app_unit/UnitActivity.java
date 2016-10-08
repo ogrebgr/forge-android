@@ -18,6 +18,9 @@ public interface UnitActivity<T extends ResidentComponent> {
     /**
      * Creates instance of the resident component
      *
+     * This method will be called from the UnitManager in order to create the resident component. Application developers
+     * must not call this method directly
+     *
      * @return resident component
      */
     @NonNull

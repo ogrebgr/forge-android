@@ -17,6 +17,9 @@ import javax.inject.Inject;
  * Application that uses {@link UnitManager} to manage Forge units
  * <p>
  * Uses ActivityLifecycleCallbacks to notify the UnitManager for activity's lifecycle events
+ * <p>
+ * Please see {@link #onCreate()} for a way to provide custom {@link UnitManager} and/or {@link TimeProvider} when
+ * you are doing unit testing.
  */
 abstract public class UnitApplication extends Application {
     // how long after last activity is paused the onInterfacePaused() method will be called
@@ -79,6 +82,13 @@ abstract public class UnitApplication extends Application {
     }
 
 
+    /**
+     * Called when the application is starting. If you override this method, be sure to call super.onCreate().
+     * Applications that don't use dependency injection may want to call {@link #setUnitManager} and/or
+     * {#link {@link #setTimeProvider(TimeProvider)}} in order to provide custom implementations (for test purposes
+     * for example).
+     * Applications that use DI <b>must</b> inject the application before the call to <code>super.onCreate()</code>
+     */
     @Override
     public void onCreate() {
         super.onCreate();
