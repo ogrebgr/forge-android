@@ -57,8 +57,8 @@ dependencies {
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
     compile 'com.android.support:support-annotations:24.2.1'
     apt 'com.google.dagger:dagger-compiler:2.0'
     compile 'javax.annotation:jsr250-api:1.0'
@@ -67,6 +67,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
         exclude group: 'javax.annotation', module: 'javax.annotation-api'
     }
-    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.1'
+    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
     compile 'net.sourceforge.streamsupport:streamsupport:1.5.1'
 }
