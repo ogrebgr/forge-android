@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("unused")
 abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR>
         extends AbstractOperationResidentComponent
-        implements SideEffectOperationResidentComponent<RESULT, ERROR>, SideEffectOperationResidentToActivity<RESULT, ERROR> {
+        implements SideEffectOperationResidentComponent<RESULT, ERROR> {
 
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
@@ -108,10 +108,5 @@ abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR
     public RESULT getLastResult() {
         return mLastResult;
     }
-
-
-    @Override
-    public OperationResidentToActivity getResidentToActivity() {
-        return this;
-    }
 }
+

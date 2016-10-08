@@ -101,10 +101,4 @@ abstract public class AbstractSingleOperationResidentComponent extends AbstractO
     public synchronized void ack() {
         completedStateAcknowledged();
     }
-
-
-    @Override
-    public OperationResidentToActivity getResidentToActivity() {
-        return this;
-    }
 }

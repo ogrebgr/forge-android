@@ -4,7 +4,7 @@ package com.bolyartech.forge.android.app_unit;
 /**
  * Base interface for resident components
  */
-public interface ResidentComponent extends ResidentToActivity {
+public interface ResidentComponent {
     /**
      * Called after activity is resumed
      * @param activity Activity

@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
         extends AbstractOperationResidentComponent
-        implements MultiOperationResidentComponent<T>,
-        MultiOperationResidentToActivity<T> {
+        implements MultiOperationResidentComponent<T> {
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
@@ -98,11 +97,5 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
     @Override
     public boolean isInIdleState() {
         return getOpState() == OpState.IDLE;
-    }
-
-
-    @Override
-    public MultiOperationResidentToActivity getResidentToActivity() {
-        return this;
     }
 }

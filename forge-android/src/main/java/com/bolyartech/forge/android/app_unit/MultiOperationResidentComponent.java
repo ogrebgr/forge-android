@@ -7,8 +7,7 @@ package com.bolyartech.forge.android.app_unit;
  *
  * @param <T>
  */
-public interface MultiOperationResidentComponent<T extends Enum<T>> extends OperationResidentComponent,
-        MultiOperationResidentToActivity<T> {
+public interface MultiOperationResidentComponent<T extends Enum<T>> extends OperationResidentComponent {
 
     /**
      * Switches to busy state and sets current operation to <code>operation</code>
@@ -31,5 +30,9 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Oper
      */
     void switchToIdleState();
 
-    MultiOperationResidentToActivity getResidentToActivity();
+    /**
+     * Returns the current operation T or null if not available
+     * @return current operation T
+     */
+    T getCurrentOperation();
 }

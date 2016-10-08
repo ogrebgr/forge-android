@@ -31,4 +31,17 @@ public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends Ope
      * Switches to idle state
      */
     void switchToIdleState();
+
+
+    /**
+     * Gets the error of the operation
+     * @return Error of the operation
+     */
+    ERROR getLastError();
+
+    /**
+     * Gets the result of the operation
+     * @return Result of the operation
+     */
+    RESULT getLastResult();
 }
