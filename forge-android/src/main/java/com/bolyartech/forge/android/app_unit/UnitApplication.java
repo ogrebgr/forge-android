@@ -5,8 +5,8 @@ import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 import com.bolyartech.forge.base.misc.TimeProvider;
+import com.bolyartech.forge.base.misc.TimeProviderImpl;
 
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 /**
  * Application that uses {@link UnitManager} to manage Forge units
- *
+ * <p>
  * Uses ActivityLifecycleCallbacks to notify the UnitManager for activity's lifecycle events
  */
 abstract public class UnitApplication extends Application {
@@ -82,6 +82,13 @@ abstract public class UnitApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (mTimeProvider == null) {
+            mTimeProvider = new TimeProviderImpl();
+        }
+
+        if (mUnitManager == null) {
+            mUnitManager = new UnitManagerImpl();
+        }
 
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
@@ -159,12 +166,48 @@ abstract public class UnitApplication extends Application {
 
 
     /**
-     * Use this method to set the unit manager if you don't use dependency injection (like Dagger 2 for example)
-     * You will have to create {@link UnitManagerImpl} in {@link #onCreate()} and call this method.
+     * Use this method to set custom (for testing purposes) unit manager if you don't use dependency injection (like Dagger 2 for example)
+     * You will have to create {@link UnitManager} in {@link #onCreate()} and call this method before the call to
+     * <code>super.onCreate()</code> like this:
+     * <p>
+     * <code>
+     * public void onCreate() {
+     *    setUnitManager(new UnitManagerImpl());
+     *    setTimeProvider(new TimeProviderImpl());
+     *    super.onCreate();
+     * }
+     * </code>
+     *
+     * If you don't call this method the default {@link UnitManagerImpl} will be created and used
+     *
      * @param unitManager UnitManager implementation, usually {@link UnitManagerImpl}
      */
     @SuppressWarnings("unused")
     protected void setUnitManager(UnitManager unitManager) {
         mUnitManager = unitManager;
+    }
+
+
+    /**
+     * Use this method to set custom (for testing purposes) time provider if you don't use dependency injection
+     * (like Dagger 2 for example)
+     *
+     * You will have to create {@link TimeProvider} in {@link #onCreate()} and call this method before the call to
+     * <code>super.onCreate()</code> like this:
+     * <p>
+     * <code>
+     * public void onCreate() {
+     *    setUnitManager(new UnitManagerImpl());
+     *    setTimeProvider(new TimeProviderImpl());
+     *    super.onCreate();
+     * }
+     * </code>
+     *
+     * If you don't call this method the default {@link TimeProviderImpl} will be created and used
+     *
+     * @param timeProvider Time provider
+     */
+    protected void setTimeProvider(TimeProvider timeProvider) {
+        mTimeProvider = timeProvider;
     }
 }
