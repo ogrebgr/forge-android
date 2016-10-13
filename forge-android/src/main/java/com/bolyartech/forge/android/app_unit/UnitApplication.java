@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 import com.bolyartech.forge.base.misc.TimeProvider;
 import com.bolyartech.forge.base.misc.TimeProviderImpl;
 
@@ -219,5 +220,16 @@ abstract public class UnitApplication extends Application {
      */
     protected void setTimeProvider(TimeProvider timeProvider) {
         mTimeProvider = timeProvider;
+    }
+
+
+    @ForUnitTestsOnly
+    protected void reset() {
+        mUnitManager = null;
+        mTimeProvider = null;
+
+        mHasResumedActivity = false;
+        mLastPausedTs = 0;
+        mInterfacePaused = false;
     }
 }
