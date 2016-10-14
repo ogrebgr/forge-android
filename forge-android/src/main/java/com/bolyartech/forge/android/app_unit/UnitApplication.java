@@ -84,15 +84,14 @@ abstract public class UnitApplication extends Application {
 
 
     /**
-     * Called when the application is starting. If you override this method, be sure to call super.onCreate().
+     * Called after dependency injection is initialized and the app is injected
+     *
      * Applications that don't use dependency injection may want to call {@link #setUnitManager} and/or
      * {#link {@link #setTimeProvider(TimeProvider)}} in order to provide custom implementations (for test purposes
-     * for example).
+     * for example) and then call onStart() in their onCreate()
      * Applications that use DI <b>must</b> inject the application before the call to <code>super.onCreate()</code>
      */
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void onStart() {
         if (mTimeProvider == null) {
             mTimeProvider = new TimeProviderImpl();
         }
