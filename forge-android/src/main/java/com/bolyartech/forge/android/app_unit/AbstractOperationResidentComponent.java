@@ -22,8 +22,6 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
 
     private OperationResidentComponent.Listener mListener;
 
-    private final Handler mHandler = new Handler();
-
 
     /**
      * Default constructor
@@ -58,22 +56,9 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
     }
 
 
-    private void notifyStateChanged() {
+    private synchronized  void notifyStateChanged() {
         if (mListener != null) {
-            if (Looper.getMainLooper() != Looper.myLooper()) {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        synchronized (AbstractOperationResidentComponent.this) {
-                            if (mListener != null) {
-                                mListener.onResidentOperationStateChanged();
-                            }
-                        }
-                    }
-                });
-            } else {
-                mListener.onResidentOperationStateChanged();
-            }
+             mListener.onResidentOperationStateChanged();
         }
     }
 
