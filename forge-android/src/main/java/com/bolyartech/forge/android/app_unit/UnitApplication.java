@@ -37,6 +37,7 @@ abstract public class UnitApplication extends Application {
 
     private final Handler mHandler = new Handler();
 
+    private boolean mManualOnStartCall = false;
     private boolean mHasResumedActivity = false;
     private long mLastPausedTs;
     private boolean mInterfacePaused = false;
@@ -52,6 +53,27 @@ abstract public class UnitApplication extends Application {
             }
         }
     };
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        if (!mManualOnStartCall) {
+            onStart();
+        }
+    }
+
+
+    /**
+     * Call this method in unit tests (only) before calling super.onCreate() in order to disable automatic calling
+     * of onStart() and thus have the chance to call it by your self when the time comes (i.e. after dependency
+     * injection is initialized with the test configuration)
+     */
+    @ForUnitTestsOnly
+    protected void useManualOnStartCall() {
+        mManualOnStartCall = true;
+    }
 
 
     /**
