@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
  *
  * @param <T> Type of the resident component
  */
-public final class UnitApplicationDelegate<T> {
+public final class UnitActivityDelegate<T> {
     private T mResident;
 
 
