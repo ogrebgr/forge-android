@@ -1,8 +1,5 @@
 package com.bolyartech.forge.android.app_unit;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import org.slf4j.LoggerFactory;
 
 
