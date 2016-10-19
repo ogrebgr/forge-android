@@ -24,26 +24,20 @@ import javax.inject.Inject;
  */
 abstract public class UnitApplication extends Application {
     // how long after last activity is paused the onInterfacePaused() method will be called
-    private final long INTERFACE_PAUSED_TIMEOUT = 10_000;
+    private final long INTERFACE_PAUSED_DEFAULT_TIMEOUT = 10_000;
 
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
-
+    private final Handler mHandler = new Handler();
     @Inject
     UnitManager mUnitManager;
-
     @Inject
     TimeProvider mTimeProvider;
-
-
-    private final Handler mHandler = new Handler();
-
     private boolean mManualOnStartCall = false;
     private boolean mHasResumedActivity = false;
     private long mLastPausedTs;
     private boolean mInterfacePaused = false;
-
+    private long mInterfacePausedTimeout = INTERFACE_PAUSED_DEFAULT_TIMEOUT;
     private ActivityLifecycleCallbacks mActivityLifecycleCallbacks;
-
 
     private final Runnable mPausedCheckRunnable = new Runnable() {
         @Override
@@ -85,9 +79,10 @@ abstract public class UnitApplication extends Application {
      * are finished.
      * <p>
      * Please note that this method is not called immediately after all activities are paused
-     * but after {@link #INTERFACE_PAUSED_TIMEOUT} expires. This is so because when new activity is starting on top
+     * but after mInterfacePausedTimeout expires. This is so because when new activity is starting on top
      * of the old one, the old one is paused and there is a small 'gap' in time before new activity is created and
-     * resumed. Default value for INTERFACE_PAUSED_TIMEOUT is 10 seconds.
+     * resumed. Default value for mInterfacePausedTimeout is 10 seconds. You can customize it with
+     * {@link #setInterfacePausedTimeout(long)}
      */
     protected void onInterfacePaused() {
         mLogger.debug("onInterfacePaused()");
@@ -105,7 +100,7 @@ abstract public class UnitApplication extends Application {
 
     /**
      * Called after dependency injection is initialized and the app is injected
-     *
+     * <p>
      * Applications that don't use dependency injection may want to call {@link #setUnitManager} and/or
      * {#link {@link #setTimeProvider(TimeProvider)}} in order to provide custom implementations (for test purposes
      * for example) and then call onStart() in their onCreate()
@@ -122,6 +117,116 @@ abstract public class UnitApplication extends Application {
 
         mActivityLifecycleCallbacks = createActivityLifecycleCallbacks();
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
+    }
+
+
+    @ForUnitTestsOnly
+    protected void reset() {
+        mUnitManager = null;
+        mTimeProvider = null;
+
+        mHasResumedActivity = false;
+        mLastPausedTs = 0;
+        mInterfacePaused = false;
+    }
+
+
+    @ForUnitTestsOnly
+    protected ActivityLifecycleCallbacks getActivityLifecycleCallbacks() {
+        return mActivityLifecycleCallbacks;
+    }
+
+
+    @ForUnitTestsOnly
+    protected UnitManager getUnitManager() {
+        return mUnitManager;
+    }
+
+
+    /**
+     * Use this method to set custom (for testing purposes) unit manager if you don't use dependency injection (like Dagger 2 for example)
+     * You will have to create {@link UnitManager} in {@link #onCreate()} and call this method before the call to
+     * <code>super.onCreate()</code> like this:
+     * <p>
+     * <code>
+     * public void onCreate() {
+     * setUnitManager(new UnitManagerImpl());
+     * setTimeProvider(new TimeProviderImpl());
+     * super.onCreate();
+     * }
+     * </code>
+     * <p>
+     * If you don't call this method the default {@link UnitManagerImpl} will be created and used
+     *
+     * @param unitManager UnitManager implementation, usually {@link UnitManagerImpl}
+     */
+    @SuppressWarnings("unused")
+    protected void setUnitManager(UnitManager unitManager) {
+        mUnitManager = unitManager;
+    }
+
+
+    @ForUnitTestsOnly
+    protected TimeProvider getTimeProvider() {
+        return mTimeProvider;
+    }
+
+
+    /**
+     * Use this method to set custom (for testing purposes) time provider if you don't use dependency injection
+     * (like Dagger 2 for example)
+     * <p>
+     * You will have to create {@link TimeProvider} in {@link #onCreate()} and call this method before the call to
+     * <code>super.onCreate()</code> like this:
+     * <p>
+     * <code>
+     * public void onCreate() {
+     * setUnitManager(new UnitManagerImpl());
+     * setTimeProvider(new TimeProviderImpl());
+     * super.onCreate();
+     * }
+     * </code>
+     * <p>
+     * If you don't call this method the default {@link TimeProviderImpl} will be created and used
+     *
+     * @param timeProvider Time provider
+     */
+    protected void setTimeProvider(TimeProvider timeProvider) {
+        mTimeProvider = timeProvider;
+    }
+
+
+    protected void checkInterfacePaused() {
+        if (!mHasResumedActivity) {
+            if (mLastPausedTs + INTERFACE_PAUSED_DEFAULT_TIMEOUT < mTimeProvider.getVmTime()) {
+                mInterfacePaused = true;
+                onInterfacePaused();
+            }
+        }
+    }
+
+
+    @ForUnitTestsOnly
+    long getInterfacePausedTimeout() {
+        return mInterfacePausedTimeout;
+    }
+
+
+    /**
+     * Sets interface paused timeout
+     *
+     * How many milliseconds after last activity is paused the onInterfacePaused()
+     * method will be called.
+     *
+     * If you call this method at all you should call it once on application initialization
+     *
+     * @param interfacePausedTimeout milliseconds
+     */
+    public void setInterfacePausedTimeout(long interfacePausedTimeout) {
+        if (interfacePausedTimeout <= 0) {
+            throw new IllegalArgumentException("interfacePausedTimeout must be positive");
+        }
+        mInterfacePausedTimeout = interfacePausedTimeout;
     }
 
 
@@ -166,8 +271,7 @@ abstract public class UnitApplication extends Application {
                 mHasResumedActivity = false;
                 mLastPausedTs = mTimeProvider.getVmTime();
 
-                mHandler.postDelayed(mPausedCheckRunnable,
-                        INTERFACE_PAUSED_TIMEOUT);
+                mHandler.postDelayed(mPausedCheckRunnable, mInterfacePausedTimeout);
 
                 mLogger.trace("Activity paused: {}", activity);
                 if (activity instanceof UnitActivity) {
@@ -197,90 +301,5 @@ abstract public class UnitApplication extends Application {
                 }
             }
         };
-    }
-
-
-    /**
-     * Use this method to set custom (for testing purposes) unit manager if you don't use dependency injection (like Dagger 2 for example)
-     * You will have to create {@link UnitManager} in {@link #onCreate()} and call this method before the call to
-     * <code>super.onCreate()</code> like this:
-     * <p>
-     * <code>
-     * public void onCreate() {
-     *    setUnitManager(new UnitManagerImpl());
-     *    setTimeProvider(new TimeProviderImpl());
-     *    super.onCreate();
-     * }
-     * </code>
-     *
-     * If you don't call this method the default {@link UnitManagerImpl} will be created and used
-     *
-     * @param unitManager UnitManager implementation, usually {@link UnitManagerImpl}
-     */
-    @SuppressWarnings("unused")
-    protected void setUnitManager(UnitManager unitManager) {
-        mUnitManager = unitManager;
-    }
-
-
-    /**
-     * Use this method to set custom (for testing purposes) time provider if you don't use dependency injection
-     * (like Dagger 2 for example)
-     *
-     * You will have to create {@link TimeProvider} in {@link #onCreate()} and call this method before the call to
-     * <code>super.onCreate()</code> like this:
-     * <p>
-     * <code>
-     * public void onCreate() {
-     *    setUnitManager(new UnitManagerImpl());
-     *    setTimeProvider(new TimeProviderImpl());
-     *    super.onCreate();
-     * }
-     * </code>
-     *
-     * If you don't call this method the default {@link TimeProviderImpl} will be created and used
-     *
-     * @param timeProvider Time provider
-     */
-    protected void setTimeProvider(TimeProvider timeProvider) {
-        mTimeProvider = timeProvider;
-    }
-
-
-    @ForUnitTestsOnly
-    protected void reset() {
-        mUnitManager = null;
-        mTimeProvider = null;
-
-        mHasResumedActivity = false;
-        mLastPausedTs = 0;
-        mInterfacePaused = false;
-    }
-
-
-    @ForUnitTestsOnly
-    ActivityLifecycleCallbacks getActivityLifecycleCallbacks() {
-        return mActivityLifecycleCallbacks;
-    }
-
-
-    void checkInterfacePaused() {
-        if (!mHasResumedActivity) {
-            if (mLastPausedTs + INTERFACE_PAUSED_TIMEOUT < mTimeProvider.getVmTime()) {
-                mInterfacePaused = true;
-                onInterfacePaused();
-            }
-        }
-    }
-
-
-    @ForUnitTestsOnly
-    UnitManager getUnitManager() {
-        return mUnitManager;
-    }
-
-    @ForUnitTestsOnly
-    TimeProvider getTimeProvider() {
-        return mTimeProvider;
     }
 }
