@@ -24,7 +24,7 @@ public interface UnitActivity<T extends ResidentComponent> {
      * @return resident component
      */
     @NonNull
-    ResidentComponent createResidentComponent();
+    T createResidentComponent();
 
     /**
      * Sets the resident component
