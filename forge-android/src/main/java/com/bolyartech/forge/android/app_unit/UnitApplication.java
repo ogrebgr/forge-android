@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 
 /**
- * Application that uses {@link UnitManager} to manage Forge units
+ * Application that uses UnitManager to manage Forge units
  * <p>
  * Uses ActivityLifecycleCallbacks to notify the UnitManager for activity's lifecycle events
  * <p>
@@ -42,15 +42,13 @@ abstract public class UnitApplication extends Application {
     private long mLastPausedTs;
     private boolean mInterfacePaused = false;
 
+    private ActivityLifecycleCallbacks mActivityLifecycleCallbacks;
+
+
     private final Runnable mPausedCheckRunnable = new Runnable() {
         @Override
         public void run() {
-            if (!mHasResumedActivity) {
-                if (mLastPausedTs + INTERFACE_PAUSED_TIMEOUT < mTimeProvider.getVmTime()) {
-                    mInterfacePaused = true;
-                    onInterfacePaused();
-                }
-            }
+            checkInterfacePaused();
         }
     };
 
@@ -122,8 +120,13 @@ abstract public class UnitApplication extends Application {
             mUnitManager = new UnitManagerImpl();
         }
 
+        mActivityLifecycleCallbacks = createActivityLifecycleCallbacks();
+        registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
+    }
 
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+
+    private ActivityLifecycleCallbacks createActivityLifecycleCallbacks() {
+        return new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 mLogger.trace("activity created: {}", activity);
@@ -193,7 +196,7 @@ abstract public class UnitApplication extends Application {
                     mUnitManager.onActivityDestroyed((UnitActivity) activity);
                 }
             }
-        });
+        };
     }
 
 
@@ -252,5 +255,32 @@ abstract public class UnitApplication extends Application {
         mHasResumedActivity = false;
         mLastPausedTs = 0;
         mInterfacePaused = false;
+    }
+
+
+    @ForUnitTestsOnly
+    ActivityLifecycleCallbacks getActivityLifecycleCallbacks() {
+        return mActivityLifecycleCallbacks;
+    }
+
+
+    void checkInterfacePaused() {
+        if (!mHasResumedActivity) {
+            if (mLastPausedTs + INTERFACE_PAUSED_TIMEOUT < mTimeProvider.getVmTime()) {
+                mInterfacePaused = true;
+                onInterfacePaused();
+            }
+        }
+    }
+
+
+    @ForUnitTestsOnly
+    UnitManager getUnitManager() {
+        return mUnitManager;
+    }
+
+    @ForUnitTestsOnly
+    TimeProvider getTimeProvider() {
+        return mTimeProvider;
     }
 }
