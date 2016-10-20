@@ -1,15 +1,11 @@
 package com.bolyartech.forge.android.app_unit;
 
+import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
+
 import org.slf4j.LoggerFactory;
 
 
-/**
- * Skeleton implementation for operation component
- *
- * Initial state is set to IDLE
- */
-@SuppressWarnings("WeakerAccess")
-abstract public class AbstractOperationResidentComponent extends ResidentComponentAdapter
+public class AbstractOperationResidentComponent extends ResidentComponentAdapter
         implements OperationResidentComponent {
 
 
@@ -18,6 +14,8 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
     private OpState mOpState;
 
     private OperationResidentComponent.Listener mListener;
+
+    private boolean mIsSuccess;
 
 
     /**
@@ -36,8 +34,7 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
     }
 
 
-    @Override
-    public synchronized void switchToState(OpState opState) {
+    private synchronized void switchToState(OpState opState) {
         if (mOpState != opState) {
             mOpState = opState;
             notifyStateChanged();
@@ -53,9 +50,9 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
     }
 
 
-    private synchronized  void notifyStateChanged() {
+    private synchronized void notifyStateChanged() {
         if (mListener != null) {
-             mListener.onResidentOperationStateChanged();
+            mListener.onResidentOperationStateChanged();
         }
     }
 
@@ -73,5 +70,96 @@ abstract public class AbstractOperationResidentComponent extends ResidentCompone
     public synchronized void onActivityPaused() {
         super.onActivityPaused();
         mListener = null;
+    }
+
+
+    @ForUnitTestsOnly
+    protected OperationResidentComponent.Listener getListener() {
+        return mListener;
+    }
+
+
+
+    @Override
+    public boolean isSuccess() {
+        return isCompletedSuccessfully();
+    }
+
+
+    @Override
+    public boolean isCompletedSuccessfully() {
+        return mIsSuccess;
+    }
+
+
+    @Override
+    public boolean isIdle() {
+        return isInIdleState();
+    }
+
+
+    @Override
+    public boolean isInIdleState() {
+        return getOpState() == OpState.IDLE;
+    }
+
+
+    @Override
+    public synchronized void completedStateAcknowledged() {
+        if (getOpState() == OpState.COMPLETED) {
+            switchToState(OpState.IDLE);
+        } else {
+            mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
+        }
+    }
+
+
+    @Override
+    @SuppressWarnings("unused")
+    public synchronized void switchToBusyState() {
+        if (getOpState() == OpState.IDLE) {
+            switchToState(OpState.BUSY);
+        } else {
+            throw new IllegalStateException("switchToBusyState() called when not in IDLE state");
+        }
+    }
+
+
+    @Override
+    @SuppressWarnings("unused")
+    public synchronized void switchToCompletedStateSuccess() {
+        if (getOpState() == OpState.BUSY) {
+            mIsSuccess = true;
+            switchToState(OpState.COMPLETED);
+        } else {
+            throw new IllegalStateException("switchToCompletedStateSuccess() called when not in BUSY state");
+        }
+    }
+
+
+    @Override
+    @SuppressWarnings("unused")
+    public synchronized void switchToCompletedStateFail() {
+        if (getOpState() == OpState.BUSY) {
+            mIsSuccess = false;
+            switchToState(OpState.COMPLETED);
+        } else {
+            throw new IllegalStateException("switchToCompletedStateFail() called when not in BUSY state");
+        }
+    }
+
+
+    @Override
+    @SuppressWarnings("unused")
+    public synchronized void abort() {
+        if (getOpState() == OpState.BUSY) {
+            switchToState(OpState.IDLE);
+        }
+    }
+
+
+    @Override
+    public void ack() {
+        completedStateAcknowledged();
     }
 }

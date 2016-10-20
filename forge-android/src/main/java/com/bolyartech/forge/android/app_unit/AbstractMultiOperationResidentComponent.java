@@ -1,101 +1,113 @@
 package com.bolyartech.forge.android.app_unit;
 
+import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
+
 import org.slf4j.LoggerFactory;
 
 
-/**
- * Skeleton implementation for resident component with multiple operations
- * @param <T> enum with operations
- */
-abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
-        extends AbstractOperationResidentComponent
+public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
         implements MultiOperationResidentComponent<T> {
 
+    private AbstractOperationResidentComponent mDelegate = new AbstractOperationResidentComponent();
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
-
 
     private T mCurrentOperation;
 
-    private boolean mIsSuccess;
 
-
-    @SuppressWarnings("unused")
     @Override
-    public synchronized void switchToBusyState(T operation) {
-        mIsSuccess = false;
-
-        mCurrentOperation = operation;
-        switchToState(OpState.BUSY);
-    }
-
-
-    @SuppressWarnings("unused")
-    @Override
-    public synchronized void switchToCompletedStateSuccess() {
-        mIsSuccess = true;
-        switchToState(OpState.COMPLETED);
-    }
-
-
-    @SuppressWarnings("unused")
-    @Override
-    public synchronized void switchToCompletedStateFail() {
-        mIsSuccess = false;
-        switchToState(OpState.COMPLETED);
-    }
-
-
-
-    @SuppressWarnings("unused")
-    @Override
-    public synchronized void switchToIdleState() {
-        switchToState(OpState.IDLE);
+    public OperationResidentComponent.OpState getOpState() {
+        return mDelegate.getOpState();
     }
 
 
     @Override
-    public synchronized void completedStateAcknowledged() {
-        if (getOpState() == OpState.COMPLETED) {
-            switchToIdleState();
-        } else {
-            mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
-        }
-
-        mCurrentOperation = null;
+    public boolean isInOpState(OperationResidentComponent.OpState opState) {
+        return mDelegate.isInOpState(opState);
     }
 
 
     @Override
-    public synchronized void ack() {
-        completedStateAcknowledged();
+    public void onActivityResumed(UnitActivity activity) {
+        mDelegate.onActivityResumed(activity);
     }
 
 
     @Override
-    public T getCurrentOperation() {
-        return mCurrentOperation;
+    public void onActivityPaused() {
+        mDelegate.onActivityPaused();
+    }
+
+
+    @ForUnitTestsOnly
+    public OperationResidentComponent.Listener getListener() {
+        return mDelegate.getListener();
     }
 
 
     @Override
     public boolean isSuccess() {
-        return isCompletedSuccessfully();
+        return mDelegate.isSuccess();
     }
 
 
     @Override
     public boolean isCompletedSuccessfully() {
-        return mIsSuccess;
+        return mDelegate.isCompletedSuccessfully();
     }
+
 
     @Override
     public boolean isIdle() {
-        return isInIdleState();
+        return mDelegate.isIdle();
     }
 
 
     @Override
     public boolean isInIdleState() {
-        return getOpState() == OpState.IDLE;
+        return mDelegate.isInIdleState();
+    }
+
+
+    @Override
+    public synchronized void completedStateAcknowledged() {
+        mDelegate.completedStateAcknowledged();
+        mCurrentOperation = null;
+    }
+
+
+    @Override
+    public void switchToCompletedStateSuccess() {
+        mDelegate.switchToCompletedStateSuccess();
+    }
+
+
+    @Override
+    public void switchToCompletedStateFail() {
+        mDelegate.switchToCompletedStateFail();
+    }
+
+
+    @Override
+    public void abort() {
+        mDelegate.abort();
+    }
+
+
+    @Override
+    public void ack() {
+        completedStateAcknowledged();
+    }
+
+
+    @Override
+    public synchronized void switchToBusyState(T operation) {
+        mCurrentOperation = operation;
+        mDelegate.switchToBusyState();
+    }
+
+
+    @Override
+    public synchronized T getCurrentOperation() {
+        return mCurrentOperation;
     }
 }

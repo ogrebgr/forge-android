@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
  * @param <ERROR>  type of the error of the operations. Use <code>Void</code> if not used
  */
 @SuppressWarnings({"unused"})
-public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends OperationResidentComponent {
+public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends ResidentComponent {
     /**
      * Switches to busy state
      */
@@ -27,11 +27,6 @@ public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends Ope
      */
     void switchToCompletedStateFail(@Nullable ERROR error);
 
-    /**
-     * Switches to idle state
-     */
-    void switchToIdleState();
-
 
     /**
      * Gets the error of the operation
@@ -44,4 +39,59 @@ public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends Ope
      * @return Result of the operation
      */
     RESULT getLastResult();
+
+
+    /**
+     * Returns the operation state
+     *
+     * @return operation state
+     */
+    OperationResidentComponent.OpState getOpState();
+
+    /**
+     * Checks if in given state
+     *
+     * @param opState operation state
+     * @return true if state <code>opState</code>
+     */
+    boolean isInOpState(OperationResidentComponent.OpState opState);
+
+    /**
+     * Notifies the resident that completed state is observed. Resident should switch to IDLE state.
+     */
+    void completedStateAcknowledged();
+
+    /**
+     * Convenience alias of {@link #completedStateAcknowledged}
+     */
+    void ack();
+
+    /**
+     * Convenience alias of {@link #isCompletedSuccessfully}
+     *
+     * @return true if last operation was marked as successful, false otherwise
+     */
+    boolean isSuccess();
+
+    /**
+     * @return true if last operation was marked as successful, false otherwise
+     */
+    boolean isCompletedSuccessfully();
+
+    /**
+     * Convenience alias of {@link #isInIdleState}
+     *
+     * @return true if resident component is in {@link OperationResidentComponent.OpState#IDLE}
+     */
+    boolean isIdle();
+
+    /**
+     * @return true if resident component is in {@link OperationResidentComponent.OpState#IDLE}
+     */
+    boolean isInIdleState();
+
+    /**
+     * Aborts the current operation and switches to idle state
+     */
+    void abort();
 }

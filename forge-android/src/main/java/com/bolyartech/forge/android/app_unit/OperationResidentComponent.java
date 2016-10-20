@@ -1,30 +1,13 @@
 package com.bolyartech.forge.android.app_unit;
 
-/**
- * Operation resident component
- * <p>
- * Uses simple finite state machine with 3 states:
- * <ul>
- * <li>IDLE - when idle and ready to execute operation</li>
- * <li>BUSY - when executing operations is in progress</li>
- * <li>COMPLETED - when operation is completed</li>
- * </ul>
- */
-@SuppressWarnings("unused")
-public interface OperationResidentComponent extends ResidentComponent {
+
+public interface OperationResidentComponent {
     /**
      * Returns the operation state
      *
      * @return operation state
      */
     OpState getOpState();
-
-    /**
-     * Switches to state <code>opState</code>
-     *
-     * @param opState operation state
-     */
-    void switchToState(OpState opState);
 
     /**
      * Checks if in given state
@@ -83,14 +66,40 @@ public interface OperationResidentComponent extends ResidentComponent {
         COMPLETED
     }
 
+
+    /**
+     * Switches to busy state
+     */
+    void switchToBusyState();
+
+
+    /**
+     * Aborts the current operation and switches to idle state
+     */
+    void abort();
+
+
+    /**
+     * Switches to completed state with success flag on
+     */
+    void switchToCompletedStateSuccess();
+
+    /**
+     * Switches to completed state with success flag off
+     */
+    void switchToCompletedStateFail();
+
+
+
     /**
      * Listener to be notified when operation state changes
      */
     interface Listener {
         /**
-         * Called when resident operation state changed
+         * Called when resident operation state changed.
+         * Listeners (i.e. your activities) must not acquire locks or do lengthy operations in this method. Best
+         * practice is to just do <code>runOnUiThread(() -> handleState(getRes().getOpState()));</code>
          */
         void onResidentOperationStateChanged();
     }
-
 }

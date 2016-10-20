@@ -1,112 +1,121 @@
 package com.bolyartech.forge.android.app_unit;
 
+
+import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
+
 import org.slf4j.LoggerFactory;
 
 
-/**
- * Skeleton implementations for resident component with single operation with side effect
- * @param <RESULT>
- * @param <ERROR>
- */
-@SuppressWarnings("unused")
-abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR>
-        extends AbstractOperationResidentComponent
-        implements SideEffectOperationResidentComponent<RESULT, ERROR> {
+public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends ResidentComponentAdapter implements
+        SideEffectOperationResidentComponent<RESULT, ERROR> {
 
-
+    private AbstractOperationResidentComponent mDelegate = new AbstractOperationResidentComponent();
     private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
 
-    private boolean mIsSuccess;
     private ERROR mLastError;
     private RESULT mLastResult;
 
 
+
+    @Override
+    public void abort() {
+        mDelegate.abort();
+    }
+
+
+    @Override
+    public OperationResidentComponent.OpState getOpState() {
+        return mDelegate.getOpState();
+    }
+
+
+    @Override
+    public boolean isInOpState(OperationResidentComponent.OpState opState) {
+        return mDelegate.isInOpState(opState);
+    }
+
+
+    @Override
+    public void onActivityResumed(UnitActivity activity) {
+        mDelegate.onActivityResumed(activity);
+    }
+
+
+    @Override
+    public void onActivityPaused() {
+        mDelegate.onActivityPaused();
+    }
+
+
+    @ForUnitTestsOnly
+    public OperationResidentComponent.Listener getListener() {
+        return mDelegate.getListener();
+    }
+
+
     @Override
     public boolean isSuccess() {
-        return isCompletedSuccessfully();
+        return mDelegate.isSuccess();
     }
 
 
     @Override
     public boolean isCompletedSuccessfully() {
-        return mIsSuccess;
-    }
-
-
-    @Override
-    public ERROR getLastError() {
-        return mLastError;
-    }
-
-
-    @Override
-    public void switchToBusyState() {
-        mLastResult = null;
-        switchToState(OpState.BUSY);
-    }
-
-
-    @Override
-    public synchronized void switchToCompletedStateSuccess(RESULT rez) {
-        mIsSuccess = true;
-        mLastResult = rez;
-        completed();
-    }
-
-
-    @Override
-    public synchronized void switchToCompletedStateFail(ERROR error) {
-        mIsSuccess = false;
-        mLastError = error;
-        completed();
-    }
-
-
-    private void completed() {
-        switchToState(OpState.COMPLETED);
-    }
-
-
-    /**
-     * You should normally not call this method but use {@see #completedStateAcknowledged} instead
-     */
-    @SuppressWarnings("unused")
-    @Override
-    public synchronized void switchToIdleState() {
-        switchToState(OpState.IDLE);
-    }
-
-
-    @Override
-    public synchronized void completedStateAcknowledged() {
-        if (getOpState() == OpState.COMPLETED) {
-            switchToState(OpState.IDLE);
-        } else {
-            mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
-        }
-    }
-
-
-    @Override
-    public synchronized void ack() {
-        completedStateAcknowledged();
+        return mDelegate.isCompletedSuccessfully();
     }
 
 
     @Override
     public boolean isIdle() {
-        return isInIdleState();
+        return mDelegate.isIdle();
     }
 
 
     @Override
     public boolean isInIdleState() {
-        return getOpState() == OpState.IDLE;
+        return mDelegate.isInIdleState();
     }
 
 
-    public RESULT getLastResult() {
+    @Override
+    public void completedStateAcknowledged() {
+        mDelegate.completedStateAcknowledged();
+    }
+
+
+    @Override
+    public void switchToBusyState() {
+        mDelegate.switchToBusyState();
+    }
+
+
+    @Override
+    public void ack() {
+        mDelegate.ack();
+    }
+
+
+    @Override
+    public synchronized void switchToCompletedStateSuccess(RESULT rez) {
+        mDelegate.switchToCompletedStateSuccess();
+        mLastResult = rez;
+    }
+
+
+    @Override
+    public synchronized void switchToCompletedStateFail(ERROR error) {
+        mDelegate.switchToCompletedStateFail();
+        mLastError = error;
+    }
+
+
+    public synchronized RESULT getLastResult() {
         return mLastResult;
     }
-}
 
+
+    @Override
+    public synchronized ERROR getLastError() {
+        return mLastError;
+    }
+}
