@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
         implements MultiOperationResidentComponent<T> {
 
-    private AbstractOperationResidentComponent mDelegate = new AbstractOperationResidentComponent();
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
+    private final AbstractOperationResidentComponent mDelegate = new AbstractOperationResidentComponent();
 
     private T mCurrentOperation;
 

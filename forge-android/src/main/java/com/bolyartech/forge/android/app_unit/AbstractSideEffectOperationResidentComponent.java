@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
 public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends ResidentComponentAdapter implements
         SideEffectOperationResidentComponent<RESULT, ERROR> {
 
-    private AbstractOperationResidentComponent mDelegate = new AbstractOperationResidentComponent();
-    private final org.slf4j.Logger mLogger = LoggerFactory.getLogger(this.getClass());
+    private final AbstractOperationResidentComponent mDelegate = new AbstractOperationResidentComponent();
 
     private ERROR mLastError;
     private RESULT mLastResult;
