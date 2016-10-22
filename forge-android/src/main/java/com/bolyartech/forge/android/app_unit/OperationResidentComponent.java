@@ -1,7 +1,18 @@
 package com.bolyartech.forge.android.app_unit;
 
 
-public interface OperationResidentComponent {
+/**
+ * Operation resident component
+ *
+ * Uses simple finite state machine with 3 states:
+ * <ul>
+ *     <li>IDLE - when idle and ready to execute operation</li>
+ *     <li>BUSY - when executing operations is in progress</li>
+ *     <li>ENDED - when operation is ended</li>
+ * </ul>
+ *
+ */
+public interface OperationResidentComponent extends ResidentComponent {
     /**
      * Returns the operation state
      *

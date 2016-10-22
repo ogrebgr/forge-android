@@ -1,5 +1,13 @@
 package com.bolyartech.forge.android.app_unit;
 
+
+/**
+ * Resident component with multiple operations
+ *
+ * Define your operations in an enum and provide it as type parameter T
+ *
+ * @param <T>
+ */
 public interface MultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponent {
     /**
      * Switches to busy state and sets current operation to <code>operation</code>

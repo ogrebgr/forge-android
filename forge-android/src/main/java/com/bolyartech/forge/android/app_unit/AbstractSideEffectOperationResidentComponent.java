@@ -4,6 +4,11 @@ package com.bolyartech.forge.android.app_unit;
 import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 
 
+/**
+ * Skeleton implementations for resident component with single operation with side effect
+ * @param <RESULT>
+ * @param <ERROR>
+ */
 abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends ResidentComponentAdapter implements
         SideEffectOperationResidentComponent<RESULT, ERROR> {
 
@@ -44,6 +49,10 @@ abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR
     }
 
 
+    /**
+     * Gets the listener
+     * @return listener
+     */
     @ForUnitTestsOnly
     public OperationResidentComponent.Listener getListener() {
         return mDelegate.getListener();

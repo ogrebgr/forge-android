@@ -4,8 +4,8 @@ import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 
 
 /**
- *
- * @param <T>
+ * Skeleton implementation for resident component with multiple operations
+ * @param <T> enum with operations
  */
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
         implements MultiOperationResidentComponent<T> {
@@ -39,6 +39,10 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
     }
 
 
+    /**
+     * Gets the listener
+     * @return listener
+     */
     @ForUnitTestsOnly
     public OperationResidentComponent.Listener getListener() {
         return mDelegate.getListener();
