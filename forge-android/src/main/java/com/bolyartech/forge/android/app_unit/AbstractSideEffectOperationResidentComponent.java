@@ -60,8 +60,8 @@ public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends
 
 
     @Override
-    public boolean isCompletedSuccessfully() {
-        return mDelegate.isCompletedSuccessfully();
+    public boolean isEndedSuccessfully() {
+        return mDelegate.isEndedSuccessfully();
     }
 
 
@@ -78,8 +78,8 @@ public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends
 
 
     @Override
-    public void completedStateAcknowledged() {
-        mDelegate.completedStateAcknowledged();
+    public void endedStateAcknowledged() {
+        mDelegate.endedStateAcknowledged();
     }
 
 
@@ -96,15 +96,15 @@ public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends
 
 
     @Override
-    public synchronized void switchToCompletedStateSuccess(RESULT rez) {
-        mDelegate.switchToCompletedStateSuccess();
+    public synchronized void switchToEndedStateSuccess(RESULT rez) {
+        mDelegate.switchToEndedStateSuccess();
         mLastResult = rez;
     }
 
 
     @Override
-    public synchronized void switchToCompletedStateFail(ERROR error) {
-        mDelegate.switchToCompletedStateFail();
+    public synchronized void switchToEndedStateFail(ERROR error) {
+        mDelegate.switchToEndedStateFail();
         mLastError = error;
     }
 

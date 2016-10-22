@@ -18,17 +18,17 @@ public interface OperationResidentComponent {
     boolean isInOpState(OpState opState);
 
     /**
-     * Notifies the resident that completed state is observed. Resident should switch to IDLE state.
+     * Notifies the resident that ENDED state is observed. Resident should switch to IDLE state.
      */
-    void completedStateAcknowledged();
+    void endedStateAcknowledged();
 
     /**
-     * Convenience alias of {@link #completedStateAcknowledged}
+     * Convenience alias of {@link #endedStateAcknowledged}
      */
     void ack();
 
     /**
-     * Convenience alias of {@link #isCompletedSuccessfully}
+     * Convenience alias of {@link #isEndedSuccessfully}
      *
      * @return true if last operation was marked as successful, false otherwise
      */
@@ -37,7 +37,7 @@ public interface OperationResidentComponent {
     /**
      * @return true if last operation was marked as successful, false otherwise
      */
-    boolean isCompletedSuccessfully();
+    boolean isEndedSuccessfully();
 
     /**
      * Convenience alias of {@link #isInIdleState}
@@ -61,9 +61,9 @@ public interface OperationResidentComponent {
          */
         BUSY,
         /**
-         * Defines completed state, i.e. operation has completed (and result or error may be available)
+         * Defines end state, i.e. operation has ended (and result or error might be available)
          */
-        COMPLETED
+        ENDED
     }
 
 
@@ -80,14 +80,14 @@ public interface OperationResidentComponent {
 
 
     /**
-     * Switches to completed state with success flag on
+     * Switches to ENDED state with success flag on
      */
-    void switchToCompletedStateSuccess();
+    void switchToEndedStateSuccess();
 
     /**
-     * Switches to completed state with success flag off
+     * Switches to ENDED state with success flag off
      */
-    void switchToCompletedStateFail();
+    void switchToEndedStateFail();
 
 
 

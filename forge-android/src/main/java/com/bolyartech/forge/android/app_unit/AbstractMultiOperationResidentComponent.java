@@ -51,8 +51,8 @@ public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends 
 
 
     @Override
-    public boolean isCompletedSuccessfully() {
-        return mDelegate.isCompletedSuccessfully();
+    public boolean isEndedSuccessfully() {
+        return mDelegate.isEndedSuccessfully();
     }
 
 
@@ -69,21 +69,21 @@ public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends 
 
 
     @Override
-    public synchronized void completedStateAcknowledged() {
-        mDelegate.completedStateAcknowledged();
+    public synchronized void endedStateAcknowledged() {
+        mDelegate.endedStateAcknowledged();
         mCurrentOperation = null;
     }
 
 
     @Override
-    public void switchToCompletedStateSuccess() {
-        mDelegate.switchToCompletedStateSuccess();
+    public void switchToEndedStateSuccess() {
+        mDelegate.switchToEndedStateSuccess();
     }
 
 
     @Override
-    public void switchToCompletedStateFail() {
-        mDelegate.switchToCompletedStateFail();
+    public void switchToEndedStateFail() {
+        mDelegate.switchToEndedStateFail();
     }
 
 
@@ -95,7 +95,7 @@ public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends 
 
     @Override
     public void ack() {
-        completedStateAcknowledged();
+        endedStateAcknowledged();
     }
 
 

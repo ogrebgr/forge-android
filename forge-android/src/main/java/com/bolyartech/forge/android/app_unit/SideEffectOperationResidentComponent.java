@@ -16,16 +16,16 @@ public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends Res
     void switchToBusyState();
 
     /**
-     * Switches to completed state with success flag on and with result <code>rez</code>
+     * Switches to ENDED state with success flag on and with result <code>rez</code>
      * @param rez Result of the operation
      */
-    void switchToCompletedStateSuccess(@Nullable RESULT rez);
+    void switchToEndedStateSuccess(@Nullable RESULT rez);
 
     /**
-     * Switches to completed state with success flag off and with error <code>error</code>
+     * Switches to ENDED state with success flag off and with error <code>error</code>
      * @param error Resulting error
      */
-    void switchToCompletedStateFail(@Nullable ERROR error);
+    void switchToEndedStateFail(@Nullable ERROR error);
 
 
     /**
@@ -57,17 +57,17 @@ public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends Res
     boolean isInOpState(OperationResidentComponent.OpState opState);
 
     /**
-     * Notifies the resident that completed state is observed. Resident should switch to IDLE state.
+     * Notifies the resident that ENDED state is observed. Resident should switch to IDLE state.
      */
-    void completedStateAcknowledged();
+    void endedStateAcknowledged();
 
     /**
-     * Convenience alias of {@link #completedStateAcknowledged}
+     * Convenience alias of {@link #endedStateAcknowledged}
      */
     void ack();
 
     /**
-     * Convenience alias of {@link #isCompletedSuccessfully}
+     * Convenience alias of {@link #isEndedSuccessfully}
      *
      * @return true if last operation was marked as successful, false otherwise
      */
@@ -76,7 +76,7 @@ public interface SideEffectOperationResidentComponent<RESULT, ERROR> extends Res
     /**
      * @return true if last operation was marked as successful, false otherwise
      */
-    boolean isCompletedSuccessfully();
+    boolean isEndedSuccessfully();
 
     /**
      * Convenience alias of {@link #isInIdleState}

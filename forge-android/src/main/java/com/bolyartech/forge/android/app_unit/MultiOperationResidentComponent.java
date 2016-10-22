@@ -8,14 +8,14 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Resi
     void switchToBusyState(T operation);
 
     /**
-     * Switches to completed state with success flag on
+     * Switches to ENDED state with success flag on
      */
-    void switchToCompletedStateSuccess();
+    void switchToEndedStateSuccess();
 
     /**
-     * Switches to completed state with success flag off
+     * Switches to ENDED state with success flag off
      */
-    void switchToCompletedStateFail();
+    void switchToEndedStateFail();
 
 
     /**
@@ -46,17 +46,17 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Resi
     boolean isInOpState(OperationResidentComponent.OpState opState);
 
     /**
-     * Notifies the resident that completed state is observed. Resident should switch to IDLE state.
+     * Notifies the resident that ENDED state is observed. Resident should switch to IDLE state.
      */
-    void completedStateAcknowledged();
+    void endedStateAcknowledged();
 
     /**
-     * Convenience alias of {@link #completedStateAcknowledged}
+     * Convenience alias of {@link #endedStateAcknowledged}
      */
     void ack();
 
     /**
-     * Convenience alias of {@link #isCompletedSuccessfully}
+     * Convenience alias of {@link #isEndedSuccessfully}
      *
      * @return true if last operation was marked as successful, false otherwise
      */
@@ -65,7 +65,7 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Resi
     /**
      * @return true if last operation was marked as successful, false otherwise
      */
-    boolean isCompletedSuccessfully();
+    boolean isEndedSuccessfully();
 
     /**
      * Convenience alias of {@link #isInIdleState}

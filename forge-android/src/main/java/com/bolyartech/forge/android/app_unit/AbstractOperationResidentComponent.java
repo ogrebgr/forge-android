@@ -82,12 +82,12 @@ public class AbstractOperationResidentComponent extends ResidentComponentAdapter
 
     @Override
     public boolean isSuccess() {
-        return isCompletedSuccessfully();
+        return isEndedSuccessfully();
     }
 
 
     @Override
-    public boolean isCompletedSuccessfully() {
+    public boolean isEndedSuccessfully() {
         return mIsSuccess;
     }
 
@@ -105,11 +105,11 @@ public class AbstractOperationResidentComponent extends ResidentComponentAdapter
 
 
     @Override
-    public synchronized void completedStateAcknowledged() {
-        if (getOpState() == OpState.COMPLETED) {
+    public synchronized void endedStateAcknowledged() {
+        if (getOpState() == OpState.ENDED) {
             switchToState(OpState.IDLE);
         } else {
-            mLogger.error("Not in COMPLETED state when calling completedStateAcknowledged()");
+            mLogger.error("Not in ENDED state when calling endedStateAcknowledged()");
         }
     }
 
@@ -127,24 +127,24 @@ public class AbstractOperationResidentComponent extends ResidentComponentAdapter
 
     @Override
     @SuppressWarnings("unused")
-    public synchronized void switchToCompletedStateSuccess() {
+    public synchronized void switchToEndedStateSuccess() {
         if (getOpState() == OpState.BUSY) {
             mIsSuccess = true;
-            switchToState(OpState.COMPLETED);
+            switchToState(OpState.ENDED);
         } else {
-            throw new IllegalStateException("switchToCompletedStateSuccess() called when not in BUSY state");
+            throw new IllegalStateException("switchToEndedStateSuccess() called when not in BUSY state");
         }
     }
 
 
     @Override
     @SuppressWarnings("unused")
-    public synchronized void switchToCompletedStateFail() {
+    public synchronized void switchToEndedStateFail() {
         if (getOpState() == OpState.BUSY) {
             mIsSuccess = false;
-            switchToState(OpState.COMPLETED);
+            switchToState(OpState.ENDED);
         } else {
-            throw new IllegalStateException("switchToCompletedStateFail() called when not in BUSY state");
+            throw new IllegalStateException("switchToEndedStateFail() called when not in BUSY state");
         }
     }
 
@@ -160,6 +160,6 @@ public class AbstractOperationResidentComponent extends ResidentComponentAdapter
 
     @Override
     public void ack() {
-        completedStateAcknowledged();
+        endedStateAcknowledged();
     }
 }
