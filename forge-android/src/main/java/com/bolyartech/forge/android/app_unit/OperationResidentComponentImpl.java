@@ -5,7 +5,10 @@ import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 import org.slf4j.LoggerFactory;
 
 
-public class AbstractOperationResidentComponent extends ResidentComponentAdapter
+/**
+ *
+ */
+public class OperationResidentComponentImpl extends ResidentComponentAdapter
         implements OperationResidentComponent {
 
 
@@ -23,7 +26,7 @@ public class AbstractOperationResidentComponent extends ResidentComponentAdapter
      *
      * Sets initial state to IDLE
      */
-    public AbstractOperationResidentComponent() {
+    public OperationResidentComponentImpl() {
         mOpState = OpState.IDLE;
     }
 

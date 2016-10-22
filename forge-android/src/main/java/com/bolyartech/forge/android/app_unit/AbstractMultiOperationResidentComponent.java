@@ -2,13 +2,15 @@ package com.bolyartech.forge.android.app_unit;
 
 import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 
-import org.slf4j.LoggerFactory;
 
-
-public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
+/**
+ *
+ * @param <T>
+ */
+abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
         implements MultiOperationResidentComponent<T> {
 
-    private final AbstractOperationResidentComponent mDelegate = new AbstractOperationResidentComponent();
+    private final OperationResidentComponentImpl mDelegate = new OperationResidentComponentImpl();
 
     private T mCurrentOperation;
 
