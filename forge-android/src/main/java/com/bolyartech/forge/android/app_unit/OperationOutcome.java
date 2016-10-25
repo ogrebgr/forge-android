@@ -1,13 +1,33 @@
 package com.bolyartech.forge.android.app_unit;
 
-public class OperationOutcome<RESULT, ERROR> {
+public final class OperationOutcome<RESULT, ERROR> {
     private final boolean mIsSuccessful;
+    private final boolean mIsAborted;
     private final RESULT mResult;
     private final ERROR mError;
 
 
-    public OperationOutcome(boolean isSuccessful, RESULT result, ERROR error) {
+    public static <RES, ERR> OperationOutcome<RES, ERR> createSuccessOutcome(RES result) {
+        return new OperationOutcome<>(true, false, result, null);
+    }
+
+
+    public static <RES, ERR> OperationOutcome<RES, ERR> createErrorOutcome(ERR error) {
+        return new OperationOutcome<>(false, false, null, error);
+    }
+
+
+    public static <RES, ERR> OperationOutcome<RES, ERR> createAbortedOutcome() {
+        return new OperationOutcome<>(false, true, null, null);
+    }
+
+
+    private OperationOutcome(boolean isSuccessful, boolean isAborted, RESULT result, ERROR error) {
+        // we don't check for valid combinations of the parameters because the only way to call this constructor is
+        // via static factory methods
+
         mIsSuccessful = isSuccessful;
+        mIsAborted = isAborted;
         mResult = result;
         mError = error;
     }
@@ -15,6 +35,11 @@ public class OperationOutcome<RESULT, ERROR> {
 
     public boolean isSuccessful() {
         return mIsSuccessful;
+    }
+
+
+    public boolean isAborted() {
+        return mIsAborted;
     }
 
 
