@@ -121,6 +121,7 @@ public class OperationResidentComponentImpl extends ResidentComponentAdapter
     @SuppressWarnings("unused")
     public synchronized void switchToBusyState() {
         if (getOpState() == OpState.IDLE) {
+            mIsSuccess = false;
             switchToState(OpState.BUSY);
         } else {
             throw new IllegalStateException("switchToBusyState() called when not in IDLE state");
