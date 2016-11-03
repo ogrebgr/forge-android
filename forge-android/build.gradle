@@ -1,6 +1,54 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.bolyartech.forge.android'
+version = '3.0.3'
+
+
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            groupId 'com.bolyartech.forge.android'
+            artifactId 'forge-android'
+            version '3.0.3'
+            artifact("$buildDir/outputs/aar/forge-android-release.aar")
+            artifact sourcesJar
+            pom.withXml {
+                def dependencies = asNode().appendNode('dependencies')
+                configurations.getByName("_releaseCompile").getResolvedConfiguration().getFirstLevelModuleDependencies().each {
+                    def dependency = dependencies.appendNode('dependency')
+                    dependency.appendNode('groupId', it.moduleGroup)
+                    dependency.appendNode('artifactId', it.moduleName)
+                    dependency.appendNode('version', it.moduleVersion)
+                }
+            }
+        }
+    }
+}
+
+//apply from: 'bintray-config.gradle'
+
+bintray {
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'forge-android'
+        userOrg = 'ogibankov'
+        licenses = ['Apache-2.0']
+        websiteUrl = 'https://github.com/ogrebgr/forge-android'
+        issueTrackerUrl = 'https://github.com/ogrebgr/forge-android/issues'
+        vcsUrl = 'https://github.com/ogrebgr/forge-android.git'
+        version {
+            name = '3.0.3'
+            desc = 'Forge android framework'
+            vcsTag = '3.0.3'
+        }
+    }
+    publications = ['MyPublication']
+}
 
 android {
     compileSdkVersion 24
@@ -31,25 +79,29 @@ android {
 }
 
 
-publishing {
-    repositories {
-        mavenLocal()
-    }
-    publications {
-        mavenJava(MavenPublication) {
-            artifact "${project.buildDir}/outputs/aar/${project.name}-release.aar"
-            groupId 'com.bolyartech.forge'
-            artifactId 'forge-android'
-            //noinspection GroovyAssignabilityCheck
-            version '2.7-SNAPSHOT'
-        }
-    }
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+artifacts {
+//    archives javadocJar
+    archives sourcesJar
 }
 
 
 dependencies {
-    //    releaseCompile ('com.bolyartech.forge:forge:2.7-SNAPSHOT')
     compile project(':forge-base')
+//    compile 'com.bolyartech.forge:base:3.0.3'
     compile 'com.google.dagger:dagger:2.0'
     provided 'com.google.dagger:dagger-compiler:2.0'
     testCompile 'junit:junit:4.12'
@@ -59,7 +111,7 @@ dependencies {
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
-    compile 'com.android.support:support-annotations:24.2.1'
+    compile 'com.android.support:support-annotations:25.0.0'
     apt 'com.google.dagger:dagger-compiler:2.0'
     compile 'javax.annotation:jsr250-api:1.0'
     androidTestCompile 'com.google.dagger:dagger:2.0'
