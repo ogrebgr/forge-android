@@ -57,10 +57,23 @@ public interface OperationResidentComponent extends ResidentComponent {
      */
     boolean isIdle();
 
+
     /**
      * @return true if resident component is in {@link OperationResidentComponent.OpState#IDLE}
      */
     boolean isInIdleState();
+
+
+    /**
+     * Convenience alias of {@link #isInBusyState}
+     * @return
+     */
+    boolean isBusy();
+
+    /**
+     * @return true if resident component is in {@link OperationResidentComponent.OpState#BUSY}
+     */
+    boolean isInBusyState();
 
     enum OpState {
         /**
