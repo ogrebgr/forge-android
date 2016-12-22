@@ -6,6 +6,7 @@ import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 
 /**
  * Skeleton implementations for resident component with single operation with side effect
+ *
  * @param <RESULT>
  * @param <ERROR>
  */
@@ -16,7 +17,6 @@ abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR
 
     private ERROR mLastError;
     private RESULT mLastResult;
-
 
 
     @Override
@@ -51,6 +51,7 @@ abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR
 
     /**
      * Gets the listener
+     *
      * @return listener
      */
     @ForUnitTestsOnly
@@ -124,4 +125,17 @@ abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR
     public synchronized ERROR getLastError() {
         return mLastError;
     }
+
+
+    @Override
+    public boolean isBusy() {
+        return isInBusyState();
+    }
+
+
+    @Override
+    public boolean isInBusyState() {
+        return getOpState() == OperationResidentComponent.OpState.BUSY;
+    }
+
 }
