@@ -108,6 +108,18 @@ public class OperationResidentComponentImpl extends ResidentComponentAdapter
 
 
     @Override
+    public boolean isBusy() {
+        return isInBusyState();
+    }
+
+
+    @Override
+    public boolean isInBusyState() {
+        return getOpState() == OpState.BUSY;
+    }
+
+
+    @Override
     public synchronized void endedStateAcknowledged() {
         if (getOpState() == OpState.ENDED) {
             switchToState(OpState.IDLE);

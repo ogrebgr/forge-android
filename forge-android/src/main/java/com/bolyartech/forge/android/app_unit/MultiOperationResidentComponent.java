@@ -3,7 +3,7 @@ package com.bolyartech.forge.android.app_unit;
 
 /**
  * Resident component with multiple operations
- *
+ * <p>
  * Define your operations in an enum and provide it as type parameter T
  *
  * @param <T>
@@ -11,6 +11,7 @@ package com.bolyartech.forge.android.app_unit;
 public interface MultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponent {
     /**
      * Switches to busy state and sets current operation to <code>operation</code>
+     *
      * @param operation Operation enum value
      */
     void switchToBusyState(T operation);
@@ -34,6 +35,7 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Resi
 
     /**
      * Returns the current operation T or null if not available
+     *
      * @return current operation T
      */
     T getCurrentOperation();
@@ -86,4 +88,16 @@ public interface MultiOperationResidentComponent<T extends Enum<T>> extends Resi
      * @return true if resident component is in {@link OperationResidentComponent.OpState#IDLE}
      */
     boolean isInIdleState();
+
+    /**
+     * Convenience alias of {@link #isInBusyState}
+     *
+     * @return
+     */
+    boolean isBusy();
+
+    /**
+     * @return true if resident component is in {@link OperationResidentComponent.OpState#BUSY}
+     */
+    boolean isInBusyState();
 }

@@ -5,6 +5,7 @@ import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 
 /**
  * Skeleton implementation for resident component with multiple operations
+ *
  * @param <T> enum with operations
  */
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
@@ -41,6 +42,7 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
     /**
      * Gets the listener
+     *
      * @return listener
      */
     @ForUnitTestsOnly
@@ -115,4 +117,17 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
     public synchronized T getCurrentOperation() {
         return mCurrentOperation;
     }
+
+
+    @Override
+    public boolean isBusy() {
+        return isInBusyState();
+    }
+
+
+    @Override
+    public boolean isInBusyState() {
+        return getOpState() == OperationResidentComponent.OpState.BUSY;
+    }
+
 }
