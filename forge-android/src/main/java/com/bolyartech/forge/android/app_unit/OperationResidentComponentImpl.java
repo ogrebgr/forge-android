@@ -77,7 +77,7 @@ public class OperationResidentComponentImpl extends ResidentComponentAdapter
 
 
     @ForUnitTestsOnly
-    protected OperationResidentComponent.Listener getListener() {
+    public OperationResidentComponent.Listener getListener() {
         return mListener;
     }
 

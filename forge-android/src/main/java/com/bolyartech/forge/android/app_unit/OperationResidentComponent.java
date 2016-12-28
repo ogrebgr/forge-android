@@ -1,6 +1,9 @@
 package com.bolyartech.forge.android.app_unit;
 
 
+import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
+
+
 /**
  * Operation resident component
  *
@@ -113,6 +116,12 @@ public interface OperationResidentComponent extends ResidentComponent {
      */
     void switchToEndedStateFail();
 
+
+    /**
+     * Returns listener
+     * @return listener
+     */
+    Listener getListener();
 
 
     /**

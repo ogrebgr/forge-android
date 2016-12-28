@@ -11,7 +11,7 @@ import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
         implements MultiOperationResidentComponent<T> {
 
-    private final OperationResidentComponentImpl mDelegate = new OperationResidentComponentImpl();
+    private final OperationResidentComponent mDelegate = new OperationResidentComponentImpl();
 
     private T mCurrentOperation;
 
