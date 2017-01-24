@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.bolyartech.forge.android'
-version = '3.0.3'
+version = '3.0.4'
 
 
 
@@ -13,7 +13,7 @@ publishing {
         MyPublication(MavenPublication) {
             groupId 'com.bolyartech.forge.android'
             artifactId 'forge-android'
-            version '3.0.3'
+            version '3.0.4'
             artifact("$buildDir/outputs/aar/forge-android-release.aar")
             artifact sourcesJar
             pom.withXml {
@@ -42,9 +42,9 @@ bintray {
         issueTrackerUrl = 'https://github.com/ogrebgr/forge-android/issues'
         vcsUrl = 'https://github.com/ogrebgr/forge-android.git'
         version {
-            name = '3.0.3'
+            name = '3.0.4'
             desc = 'Forge android framework'
-            vcsTag = '3.0.3'
+            vcsTag = '3.0.4'
         }
     }
     publications = ['MyPublication']
@@ -100,8 +100,8 @@ artifacts {
 
 
 dependencies {
-    compile project(':forge-base')
-//    compile 'com.bolyartech.forge:base:3.0.3'
+//    compile project(':forge-base')
+    compile 'com.bolyartech.forge:base:3.0.4'
     compile 'com.google.dagger:dagger:2.0'
     provided 'com.google.dagger:dagger-compiler:2.0'
     testCompile 'junit:junit:4.12'
