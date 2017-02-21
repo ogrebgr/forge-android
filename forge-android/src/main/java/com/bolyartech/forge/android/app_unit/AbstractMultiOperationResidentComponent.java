@@ -17,13 +17,13 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
 
     @Override
-    public OperationResidentComponent.OpState getOpState() {
+    public OpState getOpState() {
         return mDelegate.getOpState();
     }
 
 
     @Override
-    public boolean isInOpState(OperationResidentComponent.OpState opState) {
+    public boolean isInOpState(OpState opState) {
         return mDelegate.isInOpState(opState);
     }
 
@@ -127,7 +127,6 @@ abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>>
 
     @Override
     public boolean isInBusyState() {
-        return getOpState() == OperationResidentComponent.OpState.BUSY;
+        return getOpState() == OpState.BUSY;
     }
-
 }
