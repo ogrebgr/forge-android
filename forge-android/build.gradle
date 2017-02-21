@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-    forge_android_version = '4.0.0'
+    forge_android_version = '5.0.0'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
@@ -103,7 +103,7 @@ artifacts {
 
 dependencies {
 //    compile project(':forge-base')
-    compile 'com.bolyartech.forge:base:3.0.4'
+    compile 'com.bolyartech.forge:base:3.0.5'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     compile 'com.google.dagger:dagger:2.9'
     testCompile 'junit:junit:4.12'
