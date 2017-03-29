@@ -34,7 +34,7 @@ public interface OpStateful {
     /**
      * Convenience alias of {@link #isInBusyState}
      *
-     * @return
+     * @return true if busy, false otherwise
      */
     boolean isBusy();
 
