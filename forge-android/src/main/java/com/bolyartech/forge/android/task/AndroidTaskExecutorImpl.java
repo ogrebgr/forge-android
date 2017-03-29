@@ -1,9 +1,12 @@
 package com.bolyartech.forge.android.task;
 
+import com.bolyartech.forge.base.misc.TimeProvider;
 import com.bolyartech.forge.base.task.TaskExecutorImpl;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 
 
 /**
@@ -16,6 +19,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class AndroidTaskExecutorImpl<T> extends TaskExecutorImpl<T> implements AndroidTaskExecutor<T> {
     private final List<ResourceCallback> mResourceCallbacks = new CopyOnWriteArrayList<>();
 
+
+    public AndroidTaskExecutorImpl() {
+    }
+
+
+    public AndroidTaskExecutorImpl(ExecutorService taskExecutorService, ScheduledExecutorService scheduler) {
+        super(taskExecutorService, scheduler);
+    }
+
+
+    public AndroidTaskExecutorImpl(ExecutorService taskExecutorService, int ttlCheckInterval, int taskTtl,
+                                   ScheduledExecutorService scheduler, TimeProvider timeProvider) {
+        super(taskExecutorService, ttlCheckInterval, taskTtl, scheduler, timeProvider);
+    }
 
 
     @Override
