@@ -9,7 +9,6 @@ group = 'com.bolyartech.forge.android'
 version = forge_android_version
 
 
-
 publishing {
     publications {
         MyPublication(MavenPublication) {
@@ -18,13 +17,14 @@ publishing {
             version forge_android_version
             artifact("$buildDir/outputs/aar/forge-android-release.aar")
             artifact sourcesJar
+
             pom.withXml {
-                def dependencies = asNode().appendNode('dependencies')
-                configurations.getByName("_releaseCompile").getResolvedConfiguration().getFirstLevelModuleDependencies().each {
-                    def dependency = dependencies.appendNode('dependency')
-                    dependency.appendNode('groupId', it.moduleGroup)
-                    dependency.appendNode('artifactId', it.moduleName)
-                    dependency.appendNode('version', it.moduleVersion)
+                def dependenciesNode = asNode().appendNode('dependencies')
+                configurations.compile.allDependencies.each { dependency ->
+                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', dependency.group)
+                    dependencyNode.appendNode('artifactId', dependency.name)
+                    dependencyNode.appendNode('version', dependency.version)
                 }
             }
         }
