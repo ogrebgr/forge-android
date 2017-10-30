@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-    forge_android_version = '7.1.0'
+    forge_android_version = '7.2.0'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
@@ -107,17 +107,17 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     compile 'com.google.dagger:dagger:2.9'
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'org.mockito:mockito-core:2.4.0'
+    androidTestCompile 'org.mockito:mockito-core:2.4.0'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    compile 'com.android.support:support-annotations:26.0.1'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    androidTestCompile 'com.android.support.test:rules:1.0.1'
+    compile 'com.android.support:support-annotations:27.0.0'
     compile 'javax.annotation:jsr250-api:1.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
         exclude group: 'javax.annotation', module: 'javax.annotation-api'
     }
-    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
+    compile 'com.android.support.test.espresso:espresso-idling-resource:3.0.1'
     compile 'net.sourceforge.streamsupport:streamsupport:1.5.1'
 }
