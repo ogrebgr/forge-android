@@ -44,12 +44,11 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ViewUtils {
-    private static final org.slf4j.Logger mLogger = LoggerFactory.getLogger(ViewUtils.class
-            .getSimpleName());
+    private static final org.slf4j.Logger mLogger = LoggerFactory.getLogger(ViewUtils.class);
 
 
     /**
-     * Noninstantiable utility class
+     * Non-instantiable utility class
      */
     private ViewUtils() {
         throw new AssertionError("Non-instantiable utility class");
@@ -64,7 +63,7 @@ public class ViewUtils {
      * @return  Button if successful or null otherwise
      */
     public static Button findButton(View view, int resourceId) {
-        Button ret = (Button) view.findViewById(resourceId);
+        Button ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find Button with id = " + resourceId);
         }
@@ -82,7 +81,7 @@ public class ViewUtils {
      * @throws  IllegalStateException  if view with such ID is not found
      */
     public static Button findButtonX(View view, int resourceId) {
-        Button ret = (Button) view.findViewById(resourceId);
+        Button ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find Button with id = " + resourceId);
         }
@@ -113,7 +112,7 @@ public class ViewUtils {
      * @return text view or null if view is not found
      */
     public static TextView findTextView(View view, int resourceId) {
-        TextView ret = (TextView) view.findViewById(resourceId);
+        TextView ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find TextView with id = " + resourceId);
         }
@@ -130,7 +129,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static TextView findTextViewX(View view, int resourceId) {
-        TextView ret = (TextView) view.findViewById(resourceId);
+        TextView ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find TextView with id = " + resourceId);
         }
@@ -146,7 +145,7 @@ public class ViewUtils {
      * @return  edit text or null if view is not found
      */
     public static EditText findEditText(View view, int resourceId) {
-        EditText ret = (EditText) view.findViewById(resourceId);
+        EditText ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find EditText with id = " + resourceId);
         }
@@ -163,7 +162,7 @@ public class ViewUtils {
      * @throws  IllegalStateException  if view with such ID is not found
      */
     public static EditText findEditTextX(View view, int resourceId) {
-        EditText ret = (EditText) view.findViewById(resourceId);
+        EditText ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find EditText with id = " + resourceId);
         }
@@ -197,7 +196,7 @@ public class ViewUtils {
      * @return  radio group or null if view is not found
      */
     public static RadioGroup findRadioGroup(View view, int resourceId) {
-        RadioGroup ret = (RadioGroup) view.findViewById(resourceId);
+        RadioGroup ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find RadioGroup with id = " + resourceId);
         }
@@ -214,7 +213,7 @@ public class ViewUtils {
      * @return RadioGroup
      */
     public static RadioGroup findRadioGroupX(View view, int resourceId) {
-        RadioGroup ret = (RadioGroup) view.findViewById(resourceId);
+        RadioGroup ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find RadioGroup with id = " + resourceId);
         }
@@ -249,7 +248,7 @@ public class ViewUtils {
      * @return  check box or null if view is not found
      */
     public static CheckBox findCheckBox(View view, int resourceId) {
-        CheckBox ret = (CheckBox) view.findViewById(resourceId);
+        CheckBox ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find CheckBox with id = " + resourceId);
         }
@@ -266,7 +265,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static CheckBox findCheckBoxX(View view, int resourceId) {
-        CheckBox ret = (CheckBox) view.findViewById(resourceId);
+        CheckBox ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find CheckBox with id = " + resourceId);
         }
@@ -301,7 +300,7 @@ public class ViewUtils {
      * @return ToggleButton of null if view is not found
      */
     public static ToggleButton findToggleButton(View view, int resourceId) {
-        ToggleButton ret = (ToggleButton) view.findViewById(resourceId);
+        ToggleButton ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find ToggleButton with id = " + resourceId);
         }
@@ -318,7 +317,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static ToggleButton findToggleButtonX(View view, int resourceId) {
-        ToggleButton ret = (ToggleButton) view.findViewById(resourceId);
+        ToggleButton ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find ToggleButton with id = " + resourceId);
         }
@@ -352,7 +351,7 @@ public class ViewUtils {
      * @return ListView or null if not found
      */
     public static ListView findListView(View view, int resourceId) {
-        ListView ret = (ListView) view.findViewById(resourceId);
+        ListView ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find ListView with id = " + resourceId);
         }
@@ -369,7 +368,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static ListView findListViewX(View view, int resourceId) {
-        ListView ret = (ListView) view.findViewById(resourceId);
+        ListView ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find ListView with id = " + resourceId);
         }
@@ -385,7 +384,7 @@ public class ViewUtils {
      * @return ImageView or null if not found
      */
     public static ImageView findImageView(View view, int resourceId) {
-        ImageView ret = (ImageView) view.findViewById(resourceId);
+        ImageView ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find ImageView with id = " + resourceId);
         }
@@ -402,7 +401,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static ImageView findImageViewX(View view, int resourceId) {
-        ImageView ret = (ImageView) view.findViewById(resourceId);
+        ImageView ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find ImageView with id = " + resourceId);
         }
@@ -418,7 +417,7 @@ public class ViewUtils {
      * @return Spinner or null if not found
      */
     public static Spinner findSpinner(View view, int resourceId) {
-        Spinner ret = (Spinner) view.findViewById(resourceId);
+        Spinner ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find Spinner with id = " + resourceId);
         }
@@ -435,7 +434,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static Spinner findSpinnerX(View view, int resourceId) {
-        Spinner ret = (Spinner) view.findViewById(resourceId);
+        Spinner ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find Spinner with id = " + resourceId);
         }
@@ -452,7 +451,7 @@ public class ViewUtils {
      * @return TimePicker if successful or null otherwise
      */
     public static TimePicker findTimePicker(View view, int resourceId) {
-        TimePicker ret = (TimePicker) view.findViewById(resourceId);
+        TimePicker ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find TimePicker with id = " + resourceId);
         }
@@ -470,7 +469,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static TimePicker findTimePickerX(View view, int resourceId) {
-        TimePicker ret = (TimePicker) view.findViewById(resourceId);
+        TimePicker ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find TimePicker with id = " + resourceId);
         }
@@ -519,7 +518,7 @@ public class ViewUtils {
      * @return RadioButton or null if not found
      */
     public static RadioButton findRadioButton(View view, int resourceId) {
-        RadioButton ret = (RadioButton) view.findViewById(resourceId);
+        RadioButton ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find RadioButton with id = " + resourceId);
         }
@@ -536,7 +535,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static RadioButton findRadioButtonX(View view, int resourceId) {
-        RadioButton ret = (RadioButton) view.findViewById(resourceId);
+        RadioButton ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find RadioButton with id = " + resourceId);
         }
@@ -572,7 +571,7 @@ public class ViewUtils {
      * @return ImageButton if successful or null otherwise
      */
     public static ImageButton findImageButton(View view, int resourceId) {
-        ImageButton ret = (ImageButton) view.findViewById(resourceId);
+        ImageButton ret = view.findViewById(resourceId);
         if (ret == null) {
             mLogger.warn("Cannot find ImageButton with id = " + resourceId);
         }
@@ -590,7 +589,7 @@ public class ViewUtils {
      * @throws IllegalStateException  if view with such ID is not found
      */
     public static ImageButton findImageButtonX(View view, int resourceId) {
-        ImageButton ret = (ImageButton) view.findViewById(resourceId);
+        ImageButton ret = view.findViewById(resourceId);
         if (ret == null) {
             throw new IllegalStateException("Cannot find ImageButton with id = " + resourceId);
         }
