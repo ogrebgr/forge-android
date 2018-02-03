@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-    forge_android_version = '7.3.0'
+    forge_android_version = '7.3.2'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
@@ -64,8 +64,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            consumerProguardFiles 'proguard-rules.pro'
         }
     }
 
