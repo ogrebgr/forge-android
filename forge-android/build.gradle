@@ -124,5 +124,5 @@ dependencies {
         exclude group: 'com.google.code.findbugs'
     }
     compile 'com.android.support.test.espresso:espresso-idling-resource:3.0.1'
-    compile 'net.sourceforge.streamsupport:streamsupport:1.5.1'
+    compile 'net.sourceforge.streamsupport:streamsupport:1.6.1'
 }
