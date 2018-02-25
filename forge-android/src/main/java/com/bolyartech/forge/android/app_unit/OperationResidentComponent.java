@@ -1,6 +1,8 @@
 package com.bolyartech.forge.android.app_unit;
 
 
+import com.bolyartech.forge.android.app_unit.rc_task.RctResidentComponent;
+
 
 /**
  * Operation resident component
@@ -11,7 +13,7 @@ package com.bolyartech.forge.android.app_unit;
  *     <li>BUSY - when executing operations is in progress</li>
  *     <li>ENDED - when operation is ended</li>
  * </ul>
- *
+ * @deprecated Please use the new rc_task functionality {@link RctResidentComponent}
  */
 public interface OperationResidentComponent extends ResidentComponent, OpStateful, Abortable, EndingTests {
     /**
@@ -44,7 +46,7 @@ public interface OperationResidentComponent extends ResidentComponent, OpStatefu
         /**
          * Called when resident operation state changed.
          * Listeners (i.e. your activities) must not acquire locks or do lengthy operations in this method. Best
-         * practice is to just do <code>runOnUiThread(() -> handleState(getRes().getOpState()));</code>
+         * practice is to just do <code>runOnUiThread(() -> handleState(getRes().getTaskExecutionState()));</code>
          */
         void onResidentOperationStateChanged();
     }

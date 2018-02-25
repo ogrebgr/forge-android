@@ -7,6 +7,7 @@ import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
  * Skeleton implementation for resident component with multiple operations
  *
  * @param <T> enum with operations
+ * @deprecated Please use the new rc_task functionality {@link com.bolyartech.forge.android.app_unit.rc_task.AbstractRctResidentComponent}
  */
 abstract public class AbstractMultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponentAdapter
         implements MultiOperationResidentComponent<T> {

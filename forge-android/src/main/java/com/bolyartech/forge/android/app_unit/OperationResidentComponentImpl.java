@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- *
+ * @deprecated Please use the new rc_task functionality {@link com.bolyartech.forge.android.app_unit.rc_task.AbstractRctResidentComponent}
  */
 public class OperationResidentComponentImpl extends ResidentComponentAdapter
         implements OperationResidentComponent {
@@ -37,26 +37,9 @@ public class OperationResidentComponentImpl extends ResidentComponentAdapter
     }
 
 
-    private synchronized void switchToState(OpState opState) {
-        if (mOpState != opState) {
-            mOpState = opState;
-            notifyStateChanged();
-        } else {
-            mLogger.error("switchToState called but already in state {}", opState);
-        }
-    }
-
-
     @Override
     public boolean isInOpState(OpState opState) {
         return mOpState == opState;
-    }
-
-
-    private synchronized void notifyStateChanged() {
-        if (mListener != null) {
-            mListener.onResidentOperationStateChanged();
-        }
     }
 
 
@@ -80,7 +63,6 @@ public class OperationResidentComponentImpl extends ResidentComponentAdapter
     public OperationResidentComponent.Listener getListener() {
         return mListener;
     }
-
 
 
     @Override
@@ -177,5 +159,22 @@ public class OperationResidentComponentImpl extends ResidentComponentAdapter
     @Override
     public void ack() {
         endedStateAcknowledged();
+    }
+
+
+    private synchronized void switchToState(OpState opState) {
+        if (mOpState != opState) {
+            mOpState = opState;
+            notifyStateChanged();
+        } else {
+            mLogger.error("switchToState called but already in state {}", opState);
+        }
+    }
+
+
+    private synchronized void notifyStateChanged() {
+        if (mListener != null) {
+            mListener.onResidentOperationStateChanged();
+        }
     }
 }

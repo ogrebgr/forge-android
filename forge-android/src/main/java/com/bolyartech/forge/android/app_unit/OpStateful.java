@@ -1,5 +1,8 @@
 package com.bolyartech.forge.android.app_unit;
 
+/**
+ * @deprecated Please use the new rc_task functionality {@link com.bolyartech.forge.android.app_unit.rc_task.TaskExecutionStateful}
+ */
 public interface OpStateful {
     /**
      * Returns the operation state

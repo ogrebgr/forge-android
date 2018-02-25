@@ -9,6 +9,7 @@ import com.bolyartech.forge.base.misc.ForUnitTestsOnly;
  *
  * @param <RESULT>
  * @param <ERROR>
+ * @deprecated Please use the new rc_task functionality {@link com.bolyartech.forge.android.app_unit.rc_task.AbstractRctResidentComponent}
  */
 abstract public class AbstractSideEffectOperationResidentComponent<RESULT, ERROR> extends ResidentComponentAdapter implements
         SideEffectOperationResidentComponent<RESULT, ERROR> {

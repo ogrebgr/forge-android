@@ -2,6 +2,7 @@ package com.bolyartech.forge.android.app_unit;
 
 /**
  * States for stateful operation resident components
+ * @deprecated Please use the new rc_task functionality {@link com.bolyartech.forge.android.app_unit.rc_task.TaskExecutionState}
  */
 public enum OpState {
     /**

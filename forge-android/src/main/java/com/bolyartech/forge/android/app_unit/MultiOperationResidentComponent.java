@@ -7,6 +7,7 @@ package com.bolyartech.forge.android.app_unit;
  * Define your operations in an enum and provide it as type parameter T
  *
  * @param <T>
+ * @deprecated Please use the new rc_task functionality {@link com.bolyartech.forge.android.app_unit.rc_task.AbstractRctResidentComponent}
  */
 public interface MultiOperationResidentComponent<T extends Enum<T>> extends ResidentComponent, OpStateful, Abortable,
         EndingTests{
