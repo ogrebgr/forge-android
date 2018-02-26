@@ -2,11 +2,25 @@ package com.bolyartech.forge.android.app_unit.rc_task.task;
 
 
 abstract public class AbstractRcTask<T extends RcTaskResult> implements RcTask<T> {
+    private final int id;
+
     private volatile boolean isCancelled = false;
     private volatile boolean isEnded = false;
     private volatile boolean isSuccess = false;
 
     private volatile T result;
+
+
+    protected AbstractRcTask(int id) {
+        this.id = id;
+    }
+
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
 
     @Override
     public void cancel() {

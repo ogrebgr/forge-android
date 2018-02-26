@@ -11,8 +11,11 @@ import com.bolyartech.forge.android.app_unit.rc_task.task.RcTaskToExecutor;
 
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
 
-abstract public class AbstractRctResidentComponent extends ResidentComponentAdapter implements RctResidentComponent,
+
+abstract public class AbstractRctResidentComponent extends ResidentComponentAdapter
+        implements RctResidentComponent,
         RcTaskExecutor.Listener {
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -23,7 +26,8 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
 
     private RctResidentComponent.Listener listener;
 
-    private RcTask<? extends RcTaskResult<?,?>> currentTask;
+    private RcTask currentTask;
+
 
     public AbstractRctResidentComponent(RcTaskExecutor taskExecutor) {
         this.taskExecutor = taskExecutor;
@@ -31,7 +35,7 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
 
 
     @Override
-    public synchronized void executeTask(RcTask<? extends RcTaskResult<?,?>> task) {
+    public synchronized void executeTask(RcTask task) {
         if (isIdle()) {
             if (task.isEnded() || task.isCancelled()) {
                 throw new IllegalStateException("Cannot execute a task twice. Create new instance.");
@@ -46,7 +50,7 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
 
 
     @Override
-    public RcTask<? extends RcTaskResult<?, ?>> getCurrentTask() {
+    public RcTask getCurrentTask() {
         return currentTask;
     }
 
@@ -115,11 +119,13 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
         endedStateAcknowledged();
     }
 
-    abstract protected void onTaskPostExecute(@NonNull RcTaskToExecutor task);
+
+    abstract protected void onTaskPostExecute(@NonNull RcTaskToExecutor endedTask);
+
 
     @Override
-    public void onTaskEnded(@NonNull RcTaskToExecutor task) {
-        onTaskPostExecute(task);
+    public void onTaskEnded(@NonNull RcTaskToExecutor endedTask) {
+        onTaskPostExecute(endedTask);
         switchToState(TaskExecutionState.ENDED);
     }
 
