@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-    forge_android_version = '8.0.2'
+    forge_android_version = '8.0.3'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
