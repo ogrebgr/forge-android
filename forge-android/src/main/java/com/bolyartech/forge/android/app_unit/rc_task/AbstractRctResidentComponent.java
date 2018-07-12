@@ -6,12 +6,10 @@ import com.bolyartech.forge.android.app_unit.ResidentComponentAdapter;
 import com.bolyartech.forge.android.app_unit.UnitActivity;
 import com.bolyartech.forge.android.app_unit.rc_task.executor.RcTaskExecutor;
 import com.bolyartech.forge.android.app_unit.rc_task.task.RcTask;
-import com.bolyartech.forge.android.app_unit.rc_task.task.RcTaskResult;
 import com.bolyartech.forge.android.app_unit.rc_task.task.RcTaskToExecutor;
 
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
 
 
 abstract public class AbstractRctResidentComponent extends ResidentComponentAdapter
