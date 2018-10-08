@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import com.bolyartech.forge.android.app_unit.ResidentComponentAdapter;
 import com.bolyartech.forge.android.app_unit.UnitActivity;
 import com.bolyartech.forge.android.app_unit.rc_task.executor.RcTaskExecutor;
-import com.bolyartech.forge.android.app_unit.rc_task.task.RcTask;
-import com.bolyartech.forge.android.app_unit.rc_task.task.RcTaskToExecutor;
+import com.bolyartech.forge.base.rc_task.RcTask;
+import com.bolyartech.forge.base.rc_task.RcTaskToExecutor;
 
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +38,8 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
             if (task.isEnded() || task.isCancelled()) {
                 throw new IllegalStateException("Cannot execute a task twice. Create new instance.");
             }
-            switchToState(TaskExecutionState.BUSY);
             currentTask = task;
+            switchToState(TaskExecutionState.BUSY);
             taskExecutor.execute(this, task);
         } else {
             logger.error("executeTask called when not in IDLE. No execution will take place");

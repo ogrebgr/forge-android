@@ -2,7 +2,7 @@ package com.bolyartech.forge.android.app_unit.rc_task.executor;
 
 import android.support.annotation.NonNull;
 
-import com.bolyartech.forge.android.app_unit.rc_task.task.RcTaskToExecutor;
+import com.bolyartech.forge.base.rc_task.RcTaskToExecutor;
 
 
 public interface RcTaskExecutor {
