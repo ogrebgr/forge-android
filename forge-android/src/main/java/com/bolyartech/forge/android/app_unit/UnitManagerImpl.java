@@ -139,6 +139,10 @@ public class UnitManagerImpl implements UnitManager {
 
     private void createNewComponent(UnitActivity act) {
         ResidentComponent comp = act.createResidentComponent();
+        //noinspection ConstantConditions
+        if (comp == null) {
+            throw new NullPointerException("Activity's createResidentComponent() returned null");
+        }
         addComponentPair(act.getClass(), comp);
 
         mActiveResidentComponent = comp;
