@@ -1,5 +1,5 @@
 include ':forge-android'
 
 
-//include ':forge-base'
-//project(':forge-base').projectDir=new File("$settingsDir/../forge/base")
+include ':forge-base'
+project(':forge-base').projectDir=new File("$settingsDir/../forge/base")
