@@ -12,7 +12,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 
 ext {
-    forge_android_version = '9.2.8'
+    forge_android_version = '9.3.5'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
@@ -84,8 +84,8 @@ artifacts {
 
 
 dependencies {
-    api project(':forge-base')
-//    api 'com.bolyartech.forge:base:7.2.1'
+//    api project(':forge-base')
+    api 'com.bolyartech.forge:base:7.3.4'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.19.0'
     androidTestImplementation 'org.mockito:mockito-core:2.19.0'
