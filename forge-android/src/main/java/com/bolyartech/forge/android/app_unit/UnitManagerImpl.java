@@ -84,11 +84,14 @@ public class UnitManagerImpl implements UnitManager {
         if (act.isFinishing()) {
             mLogger.trace("Activity finishing: {}", act.getClass().getSimpleName());
             ResidentComponent comp = mResidentComponents.get(act.getClass());
-            comp.onActivityFinishing();
-            removeComponentPair(comp);
 
-            if (mActiveResidentComponent == comp) {
-                mActiveResidentComponent = null;
+            if (comp != null) {
+                comp.onActivityFinishing();
+                removeComponentPair(comp);
+
+                if (mActiveResidentComponent == comp) {
+                    mActiveResidentComponent = null;
+                }
             }
         }
     }
