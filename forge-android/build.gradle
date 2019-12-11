@@ -12,7 +12,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 
 ext {
-    forge_android_version = '9.3.9'
+    forge_android_version = '9.3.11'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
