@@ -11,7 +11,6 @@ import com.bolyartech.forge.base.rc_task.RcTaskToExecutor;
 import org.slf4j.LoggerFactory;
 
 
-
 abstract public class AbstractRctResidentComponent extends ResidentComponentAdapter
         implements RctResidentComponent,
         RcTaskExecutor.Listener {
@@ -107,7 +106,8 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
             currentTask = null;
             switchToState(TaskExecutionState.IDLE);
         } else {
-            logger.error("Not in ENDED state when calling endedStateAcknowledged()");
+            logger.error("{} Not in ENDED state when calling endedStateAcknowledged() but in {}", this.getClass().getSimpleName(),
+                    getTaskExecutionState());
         }
     }
 

@@ -56,7 +56,7 @@ public final class RctActivityDelegateImpl implements RctActivityDelegate {
 
 
     protected synchronized void handleState() {
-        logger.trace("{} state {}", activity.getClass(), activity.getRes().getTaskExecutionState());
+        logger.trace("{} state {}", activity.getClass().getSimpleName(), activity.getRes().getTaskExecutionState());
 
         switch (activity.getRes().getTaskExecutionState()) {
             case IDLE:
