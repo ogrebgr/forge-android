@@ -16,4 +16,6 @@ public interface RctActivity {
     RctResidentComponent getRes();
 
     RctResidentComponent getResident();
+
+    void onResumeJustCreated();
 }
