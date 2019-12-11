@@ -15,8 +15,6 @@ public final class RctActivityDelegateImpl implements RctActivityDelegate {
 
     private ActivityResult activityResult;
 
-    private boolean isActivityJustCreated = true;
-
     private RunOnUiThreadHelper runOnUiThreadHelper;
 
 
@@ -34,12 +32,6 @@ public final class RctActivityDelegateImpl implements RctActivityDelegate {
         } else {
             handleState();
         }
-    }
-
-
-    @Override
-    public boolean isActivityJustCreated() {
-        return isActivityJustCreated;
     }
 
 
@@ -62,7 +54,6 @@ public final class RctActivityDelegateImpl implements RctActivityDelegate {
             case IDLE:
                 runOnUiThreadHelper.runOnUiThread(() -> {
                     activity.handleResidentIdleState();
-                    isActivityJustCreated = false;
                 });
 
                 break;
