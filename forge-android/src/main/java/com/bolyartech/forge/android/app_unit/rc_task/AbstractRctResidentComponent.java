@@ -39,7 +39,7 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
         }
 
         if (listener == null) {
-            logger.error("Activity is not yet resumed. It is not idea to start a task before activity is resumed because you may not get notified when the task ends. Use isJustCreated() in onResume() to check if activity is just created.");
+            logger.error("Activity is not yet resumed. It is not idea to start a task before activity is resumed because you may not get notified when the task ends. Create flag isJustCreated and use it in onResume() to check if activity is just created.");
         }
 
         if (task.isEnded() || task.isCancelled()) {
