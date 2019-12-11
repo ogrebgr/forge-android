@@ -33,16 +33,21 @@ abstract public class AbstractRctResidentComponent extends ResidentComponentAdap
 
     @Override
     public synchronized void executeTask(RcTask task) {
-        if (isIdle()) {
-            if (task.isEnded() || task.isCancelled()) {
-                throw new IllegalStateException("Cannot execute a task twice. Create new instance.");
-            }
-            currentTask = task;
-            switchToState(TaskExecutionState.BUSY);
-            taskExecutor.execute(this, task);
-        } else {
+        if (!isIdle()) {
             logger.error("executeTask called when not in IDLE. No execution will take place");
+            return;
         }
+
+        if (listener == null) {
+            logger.error("Activity is not yet resumed. It is not idea to start a task before activity is resumed because you may not get notified when the task ends. Use isJustCreated() in onResume() to check if activity is just created.");
+        }
+
+        if (task.isEnded() || task.isCancelled()) {
+            throw new IllegalStateException("Cannot execute a task twice. Create new instance.");
+        }
+        currentTask = task;
+        switchToState(TaskExecutionState.BUSY);
+        taskExecutor.execute(this, task);
     }
 
 
