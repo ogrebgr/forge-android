@@ -4,12 +4,12 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.9.2'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
 
 
 ext {
@@ -19,17 +19,25 @@ group = 'com.bolyartech.forge.android'
 version = forge_android_version
 
 
-//apply from: 'bintray-config.gradle'
+apply from: 'bintray-config.gradle'
 
-publish {
-    userOrg = 'ogibankov'
-    groupId = 'com.bolyartech.forge.android'
-    artifactId = 'forge-android'
-    publishVersion = forge_android_version
-    desc = 'Forge framework for Andoid'
-    website = 'https://github.com/ogrebgr/forge-android'
+bintray {
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'forge-android'
+        userOrg = 'ogibankov'
+        licenses = ['Apache-2.0']
+        websiteUrl = 'https://github.com/ogrebgr/forge-android'
+        issueTrackerUrl = 'https://github.com/ogrebgr/forge-android/issues'
+        vcsUrl = 'git@github.com:ogrebgr/forge-android.git'
+        version {
+            name = forge_android_version
+            desc = 'Forge framework for Android'
+            vcsTag = 'v' + forge_android_version
+        }
+    }
 }
-
 
 android {
     compileSdkVersion 28
@@ -74,12 +82,12 @@ task javadoc(type: Javadoc) {
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 artifacts {
-//    archives javadocJar
+    archives javadocJar
     archives sourcesJar
 }
 
@@ -106,3 +114,31 @@ dependencies {
 tasks.withType(Javadoc).all {
     enabled = false
 }
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.bolyartech.forge.android'
+                artifactId = 'forge-android'
+                version = forge_android_version
+            }
+            // Creates a Maven publication called “debug”.
+            debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = 'com.bolyartech.forge.android'
+                artifactId = 'forge-android'
+                version = forge_android_version
+            }
+        }
+    }
+}
+
