@@ -4,16 +4,18 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
+
+apply plugin: 'maven'
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 
 ext {
-    forge_android_version = '11.0.0'
+    forge_android_version = '11.1.4'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
@@ -22,7 +24,7 @@ version = forge_android_version
 apply from: 'bintray-config.gradle'
 
 bintray {
-    configurations = ['archives']
+//    configurations = ['archives']
     pkg {
         repo = 'maven'
         name = 'forge-android'
@@ -37,14 +39,15 @@ bintray {
             vcsTag = 'v' + forge_android_version
         }
     }
+    publications = ['MyPublication']
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -94,10 +97,10 @@ artifacts {
 
 dependencies {
 //    api project(':forge-base')
-    api 'com.bolyartech.forge:base:7.4.1'
+    api 'com.bolyartech.forge:base:7.5.1'
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.19.0'
-    androidTestImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+    androidTestImplementation 'org.mockito:mockito-core:3.3.3'
     androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
     androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -119,26 +122,26 @@ tasks.withType(Javadoc).all {
 afterEvaluate {
     publishing {
         publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                // Applies the component for the release build variant.
+            MyPublication(MavenPublication) {
                 from components.release
+                artifact sourcesJar
+                artifact javadocJar
+                // Define this explicitly if using implementation or api configurations
+                pom.withXml {
+                    def dependenciesNode = asNode().getAt('dependencies')[0] ?: asNode().appendNode('dependencies')
 
-                // You can then customize attributes of the publication as shown below.
-                groupId = 'com.bolyartech.forge.android'
-                artifactId = 'forge-android'
-                version = forge_android_version
-            }
-            // Creates a Maven publication called “debug”.
-            debug(MavenPublication) {
-                // Applies the component for the debug build variant.
-                from components.debug
-
-                groupId = 'com.bolyartech.forge.android'
-                artifactId = 'forge-android'
-                version = forge_android_version
+                    // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
+                    configurations.implementation.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included.
+                        if (it.name != 'unspecified') {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                        }
+                    }
+                }
             }
         }
     }
 }
-
