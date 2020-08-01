@@ -15,7 +15,7 @@ apply plugin: 'com.jfrog.bintray'
 
 
 ext {
-    forge_android_version = '11.1.4'
+    forge_android_version = '11.2.0'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
@@ -97,7 +97,7 @@ artifacts {
 
 dependencies {
 //    api project(':forge-base')
-    api 'com.bolyartech.forge:base:7.5.1'
+    api 'com.bolyartech.forge:base:7.6.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:3.3.3'
     androidTestImplementation 'org.mockito:mockito-core:3.3.3'
