@@ -1,46 +1,22 @@
 buildscript {
     repositories {
-        jcenter()
         mavenLocal()
-    }
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
+        mavenCentral()
     }
 }
 
 apply plugin: 'maven'
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'signing'
 
 
 ext {
-    forge_android_version = '11.2.0'
+    forge_android_version = '11.2.1'
 }
 group = 'com.bolyartech.forge.android'
 version = forge_android_version
 
-
-apply from: 'bintray-config.gradle'
-
-bintray {
-//    configurations = ['archives']
-    pkg {
-        repo = 'maven'
-        name = 'forge-android'
-        userOrg = 'ogibankov'
-        licenses = ['Apache-2.0']
-        websiteUrl = 'https://github.com/ogrebgr/forge-android'
-        issueTrackerUrl = 'https://github.com/ogrebgr/forge-android/issues'
-        vcsUrl = 'git@github.com:ogrebgr/forge-android.git'
-        version {
-            name = forge_android_version
-            desc = 'Forge framework for Android'
-            vcsTag = 'v' + forge_android_version
-        }
-    }
-    publications = ['MyPublication']
-}
 
 android {
     compileSdkVersion 29
@@ -75,29 +51,9 @@ android {
 }
 
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-
 dependencies {
 //    api project(':forge-base')
-    api 'com.bolyartech.forge:base:7.6.0'
+    api 'com.bolyartech.forge:base:7.6.1'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:3.3.3'
     androidTestImplementation 'org.mockito:mockito-core:3.3.3'
@@ -114,8 +70,30 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.30'
 }
 
-tasks.withType(Javadoc).all {
-    enabled = false
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+
+signing {
+    sign configurations.archives
 }
 
 
@@ -145,3 +123,52 @@ afterEvaluate {
         }
     }
 }
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Forge Client Android'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'Forge framework client Android'
+                url 'https://github.com/ogrebgr/forge-android'
+
+                scm {
+                    connection 'scm:git:https://github.com/ogrebgr/forge-android.git'
+                    developerConnection 'scm:git:https://github.com/ogrebgr/forge-android.git'
+                    url 'https://github.com/ogrebgr/forge-android'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'ogremir'
+                        name 'Ognyan Bankov'
+                        email 'bankov@bolyartech.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+archivesBaseName = "forge-android"
